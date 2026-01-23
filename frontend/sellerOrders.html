@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Seller Orders - Adama Shopping</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  /* Root Variables */
+  :root {
+    --primary: #5A7BFC;
+    --secondary: #4AD991;
+    --accent: #FFD25A;
+    --text: #2D3748;
+    --light-text: #6B7280;
+    --bg: #F8F9FA;
+    --card: #FFFFFF;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+    --transition: 0.3s ease;
+    --red-btn: #E74C3C;
+    --red-btn-hover: #C0392B;
+    --navbar-height: 60px;
+  }
+
+  /* Universal Styles */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+  body { min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--text); overflow-x:hidden; position:relative; }
+
+  h1, h2, h3 { color:var(--text); font-weight:600; }
+  p { color:var(--light-text); line-height:1.6; }
+
+  /* Navbar Styles */
+  .navbar {
+    position: fixed; top: 0; left: 0; width: 100%; height: var(--navbar-height);
+    background-color: var(--card); box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 998; display: flex; justify-content: space-between; align-items: center;
+    padding: 0 20px; transition: margin-left var(--transition); flex-wrap: wrap;
+  }
+  .navbar-logo {
+    font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none;
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  }
+  .navbar-logo i { font-size: 28px; color: var(--accent); }
+  .navbar-nav { display: flex; gap: 25px; margin-left: auto; flex-shrink: 0; }
+  .navbar-nav a {
+    color: var(--text); text-decoration: none; font-weight: 500; font-size: 16px;
+    position: relative; transition: color var(--transition);
+  }
+  .navbar-nav a:hover { color: var(--primary); }
+  .navbar-nav a::after {
+    content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px;
+    background-color: var(--primary); transition: width var(--transition);
+  }
+  .navbar-nav a:hover::after, .navbar-nav a.active::after { width: 100%; }
+  .navbar-nav a.active { color: var(--primary); }
+  .navbar-buttons { display: flex; align-items: center; margin-left: 25px; flex-shrink: 0; }
+  .navbar-logout-btn {
+    background-color: var(--red-btn); color: white; padding: 8px 18px; border-radius: var(--radius);
+    border: none; cursor: pointer; font-size: 15px; font-weight: 500; transition: all var(--transition);
+    box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px;
+  }
+  .navbar-logout-btn:hover { background-color: var(--red-btn-hover); transform: translateY(-2px); box-shadow: var(--hover-shadow); }
+
+  /* Sidebar Styles */
+  .sidebar {
+    position: fixed; left: -280px; top: 0; width: 280px; height: 100%;
+    background: linear-gradient(180deg, var(--primary), #4A6EED); color: white;
+    transition: left var(--transition), box-shadow var(--transition); z-index: 999;
+    overflow-y: auto; padding: 30px 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+  }
+  .sidebar.active { left: 0; box-shadow: 5px 0 20px rgba(0,0,0,0.4); }
+  .sidebar h2 {
+    text-align: center; margin-bottom: 30px; color: white; font-size: 26px;
+    font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px;
+  }
+  .sidebar .user-profile-info {
+    margin-bottom: 30px; text-align: center; background: rgba(255,255,255,0.1);
+    padding: 15px; border-radius: var(--radius); box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  .sidebar .user-profile-info img {
+    display: block; margin: 0 auto 15px; border-radius: 50%; width: 130px; height: 130px;
+    object-fit: cover; border: 4px solid var(--accent); box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+  .sidebar .user-profile-info p { margin: 5px 0; font-size: 15px; color: #e0e0e0; font-weight: 300; }
+  .sidebar .user-profile-info p strong { color: white; font-weight: 500; }
+  .sidebar a {
+    display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: white;
+    text-decoration: none; border-radius: var(--radius); background: rgba(255,255,255,0.15);
+    margin: 12px 0; font-size: 16px; transition: all var(--transition); font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .sidebar a:hover { background: rgba(255,255,255,0.3); transform: translateX(8px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .sidebar a i { font-size: 20px; color: var(--accent); }
+  #logoutBtnSidebar {
+    margin-top: 30px; width: 100%; padding: 15px; font-size: 16px; font-weight: 600;
+    background-color: var(--red-btn); color: white; border-radius: var(--radius);
+    border: none; cursor: pointer; box-shadow: var(--shadow);
+  }
+  #logoutBtnSidebar:hover { background-color: var(--red-btn-hover); transform: translateY(-3px); box-shadow: var(--hover-shadow); }
+
+  /* Toggle Button */
+  .toggle-btn {
+    position: fixed; top: 10px; left: 20px; z-index: 1001; cursor: pointer; padding: 8px;
+    display: flex; flex-direction: column; justify-content: space-around; width: 40px; height: 35px;
+    background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    transition: all var(--transition);
+  }
+  .toggle-btn:hover { box-shadow: var(--hover-shadow); transform: translateY(-2px); }
+  .bar { width: 100%; height: 4px; background-color: var(--text); margin: 3px 0; transition: all var(--transition); border-radius: 2px; }
+  .toggle-btn.active .bar:nth-child(1) { transform: rotate(-45deg) translate(-7px, 6px); background-color: var(--accent); }
+  .toggle-btn.active .bar:nth-child(2) { opacity: 0; }
+  .toggle-btn.active .bar:nth-child(3) { transform: rotate(45deg) translate(-8px, -8px); background-color: var(--accent); }
+
+  /* Main Layout Container */
+  .main-layout-container {
+    padding-top: calc(var(--navbar-height) + 20px); flex: 1; padding-left: 30px;
+    padding-right: 30px; max-width: 1200px; margin: 0 auto; width: 100%;
+    transition: padding-left var(--transition);
+  }
+  .sidebar.active ~ .main-layout-container { padding-left: calc(280px + 30px); }
+  .sidebar.active ~ .navbar { margin-left: 280px; width: calc(100% - 280px); }
+
+  /* --- MODIFICATION: Title container with count badge --- */
+  .title-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap; /* For responsiveness */
+      margin-bottom: 25px;
+  }
+  .page-title {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 0; /* Removed margin as it's now on the container */
+      text-align: center;
+  }
+  .orders-count-badge {
+      background-color: var(--primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 500;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+      white-space: nowrap; /* Prevent text from wrapping */
+  }
+  /* --- END MODIFICATION --- */
+
+
+  /* Seller Order Card Styles */
+  #paymentsContainer {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px; margin-bottom: 30px;
+  }
+  .payment-card {
+    background: var(--card); padding: 20px; display: flex; flex-direction: column;
+    gap: 15px; border-radius: var(--radius); box-shadow: var(--shadow);
+    transition: transform var(--transition), box-shadow var(--transition); height: 100%;
+  }
+  .payment-card:hover { transform: translateY(-5px); box-shadow: var(--hover-shadow); }
+  .product-img {
+    width: 100%; max-height: 180px; object-fit: cover; border-radius: var(--radius);
+    border: 1px solid #e2e8f0; flex-shrink: 0;
+  }
+  .payment-details { flex-grow: 1; width: 100%; }
+  .payment-details h3 { font-size: 22px; margin-bottom: 8px; color: var(--text); }
+  .payment-details p { margin: 5px 0; font-size: 15px; }
+  .payment-details p strong { color: var(--text); }
+  .buyer-info {
+    display: flex; align-items: center; gap: 12px; margin-top: 15px;
+    font-weight: 500; color: var(--primary); font-size: 14px; flex-wrap: wrap;
+  }
+  .buyer-pic {
+    width: 50px; height: 50px; border-radius: 50%; object-fit: cover;
+    border: 2px solid var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;
+  }
+  .payment-date { color: var(--light-text); font-size: 0.8rem; margin-top: 10px; }
+
+  /* Filter Styles */
+  .filter-section {
+    background-color: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 20px; margin-bottom: 30px; display: flex; flex-direction: column; gap: 20px;
+    position: sticky; top: 60px; z-index: 997;
+  }
+  .filter-section h2 { font-size: 22px; margin-bottom: 0; color: var(--primary); text-align: center; }
+  .filter-group { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+  .search-input {
+      width: 100%; max-width: 500px; padding: 10px 15px; font-size: 15px;
+      border-radius: var(--radius); border: 1px solid #e2e8f0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+      transition: all var(--transition);
+  }
+  .search-input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(90,123,252,0.25); }
+
+
+  /* --- NEW: Footer Styles --- */
+  .footer {
+      background-color: var(--text);
+      color: white;
+      padding: 40px 20px;
+      margin-top: auto; /* Pushes footer to the bottom of the page */
+      width: 100%;
+  }
+  .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+  }
+  .footer-about, .footer-links, .footer-social {
+      flex: 1;
+      min-width: 250px;
+  }
+  .footer h3 {
+      color: var(--accent);
+      margin-bottom: 15px;
+      font-size: 18px;
+  }
+  .footer p, .footer a {
+      color: #ccc;
+      text-decoration: none;
+      line-height: 1.8;
+      font-size: 14px;
+      transition: color var(--transition);
+  }
+  .footer a:hover {
+      color: white;
+  }
+  .footer-links ul {
+      list-style: none;
+  }
+  .footer-social .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+  }
+  .footer-social .social-icons a {
+      font-size: 20px;
+  }
+  .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #444;
+      font-size: 13px;
+      color: #aaa;
+  }
+  /* --- END Footer Styles --- */
+
+
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .navbar { height: auto; padding-bottom: 10px; flex-direction: column; align-items: flex-start; }
+    .navbar-logo, .navbar-nav, .navbar-buttons { width: 100%; justify-content: center; margin-left: 0; margin-top: 10px; }
+    .navbar-nav { flex-wrap: wrap; gap: 15px; }
+    .main-layout-container { padding-left: 15px; padding-right: 15px; }
+    .sidebar.active ~ .main-layout-container { padding-left: 15px; }
+    .sidebar.active ~ .navbar { margin-left: 0; width: 100%; }
+    #paymentsContainer { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  }
+  @media (max-width: 768px) {
+    #paymentsContainer { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .page-title { font-size: 28px; }
+  }
+   @media (max-width: 576px) {
+    #paymentsContainer { grid-template-columns: 1fr; }
+    .page-title { font-size: 24px; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="mainNavbar">
+  <a href="home.html" class="navbar-logo">
+    <i class="fas fa-shopping-bag"></i> Adama Shopping
+  </a>
+  <div class="navbar-nav">
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+  <div class="navbar-buttons">
+    <button id="navbarLogoutBtn" class="navbar-logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+</nav>
+
+<!-- SIDEBAR TOGGLE -->
+<div class="toggle-btn" id="toggleBtn">
+  <div class="bar"></div> <div class="bar"></div> <div class="bar"></div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <h2>Adama Shopping</h2>
+  <div id="sidebarUserInfo" class="user-profile-info"></div>
+  <a href="posts.html"><i class="fas fa-box"></i> Posts</a>
+  <a href="my-posts.html"><i class="fas fa-store"></i> My Post</a>
+  <a href="order.html"><i class="fas fa-shopping-cart"></i> My Orders <span id="ordersCount" class="orders-count">0</span></a>
+  <a href="sellerOrders.html" class="active"><i class="fas fa-clipboard-list"></i> My Seller Orders</a>
+  <button id="logoutBtnSidebar" class="red-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+</div>
+
+<!-- MAIN LAYOUT CONTAINER -->
+<div class="main-layout-container">
+  
+  <!-- MODIFICATION: Title container with badge -->
+  <div class="title-container">
+    <h1 class="page-title">My Seller Orders</h1>
+    <span id="ordersCountBadge" class="orders-count-badge">Loading...</span>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <h2>Search Orders</h2>
+    <div class="filter-group">
+      <input type="text" id="filterSearchInput" class="search-input" placeholder="Search by product, buyer name...">
+    </div>
+  </div>
+
+  <div id="paymentsContainer">
+    <p style="text-align: center; color: var(--light-text);">Loading your orders...</p>
+  </div>
+</div>
+
+<!-- NEW: FOOTER SECTION -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>Adama Shopping</h3>
+      <p>Your one-stop online marketplace for quality goods and seamless transactions. Connecting buyers and sellers with trust and efficiency.</p>
+    </div>
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="posts.html">Posts</a></li>
+        <li><a href="order.html">My Orders</a></li>
+        <li><a href="aboutt.html">about</a></li>
+        <li><a href="servicess.html">service</a></li>
+        <li><a href="privacyy.html">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-social">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Adama Shopping. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('toggleBtn');
+const mainNavbar = document.getElementById('mainNavbar');
+const sidebarUserInfo = document.getElementById('sidebarUserInfo');
+const paymentsContainer = document.getElementById('paymentsContainer');
+const filterSearchInput = document.getElementById('filterSearchInput');
+const filterSection = document.querySelector('.filter-section');
+const ordersCountBadge = document.getElementById('ordersCountBadge'); // MODIFICATION: Get badge element
+
+// --- Sidebar and Sticky Filter Logic ---
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('active');
+  toggleBtn.classList.toggle('active');
+  mainNavbar.classList.toggle('active');
+});
+
+function adjustFilterPosition() {
+  const navbarHeight = mainNavbar.offsetHeight;
+  filterSection.style.top = `${navbarHeight}px`;
+  document.querySelector('.main-layout-container').style.paddingTop = `${navbarHeight + 20}px`;
+}
+window.addEventListener('load', adjustFilterPosition);
+window.addEventListener('resize', adjustFilterPosition);
+// --- End Logic ---
+
+const storedUser = localStorage.getItem('currentUser');
+if (!storedUser || JSON.parse(storedUser).accountType !== 'seller') {
+    window.location.href = 'login.html';
+}
+const currentUser = JSON.parse(storedUser);
+
+let allPayments = []; // To store all fetched payments for filtering
+
+// Display user info in sidebar
+const { accountType, info } = currentUser;
+sidebarUserInfo.innerHTML = `
+  <img src="${info.profilePic || 'https://via.placeholder.com/130'}" alt="Profile Picture">
+  <p>Hello, <strong>${info.fullName}!</strong></p>
+  <p>Account Type: <strong>${accountType}</strong></p>
+`;
+
+// Logout Logic
+const navbarLogoutBtn = document.getElementById('navbarLogoutBtn');
+const logoutBtnSidebar = document.getElementById('logoutBtnSidebar');
+navbarLogoutBtn.addEventListener('click', logout);
+logoutBtnSidebar.addEventListener('click', logout);
+function logout() {
+  localStorage.removeItem('currentUser');
+  window.location.href = 'login.html';
+}
+
+// Load all payments for this seller
+async function loadPayments() {
+  try {
+    const res = await fetch(`http://localhost:3000/api/payments/seller/${currentUser.info.username}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to load orders');
+
+    allPayments = data.payments || [];
+    filterPayments(); // Initial display
+  } catch (err) {
+    console.error(err);
+    paymentsContainer.innerHTML = `<p style="color:red; text-align:center;">Error loading orders: ${err.message}</p>`;
+    ordersCountBadge.textContent = "Error!"; // MODIFICATION
+  }
+}
+
+// Filter and display payments
+function filterPayments() {
+    const searchQuery = filterSearchInput.value.toLowerCase();
+    let filtered = allPayments;
+
+    if (searchQuery) {
+        filtered = allPayments.filter(payment =>
+            (payment.orderTitle || '').toLowerCase().includes(searchQuery) ||
+            (payment.buyerFullName || '').toLowerCase().includes(searchQuery) ||
+            (payment.buyerUsername || '').toLowerCase().includes(searchQuery)
+        );
+    }
+    
+    displayPayments(filtered);
+}
+
+// Display payments in the container
+function displayPayments(payments) {
+  // --- MODIFICATION: Update the count badge ---
+  const count = payments.length;
+  ordersCountBadge.textContent = `${count} ${count === 1 ? 'Order' : 'Orders'} Found`;
+  // --- END MODIFICATION ---
+
+  if (payments.length === 0) {
+    paymentsContainer.innerHTML = '<p style="text-align: center; color: var(--light-text);">No orders found matching your criteria.</p>';
+    return;
+  }
+
+  let html = '';
+  payments.forEach(payment => {
+    html += `
+      <div class="payment-card">
+        <img src="${payment.orderImage || 'https://via.placeholder.com/180'}" alt="Ordered Product" class="product-img">
+        <div class="payment-details">
+          <h3>${payment.orderTitle}</h3>
+          <p><strong>Description:</strong> ${payment.orderDescription || 'N/A'}</p>
+          <hr style="border: 0; height: 1px; background: #eee; margin: 10px 0;">
+          <p><strong>Buyer Bank:</strong> ${payment.userBankName} (${payment.userBankNumber})</p>
+          <p><strong>Your Bank:</strong> ${payment.sellerBankName} (${payment.sellerBankNumber})</p>
+          <div class="buyer-info">
+            <img src="${payment.buyerProfilePic || 'https://via.placeholder.com/50'}" class="buyer-pic" alt="Buyer">
+            <div>
+              <p><strong>${payment.buyerFullName}</strong> (@${payment.buyerUsername})</p>
+            </div>
+          </div>
+          <p class="payment-date"><strong>Date:</strong> ${new Date(payment.createdAt).toLocaleString()}</p>
+        </div>
+      </div>
+    `;
+  });
+  paymentsContainer.innerHTML = html;
+}
+// Event Listeners
+filterSearchInput.addEventListener('input', filterPayments);
+// InitialLoad
+loadPayments();
+</script>
+</body>
+</html>

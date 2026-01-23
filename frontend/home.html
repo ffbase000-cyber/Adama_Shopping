@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adama Shopping - Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  /* Root Variables (from your example) */
+  :root {
+    --primary: #5A7BFC;
+    --secondary: #4AD991;
+    --accent: #FFD25A;
+    --text: #2D3748;
+    --light-text: #6B7280;
+    --bg: #F8F9FA;
+    --card: #FFFFFF;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+    --transition: 0.3s ease;
+    --red-btn: #E74C3C; /* Specific red for logout */
+    --red-btn-hover: #C0392B;
+    --green-btn: #28a745;
+    --green-btn-hover: #218838;
+    --navbar-height: 60px; /* New: Define navbar height as a variable */
+  }
+
+  /* Universal Styles (from your example) */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+  body { min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--text); overflow-x:hidden; position:relative; }
+
+  h1, h2, h3 { color:var(--text); font-weight:600; }
+  p { color:var(--light-text); line-height:1.6; }
+
+  /* Navbar Styles */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height); /* Use variable */
+    background-color: var(--card);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 998;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    transition: margin-left var(--transition);
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+
+  /* Add search container styles to the navbar */
+  .navbar .search-container {
+      margin: 0 20px; /* Space around the search bar in the navbar */
+      flex-grow: 1; /* Allow search bar to take available space */
+      max-width: 400px; /* Max width for search input */
+      position: relative;
+      display: flex; /* Make the input and icon align */
+      align-items: center;
+  }
+
+  .navbar .search-input {
+      width: 100%;
+      padding: 8px 15px; /* Adjust padding for navbar */
+      font-size: 14px; /* Adjust font size for navbar */
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+      transition: all var(--transition);
+      padding-right: 40px; /* Space for search icon */
+  }
+  .navbar .search-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+  }
+
+  .navbar .search-icon {
+      position: absolute;
+      right: 15px;
+      color: var(--light-text);
+      font-size: 16px;
+      pointer-events: none; /* Make icon not interfere with input clicks */
+  }
+
+
+  /* Adjust existing navbar elements */
+  .navbar-logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0; /* Prevent logo from shrinking */
+  }
+  .navbar-logo i {
+    font-size: 28px;
+    color: var(--accent);
+  }
+
+  .navbar-nav {
+    display: flex;
+    gap: 25px;
+    margin-left: auto; /* Push nav to center if space, otherwise right */
+    flex-shrink: 0;
+  }
+  .navbar-nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    transition: color var(--transition);
+  }
+  .navbar-nav a:hover {
+    color: var(--primary);
+  }
+  .navbar-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: width var(--transition);
+  }
+  .navbar-nav a:hover::after,
+  .navbar-nav a.active::after {
+    width: 100%;
+  }
+  .navbar-nav a.active {
+    color: var(--primary);
+  }
+
+  .navbar-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: 25px; /* Space between nav links and logout button */
+    flex-shrink: 0;
+  }
+  .navbar-logout-btn {
+    background-color: var(--red-btn);
+    color: white;
+    padding: 8px 18px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all var(--transition);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .navbar-logout-btn:hover {
+    background-color: var(--red-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
+  }
+
+  /* Buttons & Links */
+  a.button-link, .category-btn, .order-btn, .quantity-btn, .price-range button, #logoutBtnSidebar, #loadMoreBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    margin: 8px 5px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+    box-shadow: var(--shadow);
+  }
+
+  a.button-link, #loadMoreBtn {
+    background-color: var(--primary);
+    color: white;
+  }
+  a.button-link:hover, #loadMoreBtn:hover {
+    background-color: #4A6EED;
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+  }
+
+  /* Order and Quantity Buttons (main content) */
+  .order-btn {
+    background-color: var(--green-btn);
+    color: white;
+  }
+  .order-btn:hover {
+    background-color: var(--green-btn-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+  }
+
+  .quantity-btn {
+    background-color: var(--primary);
+    color: white;
+    padding: 8px 15px;
+    box-shadow: none;
+  }
+  .quantity-btn:hover {
+    background-color: #4A6EED;
+    transform: translateY(-1px);
+  }
+
+  .category-btn {
+    background-color: var(--light-text);
+    color: white;
+    padding: 10px 20px;
+  }
+  .category-btn.active {
+    background-color: var(--primary);
+    box-shadow: var(--shadow);
+  }
+  .category-btn:hover:not(.active) {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+  }
+
+  /* Search container (originally from filter-sidebar, now in navbar) */
+  .search-container {
+    margin: 25px 0 15px 0;
+    position: relative;
+  }
+  /* Specific styles for the search container when it's in the navbar are already above */
+
+
+  .category-buttons {
+    margin: 15px 0 25px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Price range - default vertical styles (will be overridden by filter-bar) */
+  .price-range {
+    display: flex;
+    flex-direction: column; /* Changed to column for vertical layout */
+    gap: 10px;
+    margin: 15px 0;
+    background: var(--card);
+    padding: 15px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .price-range label {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 5px; /* Space below label */
+  }
+  .price-range-inputs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .price-range input {
+    flex: 1; /* Allow inputs to grow */
+    padding: 10px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius);
+    font-size: 15px;
+    transition: all var(--transition);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .price-range input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+  }
+  .price-range button {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    width: 100%; /* Make filter button full width */
+    margin-top: 10px;
+  }
+  .price-range button:hover {
+    background-color: #4A6EED;
+  }
+
+  /* Post Container Grid */
+  #postsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+  }
+
+  /* Post Card Styling */
+  .post-card {
+    background: var(--card);
+    padding: 20px;
+    padding-top: 40px; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform var(--transition), box-shadow var(--transition);
+    height: 100%;
+    position: relative; 
+    margin-top: 20px; 
+  }
+  .post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+  }
+  .poster-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .post-details { flex: 1; width: 100%; }
+ 
+  .post-details h3 {
+    font-size: 18px; 
+    margin-bottom: 8px;
+    position: absolute; 
+    top: -15px; 
+    left: 20px;
+    background: var(--primary); 
+    color: white; 
+    padding: 8px 15px; 
+    border-radius: var(--radius); 
+    box-shadow: var(--hover-shadow); 
+    max-width: calc(100% - 40px); 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .post-details p {
+    font-size: 14px;
+    margin-bottom: 5px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .post-timestamp {
+      font-size: 12px;
+      color: var(--light-text);
+      margin-bottom: 10px; 
+      width: 100%; 
+      text-align: right; 
+  }
+  
+  /* ADDED: Styles for truncating text and the 'Read More' link */
+  .truncatable-text {
+      max-height: 4.8em; /* Roughly 3 lines (line-height 1.6 * 3) */
+      overflow: hidden;
+      position: relative;
+      transition: max-height var(--transition);
+  }
+  .truncatable-text.expanded {
+      max-height: 1000px; /* A large value to ensure all content shows */
+  }
+  .read-more-link {
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      display: block; /* Make it appear on its own line */
+      margin-top: 5px;
+  }
+
+  .posted-by {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    font-weight: 500;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .posted-by span {
+    color: var(--text);
+  }
+
+  .post-img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-top: 10px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+  .orders-count {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: var(--red-btn);
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-left: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  /* Quantity */
+  .quantity-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 10px;
+    width: 100%;
+  }
+  .quantity-input {
+    flex-grow: 1;
+    max-width: 80px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    border: 1px solid #e2e8f0;
+    font-size: 15px;
+    -moz-appearance: textfield;
+  }
+  .quantity-input::-webkit-outer-spin-button,
+  .quantity-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  .order-btn {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  /* Pop-up Message */
+  #popupMessage {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card);
+    color: var(--green-btn);
+    padding: 30px 50px;
+    border: 2px solid var(--green-btn);
+    border-radius: var(--radius);
+    box-shadow: var(--hover-shadow);
+    font-size: 22px;
+    font-weight: bold;
+    z-index: 10000;
+    text-align: center;
+    animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  }
+  @keyframes popIn {
+    from { transform: translate(-50%, -60%) scale(0.7); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+
+  /* SIDEBAR STYLES */
+  .sidebar {
+    position: fixed;
+    left: -300px;
+    top: 0;
+    width: 280px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary), #4A6EED);
+    color: white;
+    transition: left var(--transition), box-shadow var(--transition);
+    z-index: 999;
+    overflow-y: auto;
+    padding: 30px 20px;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+  }
+  .sidebar.active {
+    left: 0;
+    box-shadow: 5px 0 20px rgba(0,0,0,0.4);
+  }
+  .sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+    font-size: 26px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 15px;
+  }
+  .sidebar .user-profile-info {
+    margin-bottom: 30px;
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: var(--radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  .sidebar .user-profile-info img {
+    display: block;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+  .sidebar .user-profile-info p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-weight: 300;
+  }
+  .sidebar .user-profile-info p strong {
+    color: white;
+    font-weight: 500;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.15);
+    margin: 12px 0;
+    font-size: 16px;
+    transition: all var(--transition);
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .sidebar a:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateX(8px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  .sidebar a i {
+    font-size: 20px;
+    color: var(--accent);
+  }
+
+  #logoutBtnSidebar {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--red-btn);
+    color: white;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+  #logoutBtnSidebar:hover {
+    background-color: var(--red-btn-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+  }
+
+  /* TOGGLE BUTTON */
+  .toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    z-index: 1001;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;
+    height: 35px;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+  }
+  .toggle-btn:hover {
+    box-shadow: var(--hover-shadow);
+    transform: translateY(-2px);
+  }
+  .bar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--text);
+    margin: 3px 0;
+    transition: all var(--transition);
+    border-radius: 2px;
+  }
+  .toggle-btn.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-7px, 6px);
+    background-color: var(--accent);
+  }
+  .toggle-btn.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .toggle-btn.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-8px, -8px);
+    background-color: var(--accent);
+  }
+
+  /* MAIN LAYOUT CONTAINER */
+  .main-layout-container {
+    padding-top: 120px; /* Adjusted to make space for both sticky navbar and filter-bar */
+    flex: 1;
+  }
+
+  /* Filter Bar (formerly filter-sidebar) */
+  .filter-bar {
+    position: sticky; /* ADDED: Make filter bar sticky */
+    top: var(--navbar-height); /* ADDED: Sticks right below the navbar */
+    z-index: 997; /* ADDED: Lower than navbar (998) but higher than content */
+    display: flex; /* Make it horizontal */
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: flex-end; /* Align to the right */
+    align-items: center; /* Vertically align items */
+    background: var(--card);
+    padding: 10px 20px; /* Reduced padding */
+    margin-bottom: 20px; /* Space below the filter bar */
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    gap: 15px; /* Space between filter elements */
+    width: 100%; /* Take full width of main-content */
+  }
+
+  .filter-bar h2 {
+    font-size: 18px; /* Smaller font size for filter title */
+    color: var(--primary);
+    margin: 0; /* Remove default margin */
+    flex-shrink: 0; /* Prevent from shrinking */
+  }
+
+  .filter-bar .price-range {
+    flex-direction: row; /* Make price inputs horizontal */
+    align-items: center;
+    gap: 8px;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background: none; /* No background */
+    box-shadow: none; /* No shadow */
+  }
+  .filter-bar .price-range label {
+    font-size: 14px;
+    margin-bottom: 0;
+    white-space: nowrap; /* Keep label on one line */
+  }
+  .filter-bar .price-range-inputs {
+    display: flex;
+    gap: 8px;
+  }
+  .filter-bar .price-range input {
+    width: 80px; /* Smaller width for price inputs */
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 8px; /* Slightly smaller radius */
+  }
+  .filter-bar .price-range button {
+    width: auto; /* Auto width */
+    padding: 6px 15px;
+    font-size: 13px;
+    margin-top: 0; /* Remove default margin */
+    border-radius: 8px;
+  }
+
+  .filter-bar .category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Smaller gap for category buttons */
+    margin: 0; /* Remove default margin */
+  }
+  .filter-bar .category-btn {
+    padding: 6px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    margin: 0; /* Remove default margin */
+  }
+
+
+  /* Original Filter Sidebar is now removed */
+  .filter-sidebar {
+    display: none; /* Hide the original filter sidebar */
+  }
+
+  /* MAIN CONTENT */
+  .main-content {
+    flex-grow: 1; /* Takes remaining space */
+    padding: 30px;
+    max-width: 100%; /* Allow it to take full width */
+  }
+  .sidebar.active ~ .main-layout-container .main-content {
+    margin-left: 280px; /* Adjust for main sidebar if active */
+  }
+  .sidebar.active ~ .navbar {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+  /* NEW: Adjust filter-bar position when sidebar is active */
+  .sidebar.active ~ .main-layout-container .filter-bar {
+      width: calc(100% - 280px); /* Adjust width */
+      left: 280px; /* Move it right */
+  }
+
+  /* Hide the old userInfo div */
+  #userInfo {
+    display: none;
+  }
+
+  /* HERO VIDEO SECTION */
+  .hero-video-container {
+    position: relative;
+    width: 100vw; /* Full viewport width */
+    height: 300px;
+    overflow: hidden;
+    margin-top: -77px; /* No margin-top here */
+    left: 50%; /* Center the element */
+    transform: translateX(-50%); /* Pull it back by half its width */
+    border-radius: 0; /* Remove border-radius for full width */
+  }
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1);
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    width: 90%; /* Limit overlay width */
+    padding: 10px;
+  }
+  .hero-overlay h1 {
+    font-size: 32px; /* Adjusted font size for better visibility */
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white; /* Ensure text is white */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+  .hero-overlay p {
+    font-size: 18px;
+    color: #f0f0f0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  }
+
+  .load-more-container {
+      text-align: center;
+      padding: 20px 0;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .navbar {
+        height: auto; /* Allow navbar to grow vertically */
+        padding-bottom: 10px; /* Add some padding at the bottom when wrapped */
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+    .navbar-logo, .navbar-nav, .navbar-buttons, .navbar .search-container {
+        width: 100%; /* Full width for all items */
+        justify-content: center; /* Center content within their full width */
+        margin-left: 0; /* Remove auto margin */
+        margin-top: 10px; /* Space between stacked items */
+    }
+    .navbar .search-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 20px; /* Add padding back for alignment */
+        max-width: none; /* No max-width on small screens */
+    }
+    .navbar-nav {
+        flex-wrap: wrap; /* Allow nav links to wrap */
+        gap: 15px; /* Adjust gap for wrapped links */
+    }
+
+    /* Adjust padding for main content based on a taller navbar AND sticky filter bar */
+    .main-layout-container {
+        padding-top: 200px; /* Increased to accommodate stacked navbar + filter bar */
+    }
+    /* NEW: Adjust sticky top for filter bar on smaller screens */
+    .filter-bar {
+        top: 150px; /* APPROXIMATE: Adjust based on how tall the navbar becomes */
+    }
+
+
+    .filter-bar {
+      flex-direction: column; /* Stack filters vertically on smaller screens */
+      align-items: flex-start; /* Align left */
+      padding: 15px;
+      gap: 10px;
+    }
+    .filter-bar h2 {
+      width: 100%; /* Full width for title */
+      margin-bottom: 10px;
+    }
+    .filter-bar .price-range {
+      flex-direction: column; /* Stack price inputs */
+      width: 100%;
+      gap: 5px;
+    }
+    .filter-bar .price-range-inputs {
+      width: 100%;
+    }
+    .filter-bar .price-range input,
+    .filter-bar .price-range button {
+      width: 100%; /* Full width for inputs and button */
+      margin: 0;
+    }
+    .filter-bar .category-buttons {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .main-content {
+        max-width: 100%; /* Full width for content */
+        padding: 20px 15px;
+    }
+    .sidebar.active ~ .main-layout-container .main-content {
+      margin-left: 0; /* Remove margin when sidebar is active */
+    }
+    .sidebar.active ~ .navbar {
+        margin-left: 0;
+        width: 100%;
+    }
+    /* NEW: Reset filter-bar position when sidebar is active on smaller screens */
+    .sidebar.active ~ .main-layout-container .filter-bar {
+        left: 0;
+        width: 100%;
+    }
+    .hero-video-container {
+        height: 150px;
+        margin-top: 0; /* Reset margin */
+    }
+    .hero-overlay h1 {
+        font-size: 24px;
+    }
+    .hero-overlay p {
+        font-size: 14px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 10px 10px 10px;
+    }
+    .navbar-logo {
+      font-size: 20px;
+    }
+    .navbar-logo i {
+      font-size: 24px;
+    }
+    .navbar-nav a {
+      font-size: 14px;
+      gap: 15px;
+    }
+    .navbar-logout-btn {
+      font-size: 13px;
+      padding: 6px 15px;
+    }
+    .toggle-btn {
+      top: 10px;
+      left: 10px;
+    }
+    .navbar .search-container {
+        padding: 0 10px;
+    }
+    .main-layout-container {
+        padding-top: 180px; /* Further adjustment for very small screens */
+    }
+    .filter-bar {
+        top: 120px; /* APPROXIMATE: Adjust based on navbar height */
+    }
+    .hero-video-container {
+        height: 120px;
+    }
+    .hero-overlay h1 {
+        font-size: 20px;
+    }
+    .hero-overlay p {
+        font-size: 13px;
+    }
+    #postsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .navbar-logo {
+      font-size: 18px;
+    }
+    .navbar-logo i {
+      font-size: 22px;
+    }
+    .navbar .search-input {
+      font-size: 13px;
+      padding: 6px 12px;
+      padding-right: 35px;
+    }
+    .navbar .search-icon {
+        right: 12px;
+        font-size: 14px;
+    }
+    .navbar-nav a {
+      font-size: 12px;
+    }
+    .navbar-logout-btn {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+    .main-layout-container {
+        padding-top: 160px; /* More adjustment */
+    }
+    .filter-bar {
+        top: 100px; /* More adjustment */
+    }
+    .hero-video-container {
+        height: 100px;
+    }
+    .hero-overlay h1 {
+        font-size: 16px;
+    }
+    .hero-overlay p {
+        font-size: 12px;
+    }
+    .search-input, .price-range input, .category-btn {
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+    .price-range button {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+    #postsContainer {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .post-card {
+        padding: 15px;
+        padding-top: 35px; /* Adjust padding for smaller screens */
+        gap: 10px;
+    }
+    .post-details h3 {
+        left: 15px; /* Adjust title position for smaller screens */
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="mainNavbar">
+  <a href="home.html" class="navbar-logo">
+    <i class="fas fa-shopping-bag"></i> Adama Shopping
+  </a>
+
+  <!-- SEARCH BAR - MOVED HERE -->
+  <div class="search-container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search posts by title or description...">
+      <i class="fas fa-search search-icon"></i>
+  </div>
+
+  <div class="navbar-nav">
+    <a href="home.html" class="active">Home</a>
+    <a href="aboutt.html">About</a>
+    <a href="servicess.html">Services</a>
+    <a href="privacyy.html">Privacy</a>
+  </div>
+  <div class="navbar-buttons">
+    <button id="navbarLogoutBtn" class="navbar-logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+</nav>
+
+<!-- SIDEBAR TOGGLE -->
+<div class="toggle-btn" id="toggleBtn">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <h2>Welcome To Adama Shopping</h2>
+  <div id="sidebarUserInfo" class="user-profile-info"></div>
+  <a href="posts.html"><i class="fas fa-box"></i> Posts</a>
+  <a href="my-posts.html"><i class="fas fa-store"></i> My Post</a>
+  <a href="order.html"><i class="fas fa-shopping-cart"></i> Orders <span id="ordersCount" class="orders-count">0</span></a>
+  <a href="sellerOrders.html"><i class="fas fa-clipboard-list"></i> My Seller Orders</a>
+  <button id="logoutBtnSidebar"><i class="fas fa-sign-out-alt"></i> Logout</button>
+</div>
+
+<!-- MAIN LAYOUT CONTAINER (holds main content) -->
+<div class="main-layout-container">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- HERO VIDEO SECTION -->
+        <div class="hero-video-container">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="video/Adama shopping.mp4" type="video/mp4">
+                Your browser does not support the video .
+            </video>
+            <div class="hero-overlay">
+              
+            </div>
+        </div>
+
+        <!-- FILTER BAR - MOVED HERE -->
+        <div class="filter-bar">
+            <h2>Adama Shopping</h2>
+            <h2>Posts</h2>
+            <div class="price-range">
+                <label><i class="fas fa-dollar-sign"></i> Price Range:</label>
+                <div class="price-range-inputs">
+                    <input type="number" id="minPrice" placeholder="Min Birr" min="0">
+                    <input type="number" id="maxPrice" placeholder="Max Birr" min="0">
+                </div>
+                <button id="filterBtn"><i class="fas fa-filter"></i> Filter</button>
+            </div>
+
+            <h3>Categories</h3>
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="All">All</button>
+                <button class="category-btn" data-category="Arada">Arada</button>
+                <button class="category-btn" data-category="Mebrat">17</button>
+                <button class="category-btn" data-category="Others">Others</button>
+            </div>
+        </div>
+        <!-- END FILTER BAR -->
+
+     
+        <div id="postsContainer"></div>
+
+        <div class="load-more-container">
+            <button id="loadMoreBtn" style="display: none;">Load More</button>
+        </div>
+
+        <div id="popupMessage">✅ Order successfully added!</div>
+    </div>
+</div>
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('toggleBtn');
+const sidebarUserInfo = document.getElementById('sidebarUserInfo');
+const mainNavbar = document.getElementById('mainNavbar');
+const navbarLinks = document.querySelectorAll('.navbar-nav a');
+
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('active');
+  toggleBtn.classList.toggle('active');
+  mainNavbar.classList.toggle('active');
+});
+
+const navbarLogoutBtn = document.getElementById('navbarLogoutBtn');
+const logoutBtnSidebar = document.getElementById('logoutBtnSidebar');
+const postsContainer = document.getElementById('postsContainer');
+const searchInput = document.getElementById('searchInput');
+const categoryButtons = document.querySelectorAll('.category-btn');
+const ordersCountSpan = document.getElementById('ordersCount');
+const popupMessage = document.getElementById('popupMessage');
+const minPriceInput = document.getElementById('minPrice');
+const maxPriceInput = document.getElementById('maxPrice');
+const filterBtn = document.getElementById('filterBtn');
+
+let allPosts = [];
+
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+const POSTS_INCREMENT = 6; 
+let activePostList = []; 
+let numPostsToShow = POSTS_INCREMENT;
+
+
+const storedUser = localStorage.getItem('currentUser');
+if (!storedUser) window.location.href = 'login.html';
+const currentUser = JSON.parse(storedUser);
+
+// Display user info - ONLY IN SIDEBAR
+const { accountType, info } = currentUser;
+let sidebarUserHtml = `
+  <img src="${info.profilePic || 'https://via.placeholder.com/130/5A7BFC/FFFFFF?text=PROFILE'}" alt="Profile Picture">
+  <p>Hello, <strong>${info.fullName}!</strong></p>
+  <p>Username: ${info.username}</p>
+  <p>Phone: ${info.phone || 'N/A'}</p>
+  <p>Account Type: <strong>${accountType}</strong></p>
+`;
+if (accountType === 'seller') {
+  sidebarUserHtml += `<p>Bank Account: ${info.bankAccountNumber} (${info.bankAccountName})</p>`;
+  if (info.businessLicensePic) sidebarUserHtml += `<p>Business License:</p><img src="${info.businessLicensePic}" style="width:100px; height:auto; border-radius:8px; margin-top:10px;">`;
+  if (info.otherDocPic) sidebarUserHtml += `<p>Other Document:</p><img src="${info.otherDocPic}" style="width:100px; height:auto; border-radius:8px; margin-top:10px;">`;
+}
+sidebarUserInfo.innerHTML = sidebarUserHtml;
+
+
+// Logout (both buttons)
+navbarLogoutBtn.addEventListener('click', logout);
+logoutBtnSidebar.addEventListener('click', logout);
+function logout() {
+  localStorage.removeItem('currentUser');
+  window.location.href = 'login.html';
+}
+
+// Function to set active link in navbar
+function setActiveNavLink() {
+  const path = window.location.pathname.split('/').pop();
+  navbarLinks.forEach(link => {
+    if (link.getAttribute('href') === path) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+setActiveNavLink(); // Call on page load to highlight current page
+
+// Load posts (unchanged)
+async function loadPosts() {
+  postsContainer.innerHTML = '<p style="text-align: center; color: var(--light-text);">Loading posts...</p>';
+  try {
+    const res = await fetch('http://localhost:3000/api/posts');
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const data = await res.json();
+    allPosts = data.posts || [];
+    updatePostView(allPosts); 
+  } catch (err) {
+    console.error('Fetch error:', err);
+    postsContainer.innerHTML = `<p style="color:var(--red-btn); text-align: center;">Error loading posts: ${err.message}. Please ensure the server is running.</p>`;
+  }
+}
+
+function checkLoadMoreVisibility() {
+    if (numPostsToShow >= activePostList.length) {
+        loadMoreBtn.style.display = 'none';
+    } else {
+        loadMoreBtn.style.display = 'inline-flex';
+    }
+}
+
+function updatePostView(posts) {
+    activePostList = posts;
+    numPostsToShow = POSTS_INCREMENT;
+    displayPosts(activePostList.slice(0, numPostsToShow));
+    checkLoadMoreVisibility();
+}
+
+function displayPosts(posts) {
+  let html = '';
+  if (posts.length === 0) {
+    postsContainer.innerHTML = '<p style="text-align: center; color: var(--light-text);">No posts found matching your criteria.</p>';
+    return;
+  }
+
+  posts.forEach(post => {
+    const posterPic = post.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP';
+    const posterFullName = post.posterFullName || post.posterUsername || 'Unknown';
+    const postDate = post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'short', day: 'numeric'
+    }) : 'Date not available';
+    html += `
+      <div class="post-card">
+        ${post.image ? `<img src="${post.image}" class="post-img" data-post='${encodeURIComponent(JSON.stringify(post))}'>` : ''}
+        <div class="post-details">
+          <h3>${post.title}</h3>
+          <div class="post-timestamp"><i class="fas fa-clock"></i> ${postDate}</div>
+          
+          <!-- MODIFIED: Added 'truncatable-text' class for the new functionality -->
+          <p class="truncatable-text"><strong>Description:</strong> ${post.description}</p>
+          <p class="truncatable-text"><strong>Important Info:</strong> ${post.importantInfo || 'N/A'}</p>
+          
+          <p><strong>Location:</strong> ${post.location}</p>
+          <p><strong>Price:</strong> ${parseFloat(post.price).toFixed(2)} Birr</p>
+
+          <div class="quantity-container">
+            <button class="quantity-btn minus-btn">-</button>
+            <input type="number" min="1" value="1" class="quantity-input">
+            <button class="quantity-btn plus-btn">+</button>
+          </div>
+
+          <div class="posted-by" data-username="${encodeURIComponent(post.posterUsername)}" data-fullname="${encodeURIComponent(posterFullName)}" data-profilepic="${encodeURIComponent(posterPic)}">
+            <img src="${posterPic}" alt="Poster" class="poster-pic">
+            <span>Posted by: ${posterFullName}</span>
+          </div>
+          <button class="order-btn" data-post='${encodeURIComponent(JSON.stringify(post))}'>Order Now</button>
+        </div>
+      </div>
+    `;
+  });
+  postsContainer.innerHTML = html; 
+
+  // ADDED: Initialize the "Read More" functionality after rendering posts
+  initializeReadMore();
+
+  // Quantity and other event listeners unchanged...
+  document.querySelectorAll('.quantity-container').forEach(container => {
+    const input = container.querySelector('.quantity-input');
+    const plus = container.querySelector('.plus-btn');
+    const minus = container.querySelector('.minus-btn');
+    plus.addEventListener('click', () => input.value = parseInt(input.value) + 1);
+    minus.addEventListener('click', () => { if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1; });
+  });
+
+  document.querySelectorAll('.posted-by').forEach(el => {
+    el.addEventListener('click', () => {
+      const username = decodeURIComponent(el.dataset.username);
+      const profilePic = decodeURIComponent(el.dataset.profilepic);
+      const fullname = decodeURIComponent(el.dataset.fullname);
+      const url = `sellerProfile.html?username=${username}&profilePic=${profilePic}&fullName=${fullname}`;
+      window.location.href = url;
+    });
+  });
+
+  document.querySelectorAll('.post-img').forEach(img => {
+    img.addEventListener('click', () => {
+      const postData = JSON.parse(decodeURIComponent(img.dataset.post));
+      localStorage.setItem('selectedPost', JSON.stringify(postData));
+      window.location.href = 'post-details.html';
+    });
+  });
+
+  document.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const postData = JSON.parse(decodeURIComponent(btn.dataset.post));
+      const quantityInput = btn.parentElement.querySelector('.quantity-input');
+      const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: currentUser.info.username,
+            postId: postData._id,
+            title: postData.title,
+            description: postData.description,
+            price: postData.price,
+            
+            quantity,
+            image: postData.image || '',
+            sellerUsername: postData.posterUsername,
+            sellerFullName: postData.posterFullName || postData.posterUsername,
+            sellerProfilePic: postData.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP'
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to add order');
+        popupMessage.style.display = 'block';
+        setTimeout(() => {
+          popupMessage.style.display = 'none';
+          window.location.href = 'order.html';
+        }, 1200);
+      } catch (err) {
+        alert('Error adding order: ' + err.message);
+      }
+    });
+  });
+}
+
+// ADDED: New function to handle the "Read More" logic
+function initializeReadMore() {
+    const textElements = document.querySelectorAll('.truncatable-text');
+    textElements.forEach(el => {
+        // Check if the text is overflowing
+        if (el.scrollHeight > el.clientHeight) {
+            const readMoreLink = document.createElement('span');
+            readMoreLink.className = 'read-more-link';
+            readMoreLink.textContent = 'Read More';
+            el.parentElement.insertBefore(readMoreLink, el.nextSibling);
+
+            readMoreLink.addEventListener('click', () => {
+                el.classList.toggle('expanded');
+                if (el.classList.contains('expanded')) {
+                    readMoreLink.textContent = 'Read Less';
+                } else {
+                    readMoreLink.textContent = 'Read More';
+                }
+            });
+        }
+    });
+}
+
+// Search
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  const filtered = allPosts.filter(post =>
+    post.title.toLowerCase().includes(query) || (post.description || '').toLowerCase().includes(query)
+  );
+  updatePostView(filtered); 
+});
+
+// Category filter
+categoryButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    categoryButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const category = btn.dataset.category;
+    if (category === 'All') {
+        updatePostView(allPosts); 
+    } else {
+        const filtered = allPosts.filter(p => (p.location || '').toLowerCase() === category.toLowerCase());
+        updatePostView(filtered); 
+    }
+  });
+});
+
+// Price range filter
+filterBtn.addEventListener('click', () => {
+  const min = parseFloat(minPriceInput.value) || 0;
+  const max = parseFloat(maxPriceInput.value) || Infinity;
+  const filtered = allPosts.filter(p => parseFloat(p.price) >= min && parseFloat(p.price) <= max);
+  updatePostView(filtered); 
+});
+
+loadMoreBtn.addEventListener('click', () => {
+    numPostsToShow += POSTS_INCREMENT;
+    displayPosts(activePostList.slice(0, numPostsToShow));
+    checkLoadMoreVisibility();
+});
+
+// Initial load of posts
+loadPosts();
+// Update orders count (assuming you have an endpoint for this or store it locally)
+async function updateOrdersCount() {
+  try {
+    const res = await fetch(`http://localhost:3000/api/orders/count/${currentUser.info.username}`);
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const data = await res.json();
+    ordersCountSpan.textContent = data.count > 0 ? data.count : '0';
+  } catch (err) {
+    console.error('Error fetching order count:', err);
+    ordersCountSpan.textContent = '0';
+  }
+}
+updateOrdersCount(); // Call on page load
+</script>
+</body>
+</html>

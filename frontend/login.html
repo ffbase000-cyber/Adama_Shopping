@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adama Shopping - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Global Variables for Consistency */
+    :root {
+      --primary: #5A7BFC;
+      --secondary: #4AD991;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+      --navbar-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      margin: 0;
+      padding-top: var(--navbar-height); /* Space for the fixed navbar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-y: auto; /* Allow scrolling on small screens */
+    }
+    
+    /* ADDED: Navigation Bar Styles */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--navbar-height);
+        background-color: var(--card);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        padding: 0 20px;
+    }
+
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .navbar-logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar-logo img {
+        height: 40px;
+        width: 40px;
+    }
+
+    .navbar-nav {
+        display: flex;
+        align-items: center; /* Vertically align items */
+        gap: 30px;
+        list-style: none;
+    }
+
+    .navbar-nav a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 16px;
+        position: relative;
+        transition: color var(--transition);
+    }
+
+    .navbar-nav a:hover {
+        color: var(--primary);
+    }
+
+    .navbar-nav a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary);
+        transition: width var(--transition);
+    }
+    
+    .navbar-nav a.active::after,
+    .navbar-nav a:hover::after {
+        width: 100%;
+    }
+
+    .navbar-nav a.active {
+        color: var(--primary);
+        font-weight: 600;
+    }
+    
+    .navbar-toggle {
+        display: none; /* Hidden on desktop */
+        font-size: 24px;
+        color: var(--text);
+        cursor: pointer;
+    }
+
+    /* ===== NEW: Language Switcher Styling ===== */
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border-radius: var(--radius);
+      margin-left: 15px;
+    }
+    .lang-switcher a {
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 12px;
+    }
+    .lang-switcher a.active {
+        background-color: var(--primary);
+        color: #fff;
+    }
+    .lang-switcher a::after {
+        display: none; /* Remove underline from language buttons */
+    }
+
+    /* Main Content Container */
+    .main-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      width: 100%;
+      max-width: 850px;
+      padding: 40px 20px;
+    }
+
+    .login-container {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      text-align: center;
+      z-index: 2;
+      transition: all var(--transition);
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-header {
+      margin-bottom: 25px;
+    }
+
+    .login-header h1 {
+      color: var(--text);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .login-header p {
+        color: var(--light-text);
+        font-size: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      font-size: 15px;
+      transition: all var(--transition);
+      background: var(--bg);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(90, 123, 252, 0.25);
+    }
+    
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+
+    button:hover {
+      background-color: #4A6EED;
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    button:disabled {
+        background-color: var(--light-text);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    #message {
+      margin-top: 15px;
+      color: #E74C3C;
+      font-weight: 500;
+    }
+
+    .note {
+      font-size: 14px;
+      color: var(--light-text);
+      margin-top: 20px;
+    }
+    
+    .note a {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    /* Animation Section */
+    .animation-area {
+      width: 350px;
+      height: 350px;
+      position: relative;
+    }
+
+    .buyer, .seller {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: scale(0.8) translateX(50px);
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    .active {
+      opacity: 1;
+      transform: scale(1) translateX(0);
+    }
+
+    .buyer {
+      background: radial-gradient(circle at center, #b3e5fc, #0288d1);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .buyer::before {
+      content: "🛍️";
+      font-size: 90px;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .seller {
+      background: radial-gradient(circle at center, #ffe082, #ff6f00);
+      border-radius: 30% 70% 70% 30% / 40% 30% 70% 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .seller::before {
+      content: "🚚";
+      font-size: 90px;
+      animation: drive 2.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes drive {
+      0%, 100% { transform: translateX(-20px) rotate(-5deg); }
+      50% { transform: translateX(20px) rotate(5deg); }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .navbar-toggle {
+            display: block; /* Show hamburger icon */
+        }
+        
+        .navbar-nav {
+            display: none; /* Hide nav links */
+            position: absolute;
+            top: var(--navbar-height);
+            left: 0;
+            width: 100%;
+            flex-direction: column;
+            background-color: var(--card);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            gap: 0;
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .navbar-nav.active {
+            display: flex; /* Show nav links when active */
+        }
+
+        .navbar-nav li {
+            width: 100%;
+            text-align: center;
+        }
+
+        .navbar-nav a {
+            padding: 15px 0;
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid var(--bg);
+        }
+        
+        .navbar-nav a::after {
+            display: none; /* Remove underline effect on mobile */
+        }
+
+        /* Adjust language switcher for mobile menu */
+        .navbar-nav .lang-switcher {
+            margin: 10px auto; /* Center it */
+            width: fit-content;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-content {
+            flex-direction: column-reverse;
+            gap: 20px;
+            padding: 20px 10px;
+        }
+        .animation-area {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 0;
+        }
+        .buyer::before, .seller::before {
+            font-size: 60px;
+        }
+        .login-container {
+            padding: 30px;
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ADDED: Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+        <a href="index.html" class="navbar-logo">
+            <!-- Replace 'logo.png' with your actual logo file -->
+            <img src="images/Adama Shopping.png" alt="Adama Shopping Logo" onerror="this.style.display='none'; this.nextSibling.style.display='block';">
+            <i class="fas fa-shopping-bag" style="display: none; font-size: 28px; color: var(--accent);"></i>
+            <span data-translate-key="nav_logo">Adama Shopping</span>
+        </a>
+        <div class="navbar-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="navbar-nav" id="navbar-menu">
+            <li><a href="index.html" data-translate-key="nav_home">Home</a></li>
+            <li><a href="login.html" class="active" data-translate-key="nav_login">Login</a></li>
+            <li><a href="signupbs.html" data-translate-key="nav_register">Register</a></li>
+            <li><a href="about.html" data-translate-key="nav_about">About</a></li>
+            <li><a href="services.html" data-translate-key="nav_services">Services</a></li>
+            <li><a href="privacy.html" data-translate-key="nav_privacy">Privacy</a></li>
+             <!-- ===== NEW: Language Switcher Buttons ===== -->
+            <li>
+              <div class="lang-switcher">
+                  <a href="#" class="lang-btn" data-lang="en">EN</a>
+                  <a href="#" class="lang-btn" data-lang="am">አማ</a>
+                  <a href="#" class="lang-btn" data-lang="om">ORO</a>
+              </div>
+            </li>
+        </ul>
+    </div>
+  </nav>
+
+  <!-- Wrapped original content in a main tag -->
+  <main class="main-content">
+    <div class="login-container">
+      <div class="login-header">
+        <h1 data-translate-key="login_title">Welcome Back!</h1>
+        <p data-translate-key="login_subtitle">Login to continue with Adama Shopping</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+            <label for="fullName" data-translate-key="label_fullname">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" data-translate-key="placeholder_fullname" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="username" data-translate-key="label_username">Username:</label>
+            <input type="text" id="username" name="username" data-translate-key="placeholder_username" placeholder="Enter your username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password" data-translate-key="label_password">Password:</label>
+            <input type="password" id="password" name="password" data-translate-key="placeholder_password" placeholder="Enter your password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="accountType" data-translate-key="label_account_type">Account Type:</label>
+            <select name="accountType" id="accountType">
+                <option value="user" data-translate-key="option_buyer">Buyer</option>
+                <option value="seller" data-translate-key="option_seller">Seller</option>
+            </select>
+        </div>
+
+        <button type="submit" id="loginButton">
+          <span data-translate-key="login_button">Login</span>
+        </button>
+      </form>
+
+      <div id="message"></div>
+      <div class="note" data-translate-key="register_note">Don’t have an account? <a href="signupbs.html">Register here</a>.</div>
+    </div>
+
+    <div class="animation-area">
+      <div class="buyer active"></div>
+      <div class="seller"></div>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const message = document.getElementById('message');
+    const accountSelect = document.getElementById('accountType');
+    const loginButton = document.getElementById('loginButton');
+    const buyerAnim = document.querySelector('.buyer');
+    const sellerAnim = document.querySelector('.seller');
+    
+    // ADDED: Navbar mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu');
+    const navbarMenu = document.getElementById('navbar-menu');
+    
+    mobileMenuToggle.addEventListener('click', () => {
+        navbarMenu.classList.toggle('active');
+    });
+
+    accountSelect.addEventListener('change', () => {
+      if (accountSelect.value === 'seller') {
+        sellerAnim.classList.add('active');
+        buyerAnim.classList.remove('active');
+      } else {
+        buyerAnim.classList.add('active');
+        sellerAnim.classList.remove('active');
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      message.textContent = '';
+      
+      const lang = localStorage.getItem('language') || 'en';
+      
+      loginButton.disabled = true;
+      loginButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[lang].logging_in}`;
+
+      const formData = new FormData(form);
+      const data = {
+        fullName: formData.get('fullName'),
+        username: formData.get('username'),
+        password: formData.get('password')
+      };
+
+      const accountType = formData.get('accountType');
+      const apiUrl = accountType === 'user'
+        ? 'http://localhost:3000/api/users/login'
+        : 'http://localhost:3000/api/sellers/login';
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          throw new Error(result.error || 'Login failed');
+        }
+
+        localStorage.setItem('currentUser', JSON.stringify({
+          accountType,
+          info: accountType === 'user' ? result.user : result.seller
+        }));
+        
+        window.location.href = 'home.html';
+
+      } catch (err) {
+        message.textContent = err.message;
+      } finally {
+        loginButton.disabled = false;
+        loginButton.innerHTML = translations[lang].login_button;
+      }
+    });
+  </script>
+
+  <!-- ===== NEW: Language Translation Script ===== -->
+  <script>
+    const translations = {
+      // English Translations
+      en: {
+        nav_logo: "Adama Shopping",
+        nav_home: "Home",
+        nav_login: "Login",
+        nav_register: "Register",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        login_title: "Welcome Back!",
+        login_subtitle: "Login to continue with Adama Shopping",
+        label_fullname: "Full Name:",
+        placeholder_fullname: "Enter your full name",
+        label_username: "Username:",
+        placeholder_username: "Enter your username",
+        label_password: "Password:",
+        placeholder_password: "Enter your password",
+        label_account_type: "Account Type:",
+        option_buyer: "Buyer",
+        option_seller: "Seller",
+        login_button: "Login",
+        logging_in: "Logging In...",
+        register_note: 'Don’t have an account? <a href="signupbs.html">Register here</a>.'
+      },
+      // Amharic Translations
+      am: {
+        nav_logo: "አዳማ ሾፒንግ",
+        nav_home: "መነሻ",
+        nav_login: "ይግቡ",
+        nav_register: "ይመዝገቡ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        login_title: "እንኳን ደህና መጡ!",
+        login_subtitle: "በአዳማ ሾፒንግ ለመቀጠል ይግቡ",
+        label_fullname: "ሙሉ ስም:",
+        placeholder_fullname: "ሙሉ ስምዎን ያስገቡ",
+        label_username: "የተጠቃሚ ስም:",
+        placeholder_username: "የተጠቃሚ ስምዎን ያስገቡ",
+        label_password: "የይለፍ ቃል:",
+        placeholder_password: "የይለፍ ቃልዎን ያስገቡ",
+        label_account_type: "የחשבון סוג:",
+        option_buyer: "ገዢ",
+        option_seller: "ሻጭ",
+        login_button: "ይግቡ",
+        logging_in: "እየገባ ነው...",
+        register_note: 'חשבון የለዎትም? <a href="signupbs.html">እዚህ ይመዝገቡ</a>።'
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_logo: "Adamaa Shooppingii",
+        nav_home: "Fuula Jalqabaa",
+        nav_login: "Seeni",
+        nav_register: "Galmaa'i",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        login_title: "Baga Nagaan Deebitan!",
+        login_subtitle: "Adamaa Shooppingii itti fufuuf seenaa",
+        label_fullname: "Maqaa Guutuu:",
+        placeholder_fullname: "Maqaa keessan guutuu galchaa",
+        label_username: "Maqaa Fayyadamaa:",
+        placeholder_username: "Maqaa fayyadamaa keessan galchaa",
+        label_password: "Jecha Darbe:",
+        placeholder_password: "Jecha darbe keessan galchaa",
+        label_account_type: "Gosa Akkaawuntii:",
+        option_buyer: "Bitaa",
+        option_seller: "Gurguraa",
+        login_button: "Seeni",
+        logging_in: "Seenaa Jira...",
+        register_note: 'Akkaawuntii hin qabduu? <a href="signupbs.html">Asitti galmaa\'i</a>.'
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+          if (el.placeholder !== undefined) {
+              el.placeholder = translation;
+          } else {
+              el.innerHTML = translation;
+          }
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Check for a saved language in local storage, or default to English
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    });
+
+  </script>
+</body>
+</html>

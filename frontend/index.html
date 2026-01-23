@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF--8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adama Shopping - Home</title>
+  <!-- FONT ENHANCEMENT: Added 'Playfair Display' for the new logo font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #5A7BFC;
+      --primary-hover: #4a6eed;
+      --secondary: #4AD991;
+      --secondary-hover: #3fbf80;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; scroll-behavior: smooth; }
+    body {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      position:relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    p {
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+    }
+
+
+    /* Navbar */
+    .navbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(12px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:15px;
+      z-index:1000;
+      margin:15px 20px;
+      transition: all 0.3s ease;
+    }
+    .navbar:hover { box-shadow:var(--hover-shadow); }
+    
+    /* --- LOGO STYLING ADDED --- */
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Adjust spacing between image and text */
+    }
+    .navbar .logo img {
+        height: 40px; /* Adjust the height of your logo */
+    }
+
+    /* --- FONT ENHANCEMENT: Beautiful Text-Based Logo Styling --- */
+    .navbar .logo a {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text);
+        transition: color var(--transition);
+    }
+    .navbar .logo a span {
+        color: var(--primary);
+        transition: color var(--transition);
+    }
+    .navbar .logo a:hover {
+        color: var(--primary);
+    }
+    .navbar .logo a:hover span {
+        color: var(--text);
+    }
+
+    .navbar ul { display:flex; list-style:none; gap:20px; align-items:center; flex-wrap:wrap; }
+    .navbar ul li a { text-decoration:none; color:var(--light-text); font-weight:500; display:flex; align-items:center; gap:8px; transition: all var(--transition); }
+    .navbar ul li a:hover { color:var(--primary); transform: translateY(-3px); }
+    .navbar ul li a.btn-login { background:var(--primary); color:#fff; padding:10px 20px; border-radius:var(--radius); font-weight:600; }
+    .navbar ul li a.btn-login:hover { background:var(--primary-hover); transform: translateY(-3px); box-shadow:var(--hover-shadow); }
+    
+    /* ===== NEW: Language Switcher Styling ===== */
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border-radius: var(--radius);
+    }
+    .lang-switcher a {
+      padding: 5px 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 12px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .lang-switcher a:hover {
+        background-color: #ddd;
+    }
+    .lang-switcher a.active {
+        background-color: var(--primary);
+        color: #fff;
+    }
+
+
+    /* Video Section */
+    .promo-video {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      margin-bottom: 30px;
+      display: flex; 
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 0 10%;
+    }
+    .promo-video video {
+      width: 600px;
+      height: 100%;
+      object-fit: cover;
+      margin-left: 200px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform 0.5s ease;
+    }
+    .promo-video video:hover { transform: scale(1.03); }
+    .promo-video .overlay {
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      background:linear-gradient(135deg, var(--primary), var(--primary-hover));
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+    .promo-video .overlay-left h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #fff;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+    .promo-video .overlay-left p {
+      font-size: 1.2rem;
+      max-width: 500px;
+      line-height: 1.5;
+      color: #eaeaea;
+      font-weight: 300;
+    }
+    @media (max-width: 992px) {
+      .promo-video { flex-direction: column; height: auto; padding: 20px; }
+      .promo-video video, .promo-video .overlay { width: 100%; margin-left: 0; }
+      .promo-video .overlay-left h1 { font-size: 2rem; }
+      .promo-video .overlay-left p { font-size: 1rem; }
+    }
+
+    /* Hero Section */
+    .hero {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap:50px;
+      margin:30px 20px;
+      padding:80px 10%;
+      border-radius:var(--radius);
+      background:linear-gradient(135deg, #E0E7FF 0%, #F0F2F5 100%);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+      z-index:1;
+      transition: all 0.3s ease;
+    }
+    .hero:hover { box-shadow:var(--hover-shadow); }
+    .hero-content { max-width:600px; z-index:2; }
+    .hero-text h1 {
+      font-size:52px;
+      margin-bottom:20px;
+      line-height:1.2;
+      font-weight:700;
+      color:var(--text);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+    }
+    .hero-text h1 .highlight { color:var(--primary); }
+    .hero-text p { font-size:18px; margin-bottom:40px; color:var(--light-text); }
+    .hero-text .buttons { display:flex; gap:20px; flex-wrap:wrap; }
+    .hero-text .buttons a { text-decoration:none; padding:16px 35px; border-radius:var(--radius); font-weight:600; display:flex; align-items:center; gap:10px; transition: all var(--transition); box-shadow:var(--shadow); }
+    .btn-primary { background:linear-gradient(135deg, var(--primary), var(--primary-hover)); color:#fff; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow:var(--hover-shadow); }
+    .btn-secondary { background:linear-gradient(135deg, var(--secondary), var(--secondary-hover)); color:#fff; }
+    .btn-secondary:hover { transform: translateY(-3px); box-shadow:var(--hover-shadow); }
+    .hero-image { flex-shrink:0; position:relative; }
+    
+    /* --- MODIFIED THIS SECTION FOR CIRCLE IMAGE --- */
+    .hero-image img {
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--hover-shadow);
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-20px); } }
+
+    /* Floating Shopping Icons Background */
+    .floating-icons { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; overflow:hidden; }
+    .floating-icons i { position:absolute; font-size:30px; color: rgba(90,123,252,0.15); animation: floatAround linear infinite; }
+    @keyframes floatAround { 0% { transform:translate(0,100vh) rotate(0deg); opacity:0; } 50% { opacity:1; } 100% { transform:translate(100vw,-50vh) rotate(360deg); opacity:0; } }
+
+    /* Features Section */
+    .features { padding:80px 10%; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:40px; margin:20px 0; }
+    .feature-card { background:var(--card); padding:30px; border-radius:var(--radius); box-shadow:var(--shadow); text-align:center; transition: transform var(--transition), box-shadow var(--transition), background 0.3s; }
+    .feature-card:hover { transform:translateY(-5px); box-shadow:var(--hover-shadow); background:#f0f4ff; }
+    .feature-card i { font-size:40px; color:var(--primary); margin-bottom:20px; transition: transform 0.3s; }
+    .feature-card:hover i { transform: scale(1.1); }
+    .feature-card h3 {
+      font-size:22px;
+      margin-bottom:15px;
+      font-weight: 600;
+    }
+    .feature-card p { color:var(--light-text); font-size:16px; }
+
+    /* Vegetable & Products Section */
+    .products-section { padding:80px 10%; background:#f0f4ff; border-radius:var(--radius); margin:20px 0; }
+    .products-section h2 {
+      text-align:center;
+      font-size:36px;
+      margin-bottom:50px;
+      color:var(--text);
+      font-weight: 700;
+    }
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; }
+    .product-card {
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      text-align:center;
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .product-card:hover { transform:translateY(-5px); box-shadow:var(--hover-shadow); }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+    .product-card:hover img { transform: scale(1.05); }
+    .product-card-content { padding: 0 20px 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    .product-card h3 {
+      margin-bottom:10px;
+      font-size:20px;
+      color:var(--text);
+      font-weight: 600;
+    }
+    .product-card p { color:var(--light-text); font-size:14px; flex-grow: 1; margin-bottom: 15px; }
+    .product-card .ratings { color: var(--accent); margin-bottom: 15px; }
+
+    /* Testimonials Section */
+    .testimonials {
+      padding: 80px 10%;
+    }
+    .testimonials h2 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 50px;
+      font-weight: 700;
+    }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .testimonial-card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .testimonial-card p {
+      font-style: italic;
+      color: var(--light-text);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 15px; }
+    .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+    .testimonial-author h4 {
+      font-size: 18px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer { background:var(--card); padding:40px 10%; margin-top:40px; border-radius:var(--radius); box-shadow:var(--shadow); }
+    footer .footer-content { display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px; }
+    footer .footer-section { flex:1; min-width:220px; }
+    footer h4 {
+      margin-bottom:20px;
+      font-size:20px;
+      color:var(--text);
+      font-weight: 600;
+    }
+    footer p { color: var(--light-text); }
+    footer ul { list-style:none; }
+    footer ul li { margin-bottom:10px; }
+    footer ul li a { text-decoration:none; color:var(--light-text); transition: color var(--transition); }
+    footer ul li a:hover { color:var(--primary); }
+    footer .social-icons { display:flex; gap:15px; margin-top:15px; }
+    footer .social-icons a { color:var(--light-text); font-size:20px; transition:color var(--transition), transform var(--transition); }
+    footer .social-icons a:hover { color:var(--primary); transform: scale(1.2); }
+    .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+    .newsletter-form input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius); }
+    .newsletter-form button { background: var(--primary); color: #fff; border: none; padding: 10px 15px; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); }
+    .newsletter-form button:hover { background: var(--primary-hover); }
+
+    /* Back to Top Button */
+    #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--primary);
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        text-decoration: none;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    }
+    #back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    #back-to-top:hover {
+        background: var(--primary-hover);
+        transform: scale(1.1);
+    }
+
+    /* Responsive */
+    @media (max-width:992px) { .hero { flex-direction:column-reverse; text-align:center; padding:50px 5%; } .hero-content { align-items:center; } }
+    @media (max-width:768px) {
+      .hero-text h1 { font-size:36px; }
+      .hero-text p { font-size:16px; }
+      /* --- ADJUSTED THIS FOR MOBILE --- */
+      .hero-image img {
+        width: 70vw;
+        height: 70vw;
+        max-width: 300px;
+        max-height: 300px;
+      }
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Shopping Icons Background -->
+  <div class="floating-icons">
+    <i class="fas fa-shopping-cart" style="left:5%; animation-duration:12s;"></i>
+    <i class="fas fa-box" style="left:30%; animation-duration:15s;"></i>
+    <i class="fas fa-tag" style="left:50%; animation-duration:10s;"></i>
+    <i class="fas fa-gift" style="left:70%; animation-duration:18s;"></i>
+    <i class="fas fa-shopping-bag" style="left:85%; animation-duration:14s;"></i>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <!-- FONT ENHANCEMENT: Replaced the image logo with a styled text logo -->
+    <div class="logo">
+      <!-- ===== LOGO PICTURE ADDED HERE ===== -->
+      <img src="images/Adama Shopping.png" alt="Adama Shopping Logo">
+      <a href="index.html">Adama<span>Shopping</span></a>
+    </div>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> <span data-translate-key="nav_home">Home</span></a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-translate-key="nav_about">About</span></a></li>
+      <li><a href="services.html"><i class="fas fa-handshake"></i> <span data-translate-key="nav_services">Services</span></a></li>
+      <li><a href="privacy.html"><i class="fas fa-shield-alt"></i> <span data-translate-key="nav_privacy">Privacy</span></a></li>
+      <li><a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt"></i> <span data-translate-key="nav_login">Login</span></a></li>
+      <li><a href="signupbs.html" class="btn-login"><i class="fas fa-user-tag"></i> <span data-translate-key="nav_signup">Sign Up</span></a></li>   
+      
+      <!-- ===== NEW: Language Switcher Buttons ===== -->
+      <li>
+        <div class="lang-switcher">
+            <a href="#" class="lang-btn" data-lang="en">EN</a>
+            <a href="#" class="lang-btn" data-lang="am">አማ</a>
+            <a href="#" class="lang-btn" data-lang="om">ORO</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Video Section -->
+  <section class="promo-video">
+    <video autoplay muted loop playsinline>
+      <source src="video/adamashopping.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay">
+      <div class="overlay-left">
+        <h1 data-translate-key="video_title">Adama Shopping</h1>
+        <p data-translate-key="video_p">Welcome to Adama Shopping! Find the best products at unbeatable prices. Sign up as a buyer or seller and start your journey today.</p>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 data-translate-key="hero_title"><span class="highlight">Smart Ideas</span> for Your Shopping Needs</h1>
+        <p data-translate-key="hero_p">Welcome to Adama Shopping! Find the best products at unbeatable prices. Sign up as a buyer or seller and start your journey today.</p>
+              <div class="buttons">
+          <a href="signupbs.html" class="btn-primary"><i class="fas fa-user-tag"></i> <span data-translate-key="hero_button">Sign Up</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image"><img src="images/Adama Shopping.png" alt="Shopping Hero Image"></div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature-card">
+      <i class="fas fa-shipping-fast"></i>
+      <h3 data-translate-key="feature1_title">Fast Delivery</h3>
+      <p data-translate-key="feature1_p">Get your products delivered quickly and reliably across the country.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-tags"></i>
+      <h3 data-translate-key="feature2_title">Best Prices</h3>
+      <p data-translate-key="feature2_p">We offer unbeatable prices for all your favorite products.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-headset"></i>
+      <h3 data-translate-key="feature3_title">24/7 Support</h3>
+      <p data-translate-key="feature3_p">Our team is always here to help you with any questions or concerns.</p>
+    </div>
+  </section>
+
+  <!-- Vegetable & Products Section -->
+  <section class="products-section">
+    <h2 data-translate-key="products_title">Fresh Products for You</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="images/vegitable.jpg" alt="Vegetables">
+        <div class="product-card-content">
+            <h3 data-translate-key="product1_title">Vegetables</h3>
+            <p data-translate-key="product1_p">Farm-fresh vegetables delivered daily.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/juice.jpg" alt="Juice Machine">
+        <div class="product-card-content">
+            <h3 data-translate-key="product2_title">Juice & Smoothies</h3>
+            <p data-translate-key="product2_p">Fresh juices and smoothies made from healthy fruits.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/flour.jpg" alt="Flour">
+        <div class="product-card-content">
+            <h3 data-translate-key="product3_title">Organic Flour</h3>
+            <p data-translate-key="product3_p">High-quality organic flour for your baking needs.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/fruit.jpg" alt="Fruits">
+        <div class="product-card-content">
+            <h3 data-translate-key="product4_title">Fresh Fruits</h3>
+            <p data-translate-key="product4_p">Seasonal fruits packed with vitamins and flavor.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/pasta and mokoroni.jpg" alt="Pasta">
+        <div class="product-card-content">
+            <h3 data-translate-key="product5_title">Pasta and Mokoro</h3>
+            <p data-translate-key="product5_p">Delicious pasta and traditional organic food items.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/chocolate.jpg" alt="Chocolate">
+        <div class="product-card-content">
+            <h3 data-translate-key="product6_title">Chocolate</h3>
+            <p data-translate-key="product6_p">Sweet and rich chocolate treats for everyone.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/cake.jpg" alt="cakeCake">
+        <div class="product-card-content">
+            <h3 data-translate-key="product7_title">Cake</h3>
+            <p data-translate-key="product7_p">Sweet and rich cake treats for everyone.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/cookiess.jpg" alt="Cookies">
+        <div class="product-card-content">
+            <h3 data-translate-key="product8_title">Cookies</h3>
+            <p data-translate-key="product8_p">Freshly baked cookies for your daily snack.</p>
+            <div class="ratings">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+      <h2 data-translate-key="testimonials_title">What Our Customers Say</h2>
+      <div class="testimonial-grid">
+          <div class="testimonial-card">
+              <p data-translate-key="testimonial1_p">"Adama Shopping offers amazing products, fast delivery, and excellent service. A one-stop shop that makes every purchase effortless!"</p>
+              <div class="testimonial-author">
+                  <img src="images/Adama Shopping.png" alt="Customer Jane Doe">
+                  <h4 data-translate-key="testimonial1_author">Adama Shopping</h4>
+              </div>
+          </div>
+          <div class="testimonial-card">
+              <p data-translate-key="testimonial2_p">"Adama Shopping brings you top quality products, unbeatable prices, and speedy delivery. Shopping made simple and fun!"</p>
+              <div class="testimonial-author">
+                  <img src="images/Adama Shopping.png" alt="Seller John Smith">
+                  <h4 data-translate-key="testimonial2_author">adamashopping</h4>
+              </div>
+          </div>
+          <div class="testimonial-card">
+              <p data-translate-key="testimonial3_p">"Discover amazing deals at Adama Shopping! Fast delivery, great variety, and quality products all in one place"</p>
+              <div class="testimonial-author">
+                  <img src="images/Adama Shopping.png" alt="Customer Sarah Lee">
+                  <h4 data-translate-key="testimonial3_author">Adama Shopping</h4>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4 data-translate-key="footer1_title">Adama Shopping</h4>
+        <p data-translate-key="footer1_p">Find the best products at the best prices. Shop confidently with us.</p>
+      </div>
+      <div class="footer-section">
+        <h4 data-translate-key="footer2_title">Quick Links</h4>
+        <ul>
+          <li><a href="index.html" data-translate-key="footer_nav_home">Home</a></li>
+          <li><a href="about.html" data-translate-key="footer_nav_about">About</a></li>
+          <li><a href="services.html" data-translate-key="footer_nav_services">Services</a></li>
+          <li><a href="privacy.html" data-translate-key="footer_nav_privacy">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4 data-translate-key="footer3_title">Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://t.me/Kingliiyy"><i class="fab fa-telegram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4 data-translate-key="footer4_title">Stay Updated</h4>
+        <p data-translate-key="footer4_p">Subscribe to our newsletter for the latest deals and updates.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required data-translate-key="footer_placeholder">
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <a href="#" id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+  
+  <script>
+    // Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+  </script>
+
+  <!-- ===== NEW: Language Translation Script ===== -->
+  <script>
+    const translations = {
+      // English Translations
+      en: {
+        nav_home: "Home",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        nav_login: "Login",
+        nav_signup: "Sign Up",
+        video_title: "Adama Shopping",
+        video_p: "Welcome to Adama Shopping! Find the best products at unbeatable prices. Sign up as a buyer or seller and start your journey today.",
+        hero_title: '<span class="highlight">Smart Ideas</span> for Your Shopping Needs',
+        hero_p: "Welcome to Adama Shopping! Find the best products at unbeatable prices. Sign up as a buyer or seller and start your journey today.",
+        hero_button: "Sign Up",
+        feature1_title: "Fast Delivery",
+        feature1_p: "Get your products delivered quickly and reliably across the country.",
+        feature2_title: "Best Prices",
+        feature2_p: "We offer unbeatable prices for all your favorite products.",
+        feature3_title: "24/7 Support",
+        feature3_p: "Our team is always here to help you with any questions or concerns.",
+        products_title: "Fresh Products for You",
+        product1_title: "Vegetables",
+        product1_p: "Farm-fresh vegetables delivered daily.",
+        product2_title: "Juice & Smoothies",
+        product2_p: "Fresh juices and smoothies made from healthy fruits.",
+        product3_title: "Organic Flour",
+        product3_p: "High-quality organic flour for your baking needs.",
+        product4_title: "Fresh Fruits",
+        product4_p: "Seasonal fruits packed with vitamins and flavor.",
+        product5_title: "Pasta and Mokoro",
+        product5_p: "Delicious pasta and traditional organic food items.",
+        product6_title: "Chocolate",
+        product6_p: "Sweet and rich chocolate treats for everyone.",
+        product7_title: "Cake",
+        product7_p: "Sweet and rich cake treats for everyone.",
+        product8_title: "Cookies",
+        product8_p: "Freshly baked cookies for your daily snack.",
+        testimonials_title: "What Our Customers Say",
+        testimonial1_p: '"Adama Shopping offers amazing products, fast delivery, and excellent service. A one-stop shop that makes every purchase effortless!"',
+        testimonial1_author: "Adama Shopping",
+        testimonial2_p: '"Adama Shopping brings you top quality products, unbeatable prices, and speedy delivery. Shopping made simple and fun!"',
+        testimonial2_author: "adamashopping",
+        testimonial3_p: '"Discover amazing deals at Adama Shopping! Fast delivery, great variety, and quality products all in one place"',
+        testimonial3_author: "Adama Shopping",
+        footer1_title: "Adama Shopping",
+        footer1_p: "Find the best products at the best prices. Shop confidently with us.",
+        footer2_title: "Quick Links",
+        footer_nav_home: "Home",
+        footer_nav_about: "About",
+        footer_nav_services: "Services",
+        footer_nav_privacy: "Privacy",
+        footer3_title: "Follow Us",
+        footer4_title: "Stay Updated",
+        footer4_p: "Subscribe to our newsletter for the latest deals and updates.",
+        footer_placeholder: "Enter your email"
+      },
+      // Amharic Translations
+      am: {
+        nav_home: "መነሻ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        nav_login: "ይግቡ",
+        nav_signup: "ይመዝገቡ",
+        video_title: "አዳማ ሾፒንግ",
+        video_p: "ወደ አዳማ ሾፒንግ እንኳን በደህና መጡ! ምርጥ ምርቶችን በማይታመን ዋጋ ያግኙ። እንደ ገዢ ወይም ሻጭ ይመዝገቡ እና ዛሬ ጉዞዎን ይጀምሩ።",
+        hero_title: 'ለግብይት ፍላጎቶችዎ <span class="highlight">ብልጥ ሀሳቦች</span>',
+        hero_p: "ወደ አዳማ ሾፒንግ እንኳን በደህና መጡ! ምርጥ ምርቶችን በማይታመን ዋጋ ያግኙ። እንደ ገዢ ወይም ሻጭ ይመዝገቡ እና ዛሬ ጉዞዎን ይጀምሩ።",
+        hero_button: "ይመዝገቡ",
+        feature1_title: "ፈጣን አቅርቦት",
+        feature1_p: "ምርቶችዎ በአገር አቀፍ ደረጃ በፍጥነት እና በአስተማማኝ ሁኔታ እንዲደርሱዎት ያድርጉ።",
+        feature2_title: "ምርጥ ዋጋዎች",
+        feature2_p: "ለሁሉም ተወዳጅ ምርቶችዎ የማይታለፉ ዋጋዎችን እናቀርባለን።",
+        feature3_title: "24/7 ድጋፍ",
+        feature3_p: "ቡድናችን በማንኛውም ጥያቄ ወይም ስጋት እርስዎን ለመርዳት ሁል ጊዜ እዚህ አለ።",
+        products_title: "ትኩስ ምርቶች ለእርስዎ",
+        product1_title: "አትክልቶች",
+        product1_p: "ከእርሻ ትኩስ አትክልቶች በየቀኑ ይደርሳሉ።",
+        product2_title: "ጭማቂ እና ስሞዚዎች",
+        product2_p: "ከጤናማ ፍራፍሬዎች የተሰሩ ትኩስ ጭማቂዎች እና ስሞዚዎች።",
+        product3_title: "ኦርጋኒክ ዱቄት",
+        product3_p: "ለመጋገር ፍላጎቶችዎ ከፍተኛ ጥራት ያለው ኦርጋኒክ ዱቄት።",
+        product4_title: "ትኩስ ፍራፍሬዎች",
+        product4_p: "በቪታሚኖች እና ጣዕም የታሸጉ የወቅቱ ፍራፍሬዎች።",
+        product5_title: "ፓስታ እና ሞኮሮ",
+        product5_p: "ጣፋጭ ፓስታ እና ባህላዊ ኦርጋኒክ የምግብ እቃዎች።",
+        product6_title: "ቸኮሌት",
+        product6_p: "ለሁሉም ሰው ጣፋጭ እና የበለጸገ የቸኮሌት ምግቦች።",
+        product7_title: "ኬክ",
+        product7_p: "ለሁሉም ሰው ጣፋጭ እና የበለጸገ የኬክ ምግቦች።",
+        product8_title: "ኩኪዎች",
+        product8_p: "ለዕለታዊ መክሰስዎ አዲስ የተጋገሩ ኩኪዎች።",
+        testimonials_title: "ደንበኞቻችን ምን ይላሉ",
+        testimonial1_p: '"አዳማ ሾፒንግ አስደናቂ ምርቶችን፣ ፈጣን አቅርቦትን እና ምርጥ አገልግሎትን ይሰጣል። እያንዳንዱን ግዢ ያለልፋት የሚያደርግ አንድ ማቆሚያ ሱቅ!"',
+        testimonial1_author: "አዳማ ሾፒንግ",
+        testimonial2_p: '"አዳማ ሾፒንግ ከፍተኛ ጥራት ያላቸውን ምርቶች፣ የማይታመን ዋጋ እና ፈጣን አቅርቦት ያቀርብልዎታል። ግብይት ቀላል እና አስደሳች ሆኗል!"',
+        testimonial2_author: "አዳማሾፒንግ",
+        testimonial3_p: '"በአዳማ ሾፒንግ አስገራሚ ቅናሾችን ያግኙ! ፈጣን አቅርቦት፣ ምርጥ ልዩነት እና ጥራት ያላቸው ምርቶች ሁሉም በአንድ ቦታ።"',
+        testimonial3_author: "አዳማ ሾፒንግ",
+        footer1_title: "አዳማ ሾፒንግ",
+        footer1_p: "ምርጥ ምርቶችን በተሻለ ዋጋ ያግኙ። ከእኛ ጋር በልበ ሙሉነት ይግዙ።",
+        footer2_title: "ፈጣን አገናኞች",
+        footer_nav_home: "መነሻ",
+        footer_nav_about: "ስለእኛ",
+        footer_nav_services: "አገልግሎቶች",
+        footer_nav_privacy: "ግላዊነት",
+        footer3_title: "ይከተሉን",
+        footer4_title: "እንደተዘመኑ ይቆዩ",
+        footer4_p: "ለአዳዲስ ቅናሾች እና ዝመናዎች ለጋዜጣችን ይመዝገቡ።",
+        footer_placeholder: "ኢሜልዎን ያስገቡ"
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_home: "Fuula Jalqabaa",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        nav_login: "Seeni",
+        nav_signup: "Galmaa'i",
+        video_title: "Adamaa Shooppingii",
+        video_p: "Gara Adamaa Shooppingii Nagaan Dhuftan! Oomishaalee gaggaarii gatii madaalawaan argadhaa. Bitaa ykn gurguraa ta'uun galmaa'uun har'a imala keessan jalqabaa.",
+        hero_title: 'Fedhii Bitachuu Keessaniif <span class="highlight">Yaada Beekkumsaa</span>',
+        hero_p: "Gara Adamaa Shooppingii Nagaan Dhuftan! Oomishaalee gaggaarii gatii madaalawaan argadhaa. Bitaa ykn gurguraa ta'uun galmaa'uun har'a imala keessan jalqabaa.",
+        hero_button: "Galmaa'i",
+        feature1_title: "Geessituu Saffisaa",
+        feature1_p: "Oomishaaleen keessan guutuu biyyattii keessatti saffisaan fi amanamummaan akka isin qaqqabu godhaa.",
+        feature2_title: "Gatii Gaarii",
+        feature2_p: "Oomishaalee jaallattan hundaaf gatii madaalawaa isiniif dhiyeessina.",
+        feature3_title: "Daggeettii 24/7",
+        feature3_p: "Gareen keenya yeroo hundumaa gaaffii ykn yaaddoo qabdan kamiyyuu isin gargaaruuf qophiidha.",
+        products_title: "Oomishaalee Haarawaa Isiniif",
+        product1_title: "Kuduraalee",
+        product1_p: "Kuduraaleen qonnaa irraa haaraan guyyaa guyyaan geeffamu.",
+        product2_title: "Cuunfaa fi Ismuuzii",
+        product2_p: "Cuunfaawwan fi ismuuziiwwan ija mukaa fayya qabeessa irraa hojjetaman.",
+        product3_title: "Daakuu Orgaanikii",
+        product3_p: "Daakuu orgaanikii qulqullina olaanaa qabu fedhii daabboo keessaniif.",
+        product4_title: "Ija Mukaa Haarawaa",
+        product4_p: "Ija mukaa yeroo isaa kan vitaaminootaa fi dhandhamaan guutame.",
+        product5_title: "Paastaa fi Mookoroo",
+        product5_p: "Paastaa mi'aawaa fi wantoota nyaata aadaa orgaanikii.",
+        product6_title: "Chokolaata",
+        product6_p: "Chokolaata mi'aawaa fi addaa nama hundaaf.",
+        product7_title: "Keekii",
+        product7_p: "Keekii mi'aawaa fi addaa nama hundaaf.",
+        product8_title: "Kookii",
+        product8_p: "Kookiiwwan haaraa tolchaman nyaata guyyaa keessaniif.",
+        testimonials_title: "Maamiltoonni Keenya Maal Jedhu",
+        testimonial1_p: '"Adamaa Shooppingiin oomishaalee dinqisiisoo, geessituu saffisaa, fi tajaajila addaa dhiyeessa. Suuqii tokko kan bitannaa hunda salphaa godhu!"',
+        testimonial1_author: "Adamaa Shooppingii",
+        testimonial2_p: '"Adamaa Shooppingiin oomishaalee qulqullina olaanaa, gatii madaalawaa, fi geessituu saffisaa isiniif fida. Bitannaan salphaa fi bashannansiisaa ta\'e!"',
+        testimonial2_author: "adamaashopping",
+        testimonial3_p: '"Adamaa Shooppingii irratti gatii dinqisiisoo argadhaa! Geessituu saffisaa, gosa hedduu, fi oomishaalee qulqullina qaban hundi iddoo tokkotti."',
+        testimonial3_author: "Adamaa Shooppingii",
+        footer1_title: "Adamaa Shooppingii",
+        footer1_p: "Oomishaalee gaggaarii gatii gaariin argadhaa. Ofitti amanamummaan nu biraa bitadhaa.",
+        footer2_title: "Ce'umsa Gaggabaaboo",
+        footer_nav_home: "Fuula Jalqabaa",
+        footer_nav_about: "Waa'ee Keenya",
+        footer_nav_services: "Tajaajila",
+        footer_nav_privacy: "Iccitii",
+        footer3_title: "Nu Hordofaa",
+        footer4_title: "Odeeffannoo argadhaa",
+        footer4_p: "Gatiiwwan fi odeeffannoowwan haaraa argachuuf barruulee keenyaaf galmaa\'aa.",
+        footer_placeholder: "Imeelii keessan galchaa"
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+           // Use innerHTML to allow for HTML tags like <span> in translations
+           el.innerHTML = translation;
+        }
+
+        // Special case for placeholders
+        if (el.tagName === 'INPUT' && el.placeholder && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        if (btn.dataset.lang === lang) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Check for a saved language in local storage, or default to English
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    });
+
+  </script>
+
+</body>
+</html>

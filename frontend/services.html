@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services - Adama Shopping</title>
+  
+  <!-- FONT & ICONS -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* --- Root Variables from in.html --- */
+    :root {
+      --primary: #5A7BFC;
+      --primary-hover: #4a6eed;
+      --secondary: #4AD991;
+      --secondary-hover: #3fbf80;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+    }
+
+    /* --- Global Styles from in.html --- */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; scroll-behavior: smooth; }
+    body {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      position:relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    p {
+      line-height: 1.7;
+      font-weight: 400;
+      color: var(--light-text);
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    /* --- Navbar (Copied from in.html for consistency) --- */
+    .navbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(12px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:15px;
+      z-index:1000;
+      margin:15px 20px;
+      transition: all 0.3s ease;
+    }
+    .navbar:hover { box-shadow:var(--hover-shadow); }
+    
+    .navbar .logo { display: flex; align-items: center; gap: 10px; }
+    .navbar .logo img { height: 40px; }
+    .navbar .logo a {
+        font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; text-decoration: none; color: var(--text); transition: color var(--transition);
+    }
+    .navbar .logo a span { color: var(--primary); }
+    .navbar ul { display:flex; list-style:none; gap:20px; align-items:center; flex-wrap:wrap; }
+    .navbar ul li a { text-decoration:none; color:var(--light-text); font-weight:500; display:flex; align-items:center; gap:8px; transition: all var(--transition); }
+    .navbar ul li a:hover, .navbar ul li a.active { color:var(--primary); }
+    .navbar ul li a.btn-login { background:var(--primary); color:#fff; padding:10px 20px; border-radius:var(--radius); font-weight:600; }
+    .navbar ul li a.btn-login:hover { background:var(--primary-hover); transform: translateY(-3px); box-shadow:var(--hover-shadow); }
+
+    /* ===== NEW: Language Switcher Styling ===== */
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border-radius: var(--radius);
+    }
+    .lang-switcher a {
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 12px;
+    }
+    .lang-switcher a.active {
+        background-color: var(--primary);
+        color: #fff !important;
+    }
+
+    /* --- Page Header Styling --- */
+    .page-header {
+      padding: 80px 10%;
+      text-align: center;
+      background:linear-gradient(135deg, #E0E7FF 0%, #F0F2F5 100%);
+      margin: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .page-header h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .page-header h1 span {
+      color: var(--primary);
+    }
+    .page-header p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* --- Services Section Styling (Adapted from .features) --- */
+    .services-section {
+      padding: 60px 10%;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .service-card {
+      background: var(--card);
+      padding: 40px 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition), background 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+      background: #f0f4ff;
+    }
+    .service-card i {
+      font-size: 48px;
+      color: var(--primary);
+      margin-bottom: 25px;
+      transition: transform 0.3s;
+    }
+    .service-card:hover i {
+      transform: scale(1.1);
+    }
+    .service-card h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .service-card p {
+      color: var(--light-text);
+      font-size: 16px;
+    }
+
+    /* --- CTA Section --- */
+    .cta-section {
+        text-align: center;
+        padding: 60px 10%;
+        background-color: #f0f4ff;
+        margin: 40px 20px 0;
+        border-radius: var(--radius);
+    }
+    .cta-section h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    .cta-section p {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .cta-btn {
+        text-decoration:none;
+        padding: 16px 35px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all var(--transition);
+        box-shadow: var(--shadow);
+        background: linear-gradient(135deg, var(--secondary), var(--secondary-hover));
+        color: #fff;
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--hover-shadow);
+    }
+
+    /* --- Footer (Copied from in.html) --- */
+    footer { background:var(--card); padding:40px 10%; margin-top:40px; border-radius:var(--radius); box-shadow:var(--shadow); }
+    footer .footer-content { display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px; }
+    footer .footer-section { flex:1; min-width:220px; }
+    footer h4 { margin-bottom:20px; font-size:20px; font-weight: 600; }
+    footer ul { list-style:none; }
+    footer ul li { margin-bottom:10px; }
+    footer ul li a { text-decoration:none; color:var(--light-text); transition: color var(--transition); }
+    footer ul li a:hover { color:var(--primary); }
+    footer .social-icons { display:flex; gap:15px; margin-top:15px; }
+    footer .social-icons a { color:var(--light-text); font-size:20px; transition:color var(--transition), transform var(--transition); }
+    footer .social-icons a:hover { color:var(--primary); transform: scale(1.2); }
+    .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+    .newsletter-form input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius); }
+    .newsletter-form button { background: var(--primary); color: #fff; border: none; padding: 10px 15px; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); }
+    .newsletter-form button:hover { background: var(--primary-hover); }
+
+    /* --- Back to Top Button (Copied from in.html) --- */
+    #back-to-top {
+        position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    }
+    #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #back-to-top:hover { background: var(--primary-hover); transform: scale(1.1); }
+
+    @media (max-width: 768px) {
+        .page-header h1, .cta-section h2 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/Adama Shopping.png" alt="Adama Shopping Logo">
+      <a href="index.html">Adama<span>Shopping</span></a>
+    </div>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> <span data-translate-key="nav_home">Home</span></a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-translate-key="nav_about">About</span></a></li>
+      <li><a href="services.html" class="active"><i class="fas fa-handshake"></i> <span data-translate-key="nav_services">Services</span></a></li>
+      <li><a href="privacy.html"><i class="fas fa-shield-alt"></i> <span data-translate-key="nav_privacy">Privacy</span></a></li>
+      <li><a href="login.html" class="btn-login"><i class="fas fa-sign-in-alt"></i> <span data-translate-key="nav_login">Login</span></a></li>
+      <!-- ===== NEW: Language Switcher Buttons ===== -->
+      <li>
+        <div class="lang-switcher">
+            <a href="#" class="lang-btn" data-lang="en">EN</a>
+            <a href="#" class="lang-btn" data-lang="am">አማ</a>
+            <a href="#" class="lang-btn" data-lang="om">ORO</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+      <h1 data-translate-key="header_title">Our <span>Services</span></h1>
+      <p data-translate-key="header_subtitle">We provide a complete suite of tools and services for a seamless online shopping and delivery experience in Ethiopia.</p>
+  </header>
+
+  <!-- Services Section -->
+  <section class="services-section">
+    <div class="services-grid">
+
+      <div class="service-card">
+        <i class="fas fa-shipping-fast"></i>
+        <h3 data-translate-key="service1_title">Fast Delivery</h3>
+        <p data-translate-key="service1_p">We ensure quick, safe, and reliable delivery for all your online purchases across the country.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-store"></i>
+        <h3 data-translate-key="service2_title">Seller Registration</h3>
+        <p data-translate-key="service2_p">Join as a verified seller and start showcasing your products to thousands of potential buyers.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-box-open"></i>
+        <h3 data-translate-key="service3_title">Product Management</h3>
+        <p data-translate-key="service3_p">Easily list your items with detailed descriptions, high-quality images, and competitive prices.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-shopping-cart"></i>
+        <h3 data-translate-key="service4_title">Seamless Buying</h3>
+        <p data-translate-key="service4_p">Enjoy a secure and easy buying process with one-click ordering and real-time tracking features.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-credit-card"></i>
+        <h3 data-translate-key="service5_title">Secure Payments</h3>
+        <p data-translate-key="service5_p">We support multiple trusted payment methods with encryption to protect your financial data.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-headset"></i>
+        <h3 data-translate-key="service6_title">24/7 Customer Support</h3>
+        <p data-translate-key="service6_p">Our friendly and dedicated support team is always available to assist you with any questions.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta-section">
+    <h2 data-translate-key="cta_title">Have a Question?</h2>
+    <p data-translate-key="cta_p">Our team is ready to help you get started or resolve any issues. Reach out to us today!</p>
+    <a href="contact.html" class="cta-btn"><i class="fas fa-envelope"></i> <span data-translate-key="cta_button">Contact Us</span></a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4 data-translate-key="footer_logo">Adama Shopping</h4>
+        <p data-translate-key="footer_p">Find the best products at the best prices. Shop confidently with us.</p>
+      </div>
+      <div class="footer-section">
+        <h4 data-translate-key="footer_links_title">Quick Links</h4>
+        <ul>
+          <li><a href="home.html" data-translate-key="footer_home">Home</a></li>
+          <li><a href="aboutt.html" data-translate-key="footer_about">About</a></li>
+          <li><a href="servicess.html" data-translate-key="footer_services">Services</a></li>
+          <li><a href="privacyy.html" data-translate-key="footer_privacy">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4 data-translate-key="footer_social_title">Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-telegram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4 data-translate-key="footer_newsletter_title">Stay Updated</h4>
+        <p data-translate-key="footer_newsletter_p">Subscribe to our newsletter for the latest deals and updates.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required data-translate-key="footer_placeholder">
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <a href="#" id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+  
+  <script>
+    // Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+  </script>
+
+  <!-- ===== NEW: Language Translation Script ===== -->
+  <script>
+    const translations = {
+      // English Translations
+      en: {
+        nav_home: "Home",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        nav_login: "Login",
+        header_title: "Our <span>Services</span>",
+        header_subtitle: "We provide a complete suite of tools and services for a seamless online shopping and delivery experience in Ethiopia.",
+        service1_title: "Fast Delivery",
+        service1_p: "We ensure quick, safe, and reliable delivery for all your online purchases across the country.",
+        service2_title: "Seller Registration",
+        service2_p: "Join as a verified seller and start showcasing your products to thousands of potential buyers.",
+        service3_title: "Product Management",
+        service3_p: "Easily list your items with detailed descriptions, high-quality images, and competitive prices.",
+        service4_title: "Seamless Buying",
+        service4_p: "Enjoy a secure and easy buying process with one-click ordering and real-time tracking features.",
+        service5_title: "Secure Payments",
+        service5_p: "We support multiple trusted payment methods with encryption to protect your financial data.",
+        service6_title: "24/7 Customer Support",
+        service6_p: "Our friendly and dedicated support team is always available to assist you with any questions.",
+        cta_title: "Have a Question?",
+        cta_p: "Our team is ready to help you get started or resolve any issues. Reach out to us today!",
+        cta_button: "Contact Us",
+        footer_logo: "Adama Shopping",
+        footer_p: "Find the best products at the best prices. Shop confidently with us.",
+        footer_links_title: "Quick Links",
+        footer_home: "Home",
+        footer_about: "About",
+        footer_services: "Services",
+        footer_privacy: "Privacy",
+        footer_social_title: "Follow Us",
+        footer_newsletter_title: "Stay Updated",
+        footer_newsletter_p: "Subscribe to our newsletter for the latest deals and updates.",
+        footer_placeholder: "Enter your email"
+      },
+      // Amharic Translations
+      am: {
+        nav_home: "መነሻ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        nav_login: "ይግቡ",
+        header_title: "የእኛ <span>አገልግሎቶች</span>",
+        header_subtitle: "በኢትዮጵያ ውስጥ እንከን የለሽ የመስመር ላይ ግብይት እና የማድረስ ልምድ ለማግኘት የተሟላ የመሳሪያዎች እና አገልግሎቶች ስብስብ እናቀርባለን።",
+        service1_title: "ፈጣን አቅርቦት",
+        service1_p: "በመላ ሀገሪቱ ላሉ ሁሉም የመስመር ላይ ግዢዎችዎ ፈጣን፣ ደህንነቱ የተጠበቀ እና አስተማማኝ መላኪያ እናረጋግጣለን።",
+        service2_title: "የሻጭ ምዝገባ",
+        service2_p: "እንደ የተረጋገጠ ሻጭ ይቀላቀሉ እና ምርቶችዎን በሺዎች ለሚቆጠሩ ገዢዎች ማሳየት ይጀምሩ።",
+        service3_title: "የምርት አስተዳደር",
+        service3_p: "እቃዎችዎን በዝርዝር መግለጫዎች፣ ከፍተኛ ጥራት ባላቸው ምስሎች እና በተወዳዳሪ ዋጋዎች በቀላሉ ይዘርዝሩ።",
+        service4_title: "እንከን የለሽ ግዢ",
+        service4_p: "በአንድ ጠቅታ ማዘዝ እና በእውነተኛ ጊዜ የመከታተያ ባህሪያት ደህንነቱ የተጠበቀ እና ቀላል የግዢ ሂደት ይደሰቱ።",
+        service5_title: "ደህንነቱ የተጠበቀ ክፍያዎች",
+        service5_p: "የእርስዎን የፋይናንስ ውሂብ ለመጠበቅ ከምስጠራ ጋር በርካታ የታመኑ የመክፈያ ዘዴዎችን እንደግፋለን።",
+        service6_title: "24/7 የደንበኛ ድጋፍ",
+        service6_p: "የእኛ ወዳጃዊ እና ቁርጠኛ የድጋፍ ቡድን በማንኛውም ጥያቄ እርስዎን ለመርዳት ሁል ጊዜ ዝግጁ ነው።",
+        cta_title: "ጥያቄ አለዎት?",
+        cta_p: "ቡድናችን እንዲጀምሩ ወይም ማንኛውንም ችግር እንዲፈቱ ለመርዳት ዝግጁ ነው። ዛሬ ያግኙን!",
+        cta_button: "ያግኙን",
+        footer_logo: "አዳማ ሾፒንግ",
+        footer_p: "ምርጥ ምርቶችን በተሻለ ዋጋ ያግኙ። ከእኛ ጋር በልበ ሙሉነት ይግዙ።",
+        footer_links_title: "ፈጣን አገናኞች",
+        footer_home: "መነሻ",
+        footer_about: "ስለእኛ",
+        footer_services: "አገልግሎቶች",
+        footer_privacy: "ግላዊነት",
+        footer_social_title: "ይከተሉን",
+        footer_newsletter_title: "እንደተዘመኑ ይቆዩ",
+        footer_newsletter_p: "ለአዳዲስ ቅናሾች እና ዝመናዎች ለጋዜጣችን ይመዝገቡ።",
+        footer_placeholder: "ኢሜልዎን ያስገቡ"
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_home: "Fuula Jalqabaa",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        nav_login: "Seeni",
+        header_title: "<span>Tajaajila</span> Keenya",
+        header_subtitle: "Itoophiyaa keessatti muuxannoo bitachuu fi geessituu interneetii mijaa'aa ta'eef meeshaalee fi tajaajila guutuu dhiyeessina.",
+        service1_title: "Geessituu Saffisaa",
+        service1_p: "Guutuu biyyattii keessatti bitannaa interneetii keessan hundaaf geessituu saffisaa, amansiisaa fi amanamaa ta'e mirkaneessina.",
+        service2_title: "Galmee Gurguraa",
+        service2_p: "Akka gurguraa mirkanaa'eetti makamaa, oomishaalee keessan kumaatama bitaa ta'aniif agarsiisuu jalqabaa.",
+        service3_title: "Bulchiinsa Oomishaa",
+        service3_p: "Wantoota keessan salphaatti ibsa bal'aa, suuraalee qulqullina olaanaa qaban, fi gatii dorgomaa ta'een tarreessaa.",
+        service4_title: "Bitachuu Mijaa'aa",
+        service4_p: "Adeemsa bitachuu amansiisaa fi salphaa kan ajaja tokko tuquun fi hordoffii yerootiin gammadaa.",
+        service5_title: "Kaffaltii Amniisaa",
+        service5_p: "Daataa maallaqaa keessan eeguuf mala kaffaltii amansiisaa hedduu kan icciteessuun deeggarra.",
+        service6_title: "Daggeettii Maamilaa 24/7",
+        service6_p: "Gareen deeggarsaa keenya jaalala qabuu fi kutataan yeroo hundumaa gaaffii kamiyyuu isin gargaaruuf qophiidha.",
+        cta_title: "Gaaffii Qabduu?",
+        cta_p: "Gareen keenya akka jalqabdan ykn rakkoo kamiyyuu furuuf isin gargaaruuf qophiidha. Har'a nu qunnamaa!",
+        cta_button: "Nu Qunnamaa",
+        footer_logo: "Adamaa Shooppingii",
+        footer_p: "Oomishaalee gaggaarii gatii gaariin argadhaa. Ofitti amanamummaan nu biraa bitadhaa.",
+        footer_links_title: "Ce'umsa Gaggabaaboo",
+        footer_home: "Fuula Jalqabaa",
+        footer_about: "Waa'ee Keenya",
+        footer_services: "Tajaajila",
+        footer_privacy: "Iccitii",
+        footer_social_title: "Nu Hordofaa",
+        footer_newsletter_title: "Odeeffannoo argadhaa",
+        footer_newsletter_p: "Gatiiwwan fi odeeffannoowwan haaraa argachuuf barruulee keenyaaf galmaa'aa.",
+        footer_placeholder: "Imeelii keessan galchaa"
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+          if (el.placeholder !== undefined) {
+              el.placeholder = translation;
+          } else {
+              // Use innerHTML to allow for tags like <strong> or <span>
+              el.innerHTML = translation;
+          }
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Check for a saved language in local storage, or default to English
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    });
+  </script>
+
+</body>
+</html>

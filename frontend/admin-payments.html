@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Verify Users</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #f4f4f4; }
+    button { padding: 5px 10px; cursor: pointer; }
+    .verified { background-color: #d4edda; }   /* green for verified */
+    .unverified { background-color: #f8d7da; } /* red for unverified */
+    .checkmark { color: green; font-weight: bold; margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Admin - Verify Users</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Type</th>
+        <th>Verified</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="userTable">
+      <tr><td colspan="5" style="text-align:center;">Loading...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const userTable = document.getElementById('userTable');
+
+    // Admin JWT token stored in localStorage
+    const adminToken = localStorage.getItem('adminToken');
+    if (!adminToken) {
+      alert('You must be logged in as admin.');
+      window.location.href = 'adminlogin.html';
+    }
+
+    // Load users from backend
+    async function loadUsers() {
+      try {
+        const res = await fetch('/api/admin/users', {
+          headers: { 'Authorization': 'Bearer ' + adminToken }
+        });
+        if (!res.ok) throw new Error('Failed to fetch users');
+
+        const data = await res.json();
+        userTable.innerHTML = '';
+
+        if (!data.users || data.users.length === 0) {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td colspan="5" style="text-align:center;">0 users found</td>`;
+          userTable.appendChild(row);
+          return;
+        }
+
+        data.users.forEach(user => {
+          const row = document.createElement('tr');
+          row.className = user.isVerified ? 'verified' : 'unverified';
+
+          row.innerHTML = `
+            <td>${user.username}${user.isVerified ? '<span class="checkmark">&#10003;</span>' : ''}</td>
+            <td>${user.email || '-'}</td>
+            <td>${user.type}</td>
+            <td>${user.isVerified ? 'Yes' : 'No'}</td>
+            <td>
+              ${user.isVerified ? '' : `<button class="verify-btn" data-id="${user._id}">Verify</button>`}
+            </td>
+          `;
+          userTable.appendChild(row);
+        });
+      } catch (err) {
+        console.error(err);
+        userTable.innerHTML = `<tr><td colspan="5" style="text-align:center;">0 users found</td></tr>`;
+      }
+    }
+
+    // Event delegation for verify buttons
+    userTable.addEventListener('click', async (e) => {
+      if (e.target.classList.contains('verify-btn')) {
+        const userId = e.target.dataset.id;
+        try {
+          const res = await fetch(`/api/admin/verify/${userId}`, {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + adminToken }
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert(data.message);
+            loadUsers(); // refresh table after verification
+          } else {
+            alert(data.error || 'Failed to verify user');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Failed to verify user.');
+        }
+      }
+    });
+
+    // Initial load
+    loadUsers();
+  </script>
+</body>
+</html>

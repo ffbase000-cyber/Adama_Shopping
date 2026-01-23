@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard - Adama Shopping</title>
+<style>
+  body { font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0; }
+  header { background-color: #007bff; color: white; padding: 15px 20px; text-align: center; position: relative; }
+  h1 { margin: 0; }
+  .logout-btn { position: absolute; right: 20px; top: 15px; background: white; color: #007bff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  .container { padding: 20px; max-width: 1200px; margin: 0 auto; }
+  h2 { color: #007bff; margin-top: 30px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+  table, th, td { border: 1px solid #ddd; }
+  th, td { padding: 8px; text-align: left; vertical-align: middle; }
+  th { background-color: #f7f7f7; color: #333; }
+  .profile-pic { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; display: block; }
+  .small { font-size: 13px; color: #555; }
+  .info { font-size: 14px; margin: 5px 0; font-weight: bold; }
+  .error-message { color: red; margin-top: 20px; text-align: center; }
+  @media (max-width: 800px) {
+    .container { padding: 10px; }
+    th, td { font-size: 13px; padding: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Admin Dashboard</h1>
+  <button class="logout-btn" id="logoutBtn">Logout</button>
+</header>
+
+<div class="container">
+  <h2>Buyers</h2>
+  <div class="info" id="buyersCount">Total Buyers: 0</div>
+  <table id="buyersTable">
+    <thead>
+      <tr>
+        <th>Profile</th>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Bank Name</th>
+        <th>Bank Number</th>
+        <th>Registered</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="8">Loading buyers...</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Sellers</h2>
+  <div class="info" id="sellersCount">Total Sellers: 0</div>
+  <table id="sellersTable">
+    <thead>
+      <tr>
+        <th>Profile</th>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Bank Name</th>
+        <th>Bank Number</th>
+        <th>Registered</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="8">Loading sellers...</td></tr>
+    </tbody>
+  </table>
+
+  <p class="error-message" id="errorMessage"></p>
+</div>
+
+<script>
+const buyersTbody = document.querySelector('#buyersTable tbody');
+const sellersTbody = document.querySelector('#sellersTable tbody');
+const buyersCount = document.getElementById('buyersCount');
+const sellersCount = document.getElementById('sellersCount');
+const errorMessage = document.getElementById('errorMessage');
+const logoutBtn = document.getElementById('logoutBtn');
+
+const token = localStorage.getItem('adminToken');
+if (!token) {
+  window.location.href = 'admin-login.html';
+}
+
+// Logout handler
+logoutBtn.addEventListener('click', () => {
+  localStorage.removeItem('adminToken');
+  localStorage.removeItem('adminUsername');
+  window.location.href = 'admin-login.html';
+});
+
+function safe(text) {
+  return text == null ? '' : String(text);
+}
+
+function rowForUser(u) {
+  const created = u.createdAt ? new Date(u.createdAt).toLocaleString() : '';
+  const profilePic = u.profilePic || '/uploads/default-profile.png';
+  return `
+    <tr>
+      <td><img src="${profilePic}" alt="pic" class="profile-pic" onerror="this.onerror=null;this.src='/uploads/default-profile.png'"></td>
+      <td>${safe(u.fullName)}<div class="small">${safe(u.email)}</div></td>
+      <td>${safe(u.username)}</td>
+      <td>${safe(u.email)}</td>
+      <td>${safe(u.phone)}</td>
+      <td>${safe(u.bankName)}</td>
+      <td>${safe(u.bankNumber)}</td>
+      <td>${safe(created)}</td>
+    </tr>
+  `;
+}
+
+async function loadDashboard() {
+  try {
+    const res = await fetch('http://localhost:3000/api/admin/dashboard', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to load data');
+
+    // Buyers
+    buyersTbody.innerHTML = '';
+    if (!data.buyers || data.buyers.length === 0) {
+      buyersTbody.innerHTML = '<tr><td colspan="8">No buyers found.</td></tr>';
+    } else {
+      buyersCount.textContent = `Total Buyers: ${data.buyers.length}`;
+      data.buyers.forEach(b => buyersTbody.insertAdjacentHTML('beforeend', rowForUser(b)));
+    }
+
+    // Sellers
+    sellersTbody.innerHTML = '';
+    if (!data.sellers || data.sellers.length === 0) {
+      sellersTbody.innerHTML = '<tr><td colspan="8">No sellers found.</td></tr>';
+    } else {
+      sellersCount.textContent = `Total Sellers: ${data.sellers.length}`;
+      data.sellers.forEach(s => sellersTbody.insertAdjacentHTML('beforeend', rowForUser(s)));
+    }
+
+  } catch (err) {
+    console.error('Load dashboard error:', err);
+    errorMessage.textContent = 'Error loading dashboard: ' + (err.message || err);
+    buyersTbody.innerHTML = '<tr><td colspan="8">Error loading buyers.</td></tr>';
+    sellersTbody.innerHTML = '<tr><td colspan="8">Error loading sellers.</td></tr>';
+  }
+}
+
+// initial load
+loadDashboard();
+</script>
+
+</body>
+</html>
