@@ -370,7 +370,7 @@
         window.location.href = 'my-posts.html';
       }
 
-      fetch(`http://localhost:3000/api/posts?username=${username}`)
+      fetch(`https://adama-shopping-20ij.onrender.com/api/posts?username=${username}`)
         .then(res => res.json())
         .then(data => {
           const post = data.posts.find(p => p._id === postId);
@@ -402,7 +402,7 @@
           price: document.getElementById('price').value
         };
         try {
-          const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+          const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/posts/${postId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
