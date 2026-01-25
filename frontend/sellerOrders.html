@@ -422,7 +422,7 @@ function logout() {
 // Load all payments for this seller
 async function loadPayments() {
   try {
-    const res = await fetch(`http://localhost:3000/api/payments/seller/${currentUser.info.username}`);
+    const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/payments/seller/${currentUser.info.username}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to load orders');
 
