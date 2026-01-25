@@ -738,7 +738,7 @@
 
     async function loadSellerProfile() {
       try {
-        const res = await fetch(`http://localhost:3000/api/sellers/${sellerUsername}`);
+        const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/sellers/${sellerUsername}`);
         if (!res.ok) throw new Error('Failed to load seller profile.');
         const sellerInfo = await res.json();
 
