@@ -198,7 +198,7 @@
       e.preventDefault();
       const formData = new FormData(form);
       try {
-        const res = await fetch('http://localhost:3000/api/sellers/signup', {
+        const res = await fetch('https://adama-shopping-20ij.onrender.com/api/sellers/signup', {
           method: 'POST',
           body: formData
         });
