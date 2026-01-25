@@ -313,7 +313,7 @@
     async function loadPosts() {
       postsContainer.innerHTML = '<p style="text-align:center;">Loading posts...</p>';
       try {
-        const res = await fetch(`http://localhost:3000/api/posts?username=${username}`);
+        const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/posts?username=${username}`);
         const data = await res.json();
 
         if (!res.ok) {
@@ -355,7 +355,7 @@
       if (!confirm('Are you sure you want to permanently delete this post?')) return;
 
       try {
-        const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+        const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/posts/${postId}`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username }) // Backend ownership check
