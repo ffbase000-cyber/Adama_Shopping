@@ -1,0 +1,1316 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Post Details - Adama Shopping</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>/* Root Variables */
+    :root {
+      --primary: #5A7BFC;
+      --secondary: #4AD991;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+      --red-btn: #E74C3C;
+      --red-btn-hover: #C0392B;
+      --green-btn: #28a745;
+      --green-btn-hover: #218838;
+      --navbar-height: 60px;
+    }
+
+    /* Universal Styles */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--text); overflow-x:hidden; position:relative; }
+
+    h1, h2, h3 { color:var(--text); font-weight:600; }
+    p { color:var(--light-text); line-height:1.6; }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--navbar-height);
+      background-color: var(--card);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 998;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      transition: margin-left var(--transition);
+      flex-wrap: wrap;
+    }
+
+    .navbar .search-container {
+      margin: 0 20px;
+      flex-grow: 1;
+      max-width: 400px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .search-input {
+      width: 100%;
+      padding: 8px 15px;
+      font-size: 14px;
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+      transition: all var(--transition);
+      padding-right: 40px;
+    }
+    .navbar .search-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+    }
+
+    .navbar .search-icon {
+      position: absolute;
+      right: 15px;
+      color: var(--light-text);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .navbar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .navbar-logo i {
+      font-size: 28px;
+      color: var(--accent);
+    }
+
+    .navbar-nav {
+      display: flex;
+      gap: 25px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .navbar-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      transition: color var(--transition);
+    }
+    .navbar-nav a:hover {
+      color: var(--primary);
+    }
+    .navbar-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width var(--transition);
+    }
+    .navbar-nav a:hover::after,
+    .navbar-nav a.active::after {
+      width: 100%;
+    }
+    .navbar-nav a.active {
+      color: var(--primary);
+    }
+
+    .navbar-buttons {
+      display: flex;
+      align-items: center;
+      margin-left: 25px;
+      flex-shrink: 0;
+    }
+    .navbar-logout-btn {
+      background-color: var(--red-btn);
+      color: white;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all var(--transition);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .navbar-logout-btn:hover {
+      background-color: var(--red-btn-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Buttons & Links */
+    a.button-link, .category-btn, .order-btn, .quantity-btn, .price-range button, #logoutBtnSidebar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 25px;
+      margin: 8px 5px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+      font-size: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    a.button-link {
+      background-color: var(--primary);
+      color: white;
+    }
+    a.button-link:hover {
+      background-color: #4A6EED;
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Order and Quantity Buttons (main content) */
+    .order-btn {
+      background-color: var(--green-btn);
+      color: white;
+      margin-top: 15px; /* Added margin for main post order btn */
+    }
+    .order-btn:hover {
+      background-color: var(--green-btn-hover);
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    .quantity-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 8px 15px;
+      box-shadow: none;
+    }
+    .quantity-btn:hover {
+      background-color: #4A6EED;
+      transform: translateY(-1px);
+    }
+
+    .category-btn {
+      background-color: var(--light-text);
+      color: white;
+      padding: 10px 20px;
+    }
+    .category-btn.active {
+      background-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
+    .category-btn:hover:not(.active) {
+      background-color: #5a6268;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Price range */
+    .price-range {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 15px 0;
+      background: var(--card);
+      padding: 15px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .price-range label {
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+    .price-range-inputs {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .price-range input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      font-size: 15px;
+      transition: all var(--transition);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .price-range input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+    }
+    .price-range button {
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .price-range button:hover {
+      background-color: #4A6EED;
+    }
+
+    /* Pop-up Message */
+    #popupMessage {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      color: var(--green-btn);
+      padding: 30px 50px;
+      border: 2px solid var(--green-btn);
+      border-radius: var(--radius);
+      box-shadow: var(--hover-shadow);
+      font-size: 22px;
+      font-weight: bold;
+      z-index: 10000;
+      text-align: center;
+      animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    }
+    @keyframes popIn {
+      from { transform: translate(-50%, -60%) scale(0.7); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    /* SIDEBAR STYLES */
+    .sidebar {
+      position: fixed;
+      left: -300px;
+      top: 0;
+      width: 280px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary), #4A6EED);
+      color: white;
+      transition: left var(--transition), box-shadow var(--transition);
+      z-index: 999;
+      overflow-y: auto;
+      padding: 30px 20px;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+    }
+    .sidebar.active {
+      left: 0;
+      box-shadow: 5px 0 20px rgba(0,0,0,0.4);
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+      font-size: 26px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 15px;
+    }
+    .sidebar .user-profile-info {
+      margin-bottom: 30px;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: var(--radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .sidebar .user-profile-info img {
+      display: block;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    .sidebar .user-profile-info p {
+      margin: 5px 0;
+      font-size: 15px;
+      color: #e0e0e0;
+      font-weight: 300;
+    }
+    .sidebar .user-profile-info p strong {
+      color: white;
+      font-weight: 500;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.15);
+      margin: 12px 0;
+      font-size: 16px;
+      transition: all var(--transition);
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .sidebar a:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateX(8px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .sidebar a i {
+      font-size: 20px;
+      color: var(--accent);
+    }
+
+    #logoutBtnSidebar {
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      background-color: var(--red-btn);
+      color: white;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    #logoutBtnSidebar:hover {
+      background-color: var(--red-btn-hover);
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* TOGGLE BUTTON */
+    .toggle-btn {
+      position: fixed;
+      top: 10px;
+      left: 20px;
+      z-index: 1001;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 40px;
+      height: 35px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    .toggle-btn:hover {
+      box-shadow: var(--hover-shadow);
+      transform: translateY(-2px);
+    }
+    .bar {
+      width: 100%;
+      height: 4px;
+      background-color: var(--text);
+      margin: 3px 0;
+      transition: all var(--transition);
+      border-radius: 2px;
+    }
+    .toggle-btn.active .bar:nth-child(1) {
+      transform: rotate(-45deg) translate(-7px, 6px);
+      background-color: var(--accent);
+    }
+    .toggle-btn.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .toggle-btn.active .bar:nth-child(3) {
+      transform: rotate(45deg) translate(-8px, -8px);
+      background-color: var(--accent);
+    }
+
+    /* MAIN LAYOUT CONTAINER */
+    .main-layout-container {
+      padding-top: 80px; /* Adjusted from 120px, as hero is removed */
+      flex: 1;
+      width: 100%; /* Ensure it takes full width */
+    }
+
+    /* Filter Bar (for all posts section) */
+    .filter-bar {
+      position: sticky;
+      top: var(--navbar-height);
+      z-index: 997;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      background: var(--card);
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      gap: 15px;
+      width: 100%;
+      max-width: 1200px; /* Constrain width */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .filter-bar h2 {
+      font-size: 18px;
+      color: var(--primary);
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .filter-bar .price-range {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+    }
+    .filter-bar .price-range label {
+      font-size: 14px;
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+    .filter-bar .price-range-inputs {
+      display: flex;
+      gap: 8px;
+    }
+    .filter-bar .price-range input {
+      width: 80px;
+      padding: 6px 10px;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+    .filter-bar .price-range button {
+      width: auto;
+      padding: 6px 15px;
+      font-size: 13px;
+      margin-top: 0;
+      border-radius: 8px;
+    }
+
+    .filter-bar .category-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+    }
+    .filter-bar .category-btn {
+      padding: 6px 15px;
+      font-size: 13px;
+      border-radius: 8px;
+      margin: 0;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex-grow: 1;
+      padding: 30px;
+      max-width: 1200px; /* Limit main content width */
+      margin: auto; /* Center main content */
+    }
+    .sidebar.active ~ .main-layout-container .main-content {
+      margin-left: 280px;
+    }
+    .sidebar.active ~ .navbar {
+      margin-left: 280px;
+      width: calc(100% - 280px);
+    }
+    .sidebar.active ~ .main-layout-container .filter-bar {
+      width: calc(100% - 280px);
+      left: 280px;
+    }
+
+    /* ----------- MAIN POST CONTAINER ----------- */
+    .post-container {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      max-width: 1000px;
+      margin: 30px auto;
+      display: flex;
+      gap: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .post-left {
+      flex: 1;
+    }
+
+    .post-left img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+    }
+
+    .post-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .post-right h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    .post-right p {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+    .post-right p strong {
+      color: var(--text);
+    }
+
+    .poster-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      font-weight: 500;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .poster-info img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .quantity-container {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-container .quantity-btn { /* Reusing quantity-btn style */
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius); /* Made more rounded */
+      font-size: 20px;
+      padding: 0; /* Remove default padding from button-link */
+    }
+
+    .quantity-container input {
+      width: 80px;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+      -moz-appearance: textfield;
+    }
+    .quantity-container input::-webkit-outer-spin-button,
+    .quantity-container input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .quantity-container input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+    }
+
+    /* ----------- ALL POSTS SECTION ----------- */
+    .all-posts {
+      max-width: 1200px;
+      margin: 40px auto;
+      background-color: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .all-posts h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--primary);
+      font-size: 26px;
+    }
+
+    #allPostsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .post-card {
+      display: flex;
+      flex-direction: column; /* Changed to column for better responsiveness */
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      background-color: var(--card);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: var(--shadow);
+      cursor: pointer; /* Make entire card clickable */
+    }
+
+    .post-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    .post-card .post-image-slide {
+      width: 100%; /* Full width */
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .post-card .post-details {
+      flex: 1;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .post-card .post-details h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .post-card .post-details p {
+      font-size: 14px;
+      color: var(--light-text);
+      margin-bottom: 3px;
+    }
+    .post-card .post-details .posted-by {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .post-card .post-details .poster-pic {
+      width: 35px;
+      height: 35px;
+      border-width: 2px;
+    }
+    .post-card .post-details .quantity-container {
+      margin-top: 10px;
+      justify-content: center; /* Center quantity controls */
+    }
+    .post-card .post-details .quantity-container .quantity-btn {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
+    .post-card .post-details .quantity-container input {
+      width: 60px;
+      padding: 6px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+    .post-card .post-details .order-btn {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-radius: var(--radius);
+      margin-top: 15px;
+    }
+
+    /* Orders count in sidebar */
+    .orders-count {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      background-color: var(--red-btn);
+      color: white;
+      border-radius: 50%;
+      font-size: 14px;
+      margin-left: 10px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .navbar {
+        height: auto;
+        padding-bottom: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .navbar-logo, .navbar-nav, .navbar-buttons, .navbar .search-container {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      .navbar .search-container {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 20px;
+        max-width: none;
+      }
+      .navbar-nav {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .main-layout-container {
+        padding-top: 180px; /* Adjusted to accommodate stacked navbar + filter bar */
+      }
+      .filter-bar {
+        top: 150px; /* APPROXIMATE: Adjust based on how tall the navbar becomes */
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        gap: 10px;
+      }
+      .filter-bar h2 {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .filter-bar .price-range {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+      }
+      .filter-bar .price-range-inputs {
+        width: 100%;
+      }
+      .filter-bar .price-range input,
+      .filter-bar .price-range button {
+        width: 100%;
+        margin: 0;
+      }
+      .filter-bar .category-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .main-content {
+        max-width: 100%;
+        padding: 20px 15px;
+      }
+      .sidebar.active ~ .main-layout-container .main-content {
+        margin-left: 0;
+      }
+      .sidebar.active ~ .navbar {
+        margin-left: 0;
+        width: 100%;
+      }
+      .sidebar.active ~ .main-layout-container .filter-bar {
+        left: 0;
+        width: 100%;
+      }
+      .post-container {
+        flex-direction: column;
+        margin-top: 20px;
+        gap: 15px;
+      }
+      .post-left img {
+        height: 300px;
+      }
+      .post-right h2 {
+        font-size: 24px;
+      }
+      #allPostsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 10px 10px 10px;
+      }
+      .navbar-logo {
+        font-size: 20px;
+      }
+      .navbar-logo i {
+        font-size: 24px;
+      }
+      .navbar-nav a {
+        font-size: 14px;
+        gap: 15px;
+      }
+      .navbar-logout-btn {
+        font-size: 13px;
+        padding: 6px 15px;
+      }
+      .toggle-btn {
+        top: 10px;
+        left: 10px;
+      }
+      .navbar .search-container {
+        padding: 0 10px;
+      }
+      .main-layout-container {
+        padding-top: 140px;
+      }
+      .filter-bar {
+        top: 120px;
+      }
+      .post-left img {
+        height: 250px;
+      }
+      .post-right h2 {
+        font-size: 22px;
+      }
+      .post-right p {
+        font-size: 14px;
+      }
+      .poster-info {
+        font-size: 14px;
+      }
+      .poster-info img {
+        width: 50px;
+        height: 50px;
+      }
+      .quantity-container .quantity-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+      .quantity-container input {
+        width: 70px;
+        padding: 8px;
+        font-size: 15px;
+      }
+      #allPostsContainer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .all-posts {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar-logo {
+        font-size: 18px;
+      }
+      .navbar-logo i {
+        font-size: 22px;
+      }
+      .navbar .search-input {
+        font-size: 13px;
+        padding: 6px 12px;
+        padding-right: 35px;
+      }
+      .navbar .search-icon {
+        right: 12px;
+        font-size: 14px;
+      }
+      .navbar-nav a {
+        font-size: 12px;
+      }
+      .navbar-logout-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+      .main-layout-container {
+        padding-top: 120px;
+      }
+      .filter-bar {
+        top: 100px;
+      }
+      .post-container {
+        padding: 15px;
+      }
+      .post-left img {
+        height: 200px;
+      }
+      .post-right h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      .post-right p {
+        font-size: 13px;
+      }
+      .poster-info {
+        font-size: 13px;
+        margin-top: 15px;
+      }
+      .poster-info img {
+        width: 40px;
+        height: 40px;
+      }
+      .quantity-container .quantity-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+      }
+      .quantity-container input {
+        width: 60px;
+        padding: 6px;
+        font-size: 14px;
+      }
+      .order-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+      .all-posts h2 {
+        font-size: 22px;
+      }
+      .post-card .post-details h3 {
+        font-size: 18px;
+      }
+    }</style></head><body><nav class="navbar" id="mainNavbar"><a href="index.html" class="navbar-logo"><i class="fas fa-shopping-bag"></i> Adama Shopping</a><div class="search-container"><input type="text" id="allPostsSearchInput" class="search-input" placeholder="Search posts by title or description..."> <i class="fas fa-search search-icon"></i></div><div class="navbar-nav"><a href="home.html">Home</a> <a href="aboutt.html">About</a> <a href="servicess.html">Services</a> <a href="privacyy.html">Privacy</a></div><div class="navbar-buttons"><button id="navbarLogoutBtn" class="navbar-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></div></nav><div class="toggle-btn" id="toggleBtn"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="sidebar" id="sidebar"><h2>Adama Shopping</h2><div id="sidebarUserInfo" class="user-profile-info"></div><a href="posts.html"><i class="fas fa-box"></i> Posts</a> <a href="my-posts.html"><i class="fas fa-store"></i> My Post</a> <a href="order.html"><i class="fas fa-shopping-cart"></i> Orders <span id="ordersCount" class="orders-count">0</span></a> <a href="sellerOrders.html"><i class="fas fa-clipboard-list"></i> My Seller Orders</a> <button id="logoutBtnSidebar"><i class="fas fa-sign-out-alt"></i> Logout</button></div><div class="main-layout-container"><div class="main-content"><div class="post-container"><div class="post-left"><img id="postImage" src="" alt="Post Image"></div><div class="post-right"><div><h2 id="postTitle"></h2><p><strong>Description:</strong> <span id="postDescription"></span></p><p><strong>Important Info:</strong> <span id="postInfo"></span></p><p><strong>Location:</strong> <span id="postLocation"></span></p><p><strong>Price:</strong> Birr<span id="postPrice"></span></p><div class="poster-info" id="mainPostPosterInfo"><img id="posterPic" src="" alt="Poster Picture"> <span id="posterName"></span></div></div><div><div class="quantity-container"><button id="decreaseMain" class="quantity-btn">-</button> <input type="number" id="quantityInput" value="1" min="1"> <button id="increaseMain" class="quantity-btn">+</button></div><button class="order-btn" id="orderNow">Order Now</button></div></div></div><div class="all-posts"><h2>More Products You Might Like</h2><div class="filter-bar"><h2>Filters</h2><div class="price-range"><label><i class="fas fa-dollar-sign"></i> Price Range:</label><div class="price-range-inputs"><input type="number" id="minPriceAllPosts" placeholder="Min Birr" min="0"> <input type="number" id="maxPriceAllPosts" placeholder="Max Birr" min="0"></div><button id="filterBtnAllPosts"><i class="fas fa-filter"></i> Filter</button></div><h3>Categories</h3><div class="category-buttons"><button class="category-btn active" data-category="All">All</button> <button class="category-btn" data-category="Addi Sabab">Addi Sabab</button> <button class="category-btn" data-category="Mebrat">Mebrat</button> <button class="category-btn" data-category="Adama">Adama</button></div></div><div id="allPostsContainer"></div></div><div id="popupMessage">✅ Order successfully added!</div></div></div><script>const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebarUserInfo = document.getElementById('sidebarUserInfo');
+    const mainNavbar = document.getElementById('mainNavbar');
+    const navbarLinks = document.querySelectorAll('.navbar-nav a');
+    const navbarLogoutBtn = document.getElementById('navbarLogoutBtn');
+    const logoutBtnSidebar = document.getElementById('logoutBtnSidebar');
+    const allPostsContainer = document.getElementById('allPostsContainer');
+    const allPostsSearchInput = document.getElementById('allPostsSearchInput'); // New search input
+    const allPostsCategoryButtons = document.querySelectorAll('.filter-bar .category-btn');
+    const ordersCountSpan = document.getElementById('ordersCount');
+    const popupMessage = document.getElementById('popupMessage');
+    const minPriceInputAllPosts = document.getElementById('minPriceAllPosts');
+    const maxPriceInputAllPosts = document.getElementById('maxPriceAllPosts');
+    const filterBtnAllPosts = document.getElementById('filterBtnAllPosts');
+
+    let allAvailablePosts = []; // Stores all posts fetched from API
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      toggleBtn.classList.toggle('active');
+      mainNavbar.classList.toggle('active');
+    });
+
+    const storedUser = localStorage.getItem('currentUser');
+    if (!storedUser) window.location.href = 'login.html';
+    const currentUser = JSON.parse(storedUser);
+
+    // Display user info - ONLY IN SIDEBAR
+    const { accountType, info } = currentUser;
+    let sidebarUserHtml = `
+      <img src="${info.profilePic || 'https://via.placeholder.com/130/5A7BFC/FFFFFF?text=PROFILE'}" alt="Profile Picture">
+      <p>Hello, <strong>${info.fullName}!</strong></p>
+      <p>Username: ${info.username}</p>
+      <p>Phone: ${info.phone || 'N/A'}</p>
+      <p>Account Type: <strong>${accountType}</strong></p>
+    `;
+    if (accountType === 'seller') {
+      sidebarUserHtml += `<p>Bank Account: ${info.bankAccountNumber} (${info.bankAccountName})</p>`;
+      if (info.businessLicensePic) sidebarUserHtml += `<p>Business License:</p><img src="${info.businessLicensePic}" style="width:100px; height:auto; border-radius:8px; margin-top:10px;">`;
+      if (info.otherDocPic) sidebarUserHtml += `<p>Other Document:</p><img src="${info.otherDocPic}" style="width:100px; height:auto; border-radius:8px; margin-top:10px;">`;
+    }
+    sidebarUserInfo.innerHTML = sidebarUserHtml;
+
+    // Logout (both buttons)
+    navbarLogoutBtn.addEventListener('click', logout);
+    logoutBtnSidebar.addEventListener('click', logout);
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    }
+
+    // Function to set active link in navbar
+    function setActiveNavLink() {
+      const path = window.location.pathname.split('/').pop();
+      navbarLinks.forEach(link => {
+        // Special case for 'post-details.html' if it should highlight 'Home' or 'Posts'
+        if (path === 'post-details.html' && link.getAttribute('href') === 'index.html') {
+             link.classList.add('active'); // Highlight Home or Posts depending on desired UX
+        } else if (link.getAttribute('href') === path) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    setActiveNavLink();
+
+    // Get post from localStorage for main display
+    const selectedPost = JSON.parse(localStorage.getItem('selectedPost'));
+
+    if (!selectedPost) {
+      document.querySelector('.post-container').innerHTML = '<h2 style="text-align: center; color: var(--red-btn);">Post details not found. Please go back to the <a href="index.html">Home page</a>.</h2>';
+    } else {
+      document.getElementById('postImage').src = selectedPost.image || 'https://via.placeholder.com/400x400/CCCCCC/FFFFFF?text=No+Image';
+      document.getElementById('postTitle').textContent = selectedPost.title;
+      document.getElementById('postDescription').textContent = selectedPost.description;
+      document.getElementById('postInfo').textContent = selectedPost.importantInfo || 'N/A';
+      document.getElementById('postLocation').textContent = selectedPost.location;
+      document.getElementById('postPrice').textContent = parseFloat(selectedPost.price).toFixed(2);
+
+      const mainPostPosterInfo = document.getElementById('mainPostPosterInfo');
+      mainPostPosterInfo.querySelector('#posterPic').src = selectedPost.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP';
+      mainPostPosterInfo.querySelector('#posterName').textContent = `Posted by: ${selectedPost.posterFullName || selectedPost.posterUsername || 'Unknown'}`;
+
+      mainPostPosterInfo.addEventListener('click', () => {
+        const username = encodeURIComponent(selectedPost.posterUsername);
+        const profilePic = encodeURIComponent(selectedPost.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP');
+        const fullname = encodeURIComponent(selectedPost.posterFullName || selectedPost.posterUsername);
+        const url = `sellerProfile.html?username=${username}&profilePic=${profilePic}&fullName=${fullname}`;
+        window.location.href = url;
+      });
+    }
+
+    // Quantity buttons for main post
+    const quantityInput = document.getElementById('quantityInput');
+    document.getElementById('increaseMain').addEventListener('click', () => {
+      quantityInput.value = parseInt(quantityInput.value) + 1;
+    });
+    document.getElementById('decreaseMain').addEventListener('click', () => {
+      if (parseInt(quantityInput.value) > 1) {
+        quantityInput.value = parseInt(quantityInput.value) - 1;
+      }
+    });
+
+    // Order Now for main post
+    document.getElementById('orderNow').addEventListener('click', async () => {
+      if (!selectedPost) {
+        alert('Cannot order: No post details found.');
+        return;
+      }
+      const quantity = parseInt(quantityInput.value) || 1;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: currentUser.info.username,
+            postId: selectedPost._id,
+            title: selectedPost.title,
+            description: selectedPost.description,
+            price: selectedPost.price,
+            quantity,
+            image: selectedPost.image || '',
+            sellerUsername: selectedPost.posterUsername,
+            sellerFullName: selectedPost.posterFullName || selectedPost.posterUsername,
+            sellerProfilePic: selectedPost.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP'
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to add order');
+
+        popupMessage.style.display = 'block';
+        setTimeout(() => {
+          popupMessage.style.display = 'none';
+          window.location.href = 'order.html'; // Redirect to orders page
+        }, 1200);
+
+      } catch (err) {
+        alert('Error adding order: ' + err.message);
+      }
+    });
+
+    // Load all posts for "More Products You Might Like"
+    async function loadAllPosts() {
+      allPostsContainer.innerHTML = '<p style="text-align: center; color: var(--light-text);">Loading more posts...</p>';
+      try {
+        const res = await fetch('http://localhost:3000/api/posts');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        allAvailablePosts = data.posts || [];
+        displayAllPosts(allAvailablePosts);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        allPostsContainer.innerHTML = `<p style="color:var(--red-btn); text-align: center;">Error loading posts: ${err.message}. Please ensure the server is running.</p>`;
+      }
+    }
+
+    function displayAllPosts(postsToDisplay) {
+      let html = '';
+      if (postsToDisplay.length === 0) {
+        allPostsContainer.innerHTML = '<p style="text-align: center; color: var(--light-text);">No posts found matching your criteria.</p>';
+        return;
+      }
+
+      postsToDisplay.forEach(p => {
+        // Exclude the currently viewed post from "More Products"
+        if (selectedPost && p._id === selectedPost._id) {
+            return;
+        }
+
+        const posterPic = p.posterProfilePic || 'https://via.placeholder.com/35/6B7280/FFFFFF?text=PP';
+        const imgSrc = p.image || 'https://via.placeholder.com/200x200/CCCCCC/FFFFFF?text=No+Image';
+
+        html += `
+          <div class="post-card" data-post='${encodeURIComponent(JSON.stringify(p))}'>
+            <img src="${imgSrc}" alt="Post Image" class="post-image-slide">
+            <div class="post-details">
+              <div>
+                <h3>${p.title}</h3>
+                <p><strong>Location:</strong> ${p.location}</p>
+                <p><strong>Price:</strong> ${parseFloat(p.price).toFixed(2)} Birr</p>
+                <p><strong>Description:</strong> ${p.description.substring(0, 70)}...</p>
+              </div>
+              <div>
+                <div class="posted-by" data-username="${encodeURIComponent(p.posterUsername)}" data-fullname="${encodeURIComponent(p.posterFullName || p.posterUsername)}" data-profilepic="${encodeURIComponent(posterPic)}">
+                  <img src="${posterPic}" alt="Poster" class="poster-pic">
+                  <span>${p.posterFullName || p.posterUsername}</span>
+                </div>
+                <div class="quantity-container">
+                  <button class="quantity-btn decrease-btn">-</button>
+                  <input type="number" class="quantity-input" value="1" min="1">
+                  <button class="quantity-btn increase-btn">+</button>
+                </div>
+                <button class="order-btn" data-post='${encodeURIComponent(JSON.stringify(p))}'>Order Now</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      allPostsContainer.innerHTML = html;
+
+      // Add event listeners for dynamically created elements
+      document.querySelectorAll('#allPostsContainer .increase-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent card click
+          const input = btn.parentElement.querySelector('.quantity-input');
+          input.value = parseInt(input.value) + 1;
+        });
+      });
+
+      document.querySelectorAll('#allPostsContainer .decrease-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent card click
+          const input = btn.parentElement.querySelector('.quantity-input');
+          if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
+        });
+      });
+
+      document.querySelectorAll('#allPostsContainer .order-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation(); // Prevent card click
+          const postData = JSON.parse(decodeURIComponent(btn.dataset.post));
+          const quantityInput = btn.parentElement.querySelector('.quantity-input');
+          const quantity = parseInt(quantityInput.value) || 1;
+
+          try {
+            const res = await fetch('http://localhost:3000/api/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                userId: currentUser.info.username,
+                postId: postData._id,
+                title: postData.title,
+                description: postData.description,
+                price: postData.price,
+                quantity,
+                image: postData.image || '',
+                sellerUsername: postData.posterUsername,
+                sellerFullName: postData.posterFullName || postData.posterUsername,
+                sellerProfilePic: postData.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP'
+              })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Failed to add order');
+
+            popupMessage.style.display = 'block';
+            setTimeout(() => {
+              popupMessage.style.display = 'none';
+              window.location.href = 'order.html';
+            }, 1200);
+
+          } catch (err) {
+            alert('Error adding order: ' + err.message);
+          }
+        });
+      });
+
+      // Make post cards clickable to view details
+      document.querySelectorAll('#allPostsContainer .post-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const postData = JSON.parse(decodeURIComponent(card.dataset.post));
+          localStorage.setItem('selectedPost', JSON.stringify(postData));
+          window.location.href = 'post-details.html'; // Reload current page with new post
+        });
+      });
+
+      // Make poster info clickable in "More Products"
+      document.querySelectorAll('#allPostsContainer .posted-by').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent card click
+          const username = decodeURIComponent(el.dataset.username);
+          const profilePic = decodeURIComponent(el.dataset.profilepic);
+          const fullname = decodeURIComponent(el.dataset.fullname);
+          const url = `sellerProfile.html?username=${username}&profilePic=${profilePic}&fullName=${fullname}`;
+          window.location.href = url;
+        });
+      });
+    }
+
+    // Search for "All Posts"
+    allPostsSearchInput.addEventListener('input', () => {
+      applyAllPostsFilters();
+    });
+
+    // Category filter for "All Posts"
+    allPostsCategoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        allPostsCategoryButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyAllPostsFilters();
+      });
+    });
+
+    // Price range filter for "All Posts"
+    filterBtnAllPosts.addEventListener('click', () => {
+      applyAllPostsFilters();
+    });
+
+    // Unified filter function for "All Posts"
+    function applyAllPostsFilters() {
+        let filteredPosts = [...allAvailablePosts];
+
+        // Exclude the currently viewed post from "More Products"
+        if (selectedPost) {
+            filteredPosts = filteredPosts.filter(p => p._id !== selectedPost._id);
+        }
+
+        // Apply search query
+        const query = allPostsSearchInput.value.toLowerCase();
+        if (query) {
+            filteredPosts = filteredPosts.filter(post =>
+                post.title.toLowerCase().includes(query) || (post.description || '').toLowerCase().includes(query)
+            );
+        }
+
+        // Apply category filter
+        const activeCategoryBtn = document.querySelector('.filter-bar .category-btn.active');
+        const category = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'All';
+        if (category !== 'All') {
+            filteredPosts = filteredPosts.filter(p => (p.location || '').toLowerCase() === category.toLowerCase());
+        }
+
+        // Apply price range filter
+        const min = parseFloat(minPriceInputAllPosts.value) || 0;
+        const max = parseFloat(maxPriceInputAllPosts.value) || Infinity;
+        filteredPosts = filteredPosts.filter(p => parseFloat(p.price) >= min && parseFloat(p.price) <= max);
+
+        displayAllPosts(filteredPosts);
+    }
+
+
+    // Update orders count
+    async function updateOrdersCount() {
+      try {
+        const res = await fetch(`http://localhost:3000/api/orders/count/${currentUser.info.username}`);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        ordersCountSpan.textContent = data.count > 0 ? data.count : '0';
+      } catch (err) {
+        console.error('Error fetching order count:', err);
+        ordersCountSpan.textContent = '0';
+      }
+    }
+
+    // Initial loads
+    loadAllPosts();
+    updateOrdersCount();</script></body></html>

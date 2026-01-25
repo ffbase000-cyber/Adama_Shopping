@@ -1,0 +1,751 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Create Post - Adama Shopping</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet"></head><body><nav class="navbar"><div class="navbar-container"><a href="#" class="navbar-brand"><i class="fas fa-shopping-bag"></i> <span data-translate-key="nav_brand">Adama Shopping</span></a><ul class="navbar-nav"><li><a href="home.html" class="nav-link"><i class="fas fa-home"></i> <span data-translate-key="nav_home">Home</span></a></li><li><a href="aboutt.html" class="nav-link"><i class="fas fa-info-circle"></i> <span data-translate-key="nav_about">About</span></a></li><li><a href="servicess.html" class="nav-link"><i class="fas fa-concierge-bell"></i> <span data-translate-key="nav_services">Services</span></a></li><li><a href="privacyy.html" class="nav-link"><i class="fas fa-user-secret"></i> <span data-translate-key="nav_privacy">Privacy</span></a></li><li><div class="lang-switcher"><a href="#" class="lang-btn" data-lang="en">EN</a> <a href="#" class="lang-btn" data-lang="am">አማ</a> <a href="#" class="lang-btn" data-lang="om">ORO</a></div></li></ul></div></nav><div class="container"><header><h1 data-translate-key="header_title">Create a New Post</h1><p id="user-info-display"></p></header><form id="postForm" enctype="multipart/form-data" class="post-form"><div class="form-group"><label for="title"><i class="fas fa-heading"></i> <span data-translate-key="label_title">Title</span></label> <input type="text" id="title" name="title" required></div><div class="form-group"><label for="description"><i class="fas fa-file-alt"></i> <span data-translate-key="label_description">Description</span></label> <textarea id="description" name="description" required></textarea></div><div class="form-group"><label for="importantInfo"><i class="fas fa-info-circle"></i> <span data-translate-key="label_important_info">Important Info</span></label> <textarea id="importantInfo" name="importantInfo"></textarea></div><div class="form-group"><label for="location"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="label_location">Location</span></label> <select id="location" name="location" required><option value="" data-translate-key="option_select_location">Select location</option><option value="Arada">Arada</option><option value="17">17</option><option value="Others">Others</option></select></div><div class="form-group"><label for="price"><i class="fas fa-tag"></i> <span data-translate-key="label_price">Price (ETB)</span></label> <input type="number" id="price" name="price" required min="0"></div><div class="form-group"><label><i class="fas fa-image"></i> <span data-translate-key="label_image">Product Image</span></label><div class="custom-file-input-wrapper"><input type="file" id="image" name="image" accept="image/*" class="hidden-file-input"> <label for="image" class="custom-file-upload"><i class="fas fa-cloud-upload-alt"></i> <span data-translate-key="button_choose_file">Choose File</span></label> <span id="fileNameDisplay" class="file-name-display" data-translate-key="no_file_chosen">No file chosen</span></div><small data-translate-key="image_formats">Accepted formats: JPG, PNG, GIF</small><div class="image-preview-container" id="imagePreviewContainer"><img id="imagePreview" src="#" alt="Image Preview"><p id="imagePlaceholder"><i class="fas fa-camera"></i> <span data-translate-key="image_preview">Image Preview</span></p></div></div><button type="submit" class="btn primary-btn" data-translate-key="button_post_ad">Post Ad</button></form><div id="message" class="form-message"></div></div><style>:root {
+    --primary: #5A7BFC;
+    --secondary: #4AD991;
+    --accent: #FFD25A;
+    --text: #2D3748;
+    --light-text: #6B7280;
+    --bg: #F8F9FA;
+    --card: #FFFFFF;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+    --transition: 0.3s ease;
+    --red-btn: #E74C3C;
+    --red-btn-hover: #C0392B;
+    --green-btn: #28a745;
+    --green-btn-hover: #218838;
+    --navbar-height: 60px; /* Now actively used */
+    --primary-rgb: 90, 123, 252; /* RGB of #5A7BFC for shadows */
+}
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif; /* A modern font choice */
+    margin: 0;
+    padding: 0; /* Remove body padding to allow navbar to span full width */
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column; /* Column layout for navbar + content */
+    justify-content: flex-start;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Navigation Bar Styles */
+.navbar {
+    width: 100%;
+    background-color: var(--card); /* White background for navbar */
+    box-shadow: var(--shadow); /* Subtle shadow */
+    position: sticky; /* Keeps navbar at top on scroll */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensures it stays on top of other content */
+    height: var(--navbar-height); /* Use the defined height */
+    display: flex;
+    align-items: center;
+    padding: 0 20px; /* Padding on sides */
+}
+
+.navbar-container {
+    max-width: 1200px; /* Max width for content inside navbar */
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif; /* Use Poppins for brand name */
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--primary); /* Primary color for brand name */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.navbar-brand i {
+    font-size: 1.2em;
+}
+
+.navbar-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Space between nav items */
+}
+
+.nav-link {
+    color: var(--text); /* Default link color */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    padding: 5px 0;
+    position: relative;
+    transition: color var(--transition);
+    display: flex; /* For icon alignment */
+    align-items: center;
+    gap: 7px;
+}
+
+.nav-link:hover {
+    color: var(--primary); /* Primary color on hover */
+}
+
+.nav-link::after { /* Underline effect on hover */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--primary);
+    transition: width var(--transition);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ===== NEW: Language Switcher Styling ===== */
+.lang-switcher {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border-radius: var(--radius);
+}
+.lang-switcher a {
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 12px;
+  color: var(--text);
+  text-decoration: none;
+}
+.lang-switcher a.active {
+    background-color: var(--primary);
+    color: #fff;
+}
+.lang-switcher a:hover {
+    background-color: #ddd;
+    color: var(--text);
+}
+/* Stop underline effect for language buttons */
+.lang-switcher a::after {
+    display: none;
+}
+
+
+/* Content Container */
+.container {
+    background-color: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    margin: 40px auto; /* Add margin-top to separate from navbar */
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 2.2em;
+}
+
+#user-info-display {
+    font-size: 0.95em;
+    color: var(--light-text);
+    margin-top: 5px;
+}
+
+.verified {
+    color: var(--green-btn);
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Form Styling */
+.post-form {
+    display: grid;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text);
+    font-size: 0.95em;
+}
+
+label i {
+    margin-right: 10px;
+    color: var(--primary);
+    font-size: 1.1em;
+}
+
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--text);
+    background-color: #fcfcfc;
+    box-sizing: border-box;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+small {
+    color: var(--light-text);
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Custom File Input Styles */
+.custom-file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.hidden-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    background-color: var(--secondary);
+    color: var(--card);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95em;
+    transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    box-shadow: 0 3px 10px rgba(74, 217, 145, 0.2);
+}
+
+.custom-file-upload i {
+    margin-right: 8px;
+    font-size: 1.1em;
+    color: var(--card);
+}
+
+.custom-file-upload:hover {
+    background-color: #3cb87c;
+    box-shadow: 0 5px 15px rgba(74, 217, 145, 0.3);
+    transform: translateY(-1px);
+}
+
+.file-name-display {
+    font-size: 0.9em;
+    color: var(--light-text);
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Image Preview Styles */
+.image-preview-container {
+    margin-top: 15px;
+    border: 2px dashed #e0e0e0;
+    border-radius: var(--radius);
+    padding: 15px;
+    text-align: center;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fcfcfc;
+    color: var(--light-text);
+    transition: border-color var(--transition);
+}
+
+.image-preview-container.has-image {
+    border-color: var(--secondary);
+}
+
+.image-preview-container img {
+    max-width: 100%;
+    max-height: 160px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.image-preview-container p {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-preview-container p i {
+    font-size: 1.2em;
+    color: var(--light-text);
+}
+
+
+/* Buttons */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.primary-btn {
+    background-color: var(--primary);
+    color: var(--card);
+    box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.primary-btn:hover {
+    background-color: #4A6BED;
+    box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.4);
+    transform: translateY(-2px);
+}
+
+.primary-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Messages */
+.form-message {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-message p {
+    margin: 0;
+}
+
+.form-message p[style*="color:red"] {
+    background-color: #ffebeb;
+    color: var(--red-btn) !important;
+    border: 1px solid #ffcccc;
+}
+
+.form-message p[style*="color:green"] {
+    background-color: #ebfff1;
+    color: var(--green-btn) !important;
+    border: 1px solid #ccffda;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-nav {
+        gap: 15px; /* Adjust gap for smaller screens */
+    }
+
+    .nav-link {
+        font-size: 0.9em;
+        gap: 5px;
+    }
+
+    .navbar-brand {
+        font-size: 1.3em;
+    }
+
+    .container {
+        padding: 30px 20px;
+        margin: 20px auto; /* Adjust margin for smaller screens */
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    .custom-file-upload {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 580px) { /* Breakpoint for nav menu collapse */
+    .navbar-nav {
+        display: none; /* Hide nav links by default on small screens */
+    }
+
+    .navbar-container {
+        justify-content: center; /* Center brand if nav links are hidden */
+    }
+
+    /* If you wanted a hamburger menu, you'd add JS to toggle this */
+    /* .menu-toggle { display: block; } */
+}
+
+
+@media (max-width: 480px) {
+    body {
+        padding: 0; /* No body padding to let navbar take full width */
+    }
+
+    .navbar {
+        padding: 0 10px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2em;
+        gap: 5px;
+    }
+
+    .container {
+        padding: 20px 15px;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .custom-file-input-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .custom-file-upload {
+        width: 100%;
+        justify-content: center;
+    }
+}</style><script>document.addEventListener('DOMContentLoaded', () => {
+    const postForm = document.getElementById('postForm');
+    const messageDiv = document.getElementById('message');
+    const userInfoDisplay = document.getElementById('user-info-display');
+    const postButton = postForm.querySelector('.primary-btn');
+
+    // Image Upload Elements
+    const imageInput = document.getElementById('image');
+    const imagePreview = document.getElementById('imagePreview');
+    const imagePlaceholder = document.getElementById('imagePlaceholder');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+    // --- User Verification and Display ---
+    const storedUser = localStorage.getItem('currentUser');
+    if (!storedUser) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const currentUser = JSON.parse(storedUser);
+    const username = currentUser.info.username;
+
+    async function checkVerified() {
+        // ===== MODIFIED: Get current language for translations =====
+        const lang = localStorage.getItem('language') || 'en';
+
+        try {
+            const res = await fetch(`/api/users/${username}`);
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json();
+
+            if (!data.isVerified) {
+                messageDiv.innerHTML = `<p style="color:red;">${translations[lang].error_unverified}</p>`;
+                postButton.disabled = true;
+                userInfoDisplay.innerHTML = `${translations[lang].logged_in_as} ${username} ${translations[lang].status_unverified}`;
+            } else {
+                userInfoDisplay.innerHTML = `${translations[lang].logged_in_as} ${username} <span class="verified">${translations[lang].status_verified}</span>`;
+                postButton.disabled = false;
+            }
+        } catch (err) {
+            console.error("Error checking verification status:", err);
+            messageDiv.innerHTML = `<p style="color:red;">${translations[lang].error_verification_failed}</p>`;
+            postButton.disabled = true;
+            userInfoDisplay.innerHTML = `${translations[lang].logged_in_as} ${username} ${translations[lang].status_verification_failed}`;
+        }
+    }
+
+    // --- Image Preview Logic ---
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        const lang = localStorage.getItem('language') || 'en';
+
+        if (file) {
+            fileNameDisplay.textContent = file.name;
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                imagePlaceholder.style.display = 'none';
+                imagePreviewContainer.classList.add('has-image');
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            // ===== MODIFIED: Use translated text =====
+            fileNameDisplay.textContent = translations[lang].no_file_chosen;
+            imagePreview.src = '#';
+            imagePreview.style.display = 'none';
+            imagePlaceholder.style.display = 'flex';
+            imagePreviewContainer.classList.remove('has-image');
+        }
+    });
+
+    // --- Form Submission ---
+    postForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        messageDiv.innerHTML = '';
+        
+        // ===== MODIFIED: Get current language for translations =====
+        const lang = localStorage.getItem('language') || 'en';
+
+        postButton.disabled = true;
+        postButton.textContent = translations[lang].button_posting;
+
+        const formData = new FormData(postForm);
+        formData.append('username', username);
+
+        try {
+            const res = await fetch('/api/posts/create', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                const errorMessage = data.error || (data.errors && data.errors[0] ? data.errors[0].msg : translations[lang].error_unknown);
+                messageDiv.innerHTML = `<p style="color:red;">${translations[lang].error_prefix}: ${errorMessage}</p>`;
+            } else {
+                messageDiv.innerHTML = `<p style="color:green;">${data.message || translations[lang].success_post_created}</p>`;
+                postForm.reset();
+
+                // Clear image preview and custom file input display
+                fileNameDisplay.textContent = translations[lang].no_file_chosen;
+                imagePreview.src = '#';
+                imagePreview.style.display = 'none';
+                imagePlaceholder.style.display = 'flex';
+                imagePreviewContainer.classList.remove('has-image');
+            }
+        } catch (err) {
+            console.error("Network or server error:", err);
+            messageDiv.innerHTML = `<p style="color:red;">${translations[lang].error_network}</p>`;
+        } finally {
+            postButton.disabled = false;
+            postButton.textContent = translations[lang].button_post_ad;
+        }
+    });
+
+    // ===== NOTE: The checkVerified function is now called by the setLanguage function =====
+    // This ensures user info is re-translated when the language changes.
+    // checkVerified(); // This will be called on initial language set.
+});</script><script>const translations = {
+      // English Translations
+      en: {
+        nav_brand: "Adama Shopping",
+        nav_home: "Home",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        header_title: "Create a New Post",
+        logged_in_as: "Logged in as:",
+        status_unverified: "(Unverified)",
+        status_verified: "&#10003;",
+        status_verification_failed: "(Verification Failed)",
+        label_title: "Title",
+        label_description: "Description",
+        label_important_info: "Important Info",
+        label_location: "Location",
+        option_select_location: "Select location",
+        label_price: "Price (ETB)",
+        label_image: "Product Image",
+        button_choose_file: "Choose File",
+        no_file_chosen: "No file chosen",
+        image_formats: "Accepted formats: JPG, PNG, GIF",
+        image_preview: "Image Preview",
+        button_post_ad: "Post Ad",
+        button_posting: "Posting...",
+        error_unverified: "You must be verified by the admin to post.",
+        error_verification_failed: "Could not verify user status. Please try again.",
+        error_unknown: "An unknown error occurred.",
+        error_prefix: "Error:",
+        success_post_created: "Post created successfully!",
+        error_network: "Network error. Could not create post. Please check your connection."
+      },
+      // Amharic Translations
+      am: {
+        nav_brand: "አዳማ ሾፒንግ",
+        nav_home: "መነሻ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        header_title: "አዲስ ልጥፍ ይፍጠሩ",
+        logged_in_as: "የገባው እንደ:",
+        status_unverified: "(ያልተረጋገጠ)",
+        status_verified: "&#10003;",
+        status_verification_failed: "(ማረጋገጫ አልተሳካም)",
+        label_title: "ርዕስ",
+        label_description: "መግለጫ",
+        label_important_info: "ጠቃሚ መረጃ",
+        label_location: "አካባቢ",
+        option_select_location: "አካባቢ ይምረጡ",
+        label_price: "ዋጋ (ብር)",
+        label_image: "የምርት ምስል",
+        button_choose_file: "ፋይል ይምረጡ",
+        no_file_chosen: "ምንም ፋይል አልተመረጠም",
+        image_formats: "ተቀባይነት ያላቸው ቅርጸቶች: JPG, PNG, GIF",
+        image_preview: "የምስል ቅድመ እይታ",
+        button_post_ad: "ማስታወቂያ ልጠፍ",
+        button_posting: "እየለጠፈ ነው...",
+        error_unverified: "ለመለጠፍ በአስተዳዳሪው መረጋገጥ አለብዎት።",
+        error_verification_failed: "የተጠቃሚን ሁኔታ ማረጋገጥ አልተቻለም። እባክዎ እንደገና ይሞክሩ።",
+        error_unknown: "ያልታወቀ ስህተት ተፈጥሯል።",
+        error_prefix: "ስህተት:",
+        success_post_created: "ልጥፍ በተሳካ ሁኔታ ተፈጥሯል!",
+        error_network: "የአውታረ መረብ ስህተት። ልጥፍ መፍጠር አልተቻለም። እባክዎ ግንኙነትዎን ያረጋግጡ።"
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_brand: "Adamaa Shooppingii",
+        nav_home: "Fuula Jalqabaa",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        header_title: "Barreeffama Haaraa Uumi",
+        logged_in_as: "Akka itti seente:",
+        status_unverified: "(Hin Mirkaneeffamne)",
+        status_verified: "&#10003;",
+        status_verification_failed: "(Mirkaneessuun Fashale)",
+        label_title: "Mata Duree",
+        label_description: "Ibsa",
+        label_important_info: "Odeeffannoo Barbaachisaa",
+        label_location: "Iddoo",
+        option_select_location: "Iddoo Filadhu",
+        label_price: "Gatii (ETB)",
+        label_image: "Suuraa Oomishaa",
+        button_choose_file: "Faayilii Filadhu",
+        no_file_chosen: "Faayiliin hin filatamne",
+        image_formats: "Unkaalee fudhatama qaban: JPG, PNG, GIF",
+        image_preview: "Fakkii Duraa",
+        button_post_ad: "Beeksisa Maxxansi",
+        button_posting: "Maxxansaa Jira...",
+        error_unverified: "Maxxansuuf bulchaan mirkaneeffamuu qabda.",
+        error_verification_failed: "Sadarkaa fayyadamaa mirkaneessuun hin danda'amne. Maaloo irra deebi'ii yaali.",
+        error_unknown: "Dogoggorri hin beekamne uumame.",
+        error_prefix: "Dogoggora:",
+        success_post_created: "Barreeffamni milkaa'inaan uumameera!",
+        error_network: "Dogoggora neetworkii. Barreeffama uumuu hin dandeenye. Maaloo qunnamtii kee mirkaneessi."
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+          // Handle elements with icons by targeting the span inside
+          const textSpan = el.querySelector('span');
+          if (textSpan) {
+              textSpan.innerHTML = translation;
+          } else {
+              el.innerHTML = translation;
+          }
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+      
+      // Re-run the verification check to update the user info display with the new language
+      if (typeof checkVerified === 'function') {
+        checkVerified();
+      }
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Initial language set on page load
+    const savedLang = localStorage.getItem('language') || 'en';
+    setLanguage(savedLang);</script></body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Adama Shopping - Seller Sign Up</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>:root {
+      --primary: #5A7BFC;
+      --secondary: #4AD991;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--text); overflow-x:hidden; position:relative; }
+
+    /* Floating Shopping Icons Background */
+    .floating-icons { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
+    .floating-icons i { position:absolute; font-size:30px; color: rgba(90,123,252,0.15); animation: floatAround linear infinite; }
+    @keyframes floatAround { 0% { transform:translate(0,100vh) rotate(0deg); opacity:0; } 50% { opacity:1; } 100% { transform:translate(100vw,-50vh) rotate(360deg); opacity:0; } }
+
+    /* Navbar */
+    .navbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(12px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:15px;
+      z-index:1000;
+      margin:15px 20px;
+    }
+    .navbar ul { display:flex; list-style:none; gap:20px; align-items:center; flex-wrap:wrap; }
+    .navbar ul li a { text-decoration:none; color:var(--light-text); font-weight:500; display:flex; align-items:center; gap:8px; transition: all var(--transition); }
+    .navbar ul li a:hover { color:var(--primary); transform: translateY(-3px); }
+
+    /* Signup Card */
+    .signup-card {
+      max-width:600px;
+      margin:60px auto;
+      padding:40px;
+      border-radius:var(--radius);
+      background:var(--card);
+      box-shadow:var(--shadow);
+      position:relative;
+      z-index:1;
+      transition: box-shadow var(--transition);
+    }
+    .signup-card:hover { box-shadow:var(--hover-shadow); }
+    .signup-card h1 { color:var(--primary); text-align:center; margin-bottom:30px; }
+    .signup-card form { display:flex; flex-direction:column; gap:15px; }
+    .signup-card label { font-weight:500; color:var(--text); display:flex; flex-direction:column; }
+    .signup-card input { padding:12px 15px; border-radius:8px; border:1px solid #E2E8F0; transition: border-color var(--transition), box-shadow var(--transition); }
+    .signup-card input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(90,123,252,0.2); }
+
+    /* Buttons */
+    .signup-card button {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px;
+      background:var(--primary);
+      color:#fff;
+      font-weight:600;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      transition: all var(--transition);
+    }
+    .signup-card button:hover { background:var(--secondary); transform: translateY(-2px); box-shadow:var(--hover-shadow); }
+    .btn-icon { animation:bounce 1s infinite; }
+    @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-5px); } }
+
+    /* File Upload with Icon */
+    .file-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border: 2px dashed var(--primary);
+      border-radius: 12px;
+      color: var(--primary);
+      font-weight:600;
+      text-align:center;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .file-upload:hover { background: rgba(90,123,252,0.1); transform: translateY(-2px); }
+    .file-upload i { font-size: 24px; margin-bottom: 8px; animation: bounce 1s infinite; }
+    .file-upload img { display:none; margin-top:10px; width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid var(--primary); }
+
+    /* Message */
+    #message { text-align:center; margin-top:15px; font-weight:500; min-height:24px; color:var(--secondary); }
+
+    /* Responsive */
+    @media (max-width:600px) { .signup-card { margin:40px 20px; padding:30px; } }</style></head><body><div class="floating-icons"><i class="fas fa-shopping-cart" style="left:10%; animation-duration:12s;"></i> <i class="fas fa-box" style="left:30%; animation-duration:15s;"></i> <i class="fas fa-tag" style="left:50%; animation-duration:10s;"></i> <i class="fas fa-gift" style="left:70%; animation-duration:18s;"></i> <i class="fas fa-shopping-bag" style="left:85%; animation-duration:14s;"></i></div><nav class="navbar"><div class="logo"><i class="fas fa-store"></i> Adama Shopping</div><ul><li><a href="index.html"><i class="fas fa-home"></i> Home</a></li><li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li><li><a href="services.html"><i class="fas fa-handshake"></i> Services</a></li><li><a href="privacy.html"><i class="fas fa-shield-alt"></i> Privacy</a></li></ul></nav><div class="signup-card"><h1>Seller Sign Up</h1><form id="sellerSignupForm" enctype="multipart/form-data"><label>Full Name<input name="fullName" required></label> <label>Username<input name="username" required></label> <label>Phone<input name="phone" required></label> <label>Password<input type="password" name="password" required minlength="6"></label> <label class="file-upload"><input type="file" name="profilePic" accept="image/*" id="profilePic" hidden required> <i class="fas fa-user btn-icon"></i> Personal Profile Picture <img id="profilePreview"></label> <label class="file-upload"><input type="file" name="businessLicensePic" accept="image/*" id="businessLicensePic" hidden required> <i class="fas fa-file-alt btn-icon"></i> Business License Picture <img id="licensePreview"></label> <label class="file-upload"><input type="file" name="otherDocPic" accept="image/*" id="otherDocPic" hidden> <i class="fas fa-file btn-icon"></i> Other Document Picture <img id="otherPreview"></label> <label>Bank Account Number<input name="bankAccountNumber" required></label> <label>Bank Account Name<input name="bankAccountName" required></label> <button type="submit"><i class="fas fa-user-plus btn-icon"></i> Sign Up</button></form><div id="message"></div></div><script>// Preview uploaded images
+    function setupPreview(inputId, previewId) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+      input.addEventListener('change', () => {
+        const file = input.files[0];
+        if(file) {
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = 'block';
+        } else {
+          preview.src = '';
+          preview.style.display = 'none';
+        }
+      });
+    }
+    setupPreview('profilePic','profilePreview');
+    setupPreview('businessLicensePic','licensePreview');
+    setupPreview('otherDocPic','otherPreview');
+
+    // Form submission
+    const form = document.getElementById('sellerSignupForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      try {
+        const res = await fetch('http://localhost:3000/api/sellers/signup', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+
+        if(!res.ok) {
+          message.textContent = data.error || JSON.stringify(data.errors);
+          message.style.color = 'red';
+          return;
+        }
+
+        message.textContent = 'Seller sign-up successful! Welcome, ' + data.seller.fullName;
+        message.style.color = 'var(--secondary)';
+        form.reset();
+        document.getElementById('profilePreview').style.display='none';
+        document.getElementById('licensePreview').style.display='none';
+        document.getElementById('otherPreview').style.display='none';
+      } catch(err) {
+        message.textContent = 'Network error';
+        message.style.color = 'red';
+      }
+    });</script></body></html>

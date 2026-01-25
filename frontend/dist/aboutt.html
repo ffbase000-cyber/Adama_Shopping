@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>About - Adama Shopping</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>/* --- Root Variables from in.html --- */
+    :root {
+      --primary: #5A7BFC;
+      --primary-hover: #4a6eed;
+      --secondary: #4AD991;
+      --secondary-hover: #3fbf80;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+    }
+
+    /* --- Global Styles from in.html --- */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; scroll-behavior: smooth; }
+    body {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      position:relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    p {
+      line-height: 1.7;
+      font-weight: 400;
+      color: var(--light-text);
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    /* --- Navbar (Copied from in.html for consistency) --- */
+    .navbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(12px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:15px;
+      z-index:1000;
+      margin:15px 20px;
+      transition: all 0.3s ease;
+    }
+    .navbar:hover { box-shadow:var(--hover-shadow); }
+    
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .navbar .logo img {
+        height: 40px;
+    }
+
+    .navbar .logo a {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text);
+        transition: color var(--transition);
+    }
+    .navbar .logo a span {
+        color: var(--primary);
+    }
+
+    .navbar ul { display:flex; list-style:none; gap:20px; align-items:center; flex-wrap:wrap; }
+    .navbar ul li a { text-decoration:none; color:var(--light-text); font-weight:500; display:flex; align-items:center; gap:8px; transition: all var(--transition); }
+    .navbar ul li a:hover, .navbar ul li a.active { color:var(--primary); }
+    .navbar ul li a.btn-login { background:var(--primary); color:#fff; padding:10px 20px; border-radius:var(--radius); font-weight:600; }
+    .navbar ul li a.btn-login:hover { background:var(--primary-hover); transform: translateY(-3px); box-shadow:var(--hover-shadow); }
+
+    /* ===== NEW: Language Switcher Styling ===== */
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border-radius: var(--radius);
+    }
+    .lang-switcher a {
+      padding: 5px 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 12px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .lang-switcher a:hover {
+        background-color: #ddd;
+    }
+    .lang-switcher a.active {
+        background-color: var(--primary);
+        color: #fff;
+    }
+
+    /* --- Main Content Styling for About Page --- */
+    .page-header {
+      padding: 80px 10%;
+      text-align: center;
+      background:linear-gradient(135deg, #E0E7FF 0%, #F0F2F5 100%);
+      margin: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .page-header h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .page-header h1 span {
+      color: var(--primary);
+    }
+    .page-header p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .content-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 50px;
+      padding: 60px 10%;
+      margin: 0 20px 30px;
+      background-color: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    .content-section:hover {
+        box-shadow: var(--hover-shadow);
+    }
+    .content-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    .text-content {
+      flex: 1 1 45%;
+      min-width: 300px;
+    }
+    .text-content h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .media-content {
+      flex: 1 1 45%;
+      min-width: 300px;
+    }
+    .media-content video, .media-content img {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      object-fit: cover;
+      transition: transform var(--transition);
+    }
+    .media-content video:hover, .media-content img:hover {
+        transform: scale(1.03);
+    }
+
+    /* Social Media Section */
+    .social-section {
+      text-align: center;
+      padding: 60px 10%;
+      background-color: #f0f4ff;
+      margin: 20px;
+      border-radius: var(--radius);
+    }
+    .social-section h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+    .social-section p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
+    .social-icons-grid {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .social-icons-grid a {
+      color: var(--light-text);
+      font-size: 28px;
+      transition: transform var(--transition), color var(--transition);
+    }
+    .social-icons-grid a:hover {
+      color: var(--primary);
+      transform: translateY(-5px);
+    }
+
+    /* --- Footer (Copied from in.html for consistency) --- */
+    footer { background:var(--card); padding:40px 10%; margin-top:40px; border-radius:var(--radius); box-shadow:var(--shadow); }
+    footer .footer-content { display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px; }
+    footer .footer-section { flex:1; min-width:220px; }
+    footer h4 { margin-bottom:20px; font-size:20px; font-weight: 600; }
+    footer ul { list-style:none; }
+    footer ul li { margin-bottom:10px; }
+    footer ul li a { text-decoration:none; color:var(--light-text); transition: color var(--transition); }
+    footer ul li a:hover { color:var(--primary); }
+    footer .social-icons { display:flex; gap:15px; margin-top:15px; }
+    footer .social-icons a { color:var(--light-text); font-size:20px; transition:color var(--transition), transform var(--transition); }
+    footer .social-icons a:hover { color:var(--primary); transform: scale(1.2); }
+    .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+    .newsletter-form input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius); }
+    .newsletter-form button { background: var(--primary); color: #fff; border: none; padding: 10px 15px; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); }
+    .newsletter-form button:hover { background: var(--primary-hover); }
+
+    /* --- Back to Top Button (Copied from in.html) --- */
+    #back-to-top {
+        position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    }
+    #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #back-to-top:hover { background: var(--primary-hover); transform: scale(1.1); }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 992px) {
+        .content-section, .content-section:nth-child(even) {
+            flex-direction: column-reverse;
+        }
+    }
+    @media (max-width: 768px) {
+        .page-header h1 { font-size: 36px; }
+        .text-content h2 { font-size: 28px; }
+    }</style></head><body><nav class="navbar"><div class="logo"><img src="images/Adama Shopping.png" alt="Adama Shopping Logo"> <a href="index.html">Adama<span>Shopping</span></a></div><ul><li><a href="home.html"><i class="fas fa-home"></i> <span data-translate-key="nav_home">Home</span></a></li><li><a href="aboutt.html" class="active"><i class="fas fa-info-circle"></i> <span data-translate-key="nav_about">About</span></a></li><li><a href="servicess.html"><i class="fas fa-handshake"></i> <span data-translate-key="nav_services">Services</span></a></li><li><a href="privacyy.html"><i class="fas fa-shield-alt"></i> <span data-translate-key="nav_privacy">Privacy</span></a></li><li><div class="lang-switcher"><a href="#" class="lang-btn" data-lang="en">EN</a> <a href="#" class="lang-btn" data-lang="am">አማ</a> <a href="#" class="lang-btn" data-lang="om">ORO</a></div></li></ul></nav><header class="page-header"><h1 data-translate-key="about_header_title">About <span>Adama Shopping</span></h1><p data-translate-key="about_header_p">Your trusted e-commerce and delivery partner, connecting buyers and sellers across Ethiopia with speed, security, and reliability.</p></header><section class="content-section"><div class="text-content"><h2 data-translate-key="about_s1_title">Welcome to Adama Shopping</h2><p data-translate-key="about_s1_p">Adama Shopping is your one-stop online delivery platform. We are dedicated to making online shopping easier than ever by bridging the gap between local sellers and customers with a seamless digital marketplace.</p></div><div class="media-content"><img src="images/Adama Shopping.png" alt="Welcome Image"></div></section><section class="content-section"><div class="text-content"><h2 data-translate-key="about_s2_title">Our Core Mission</h2><p data-translate-key="about_s2_p">Our platform helps thousands of buyers and sellers every day. Whether you’re shopping for essentials or selling your products, Adama Shopping provides a trusted space to grow your business and shop with complete confidence.</p></div><div class="media-content"><video autoplay muted loop playsinline><source src="video/adamashopping.mp4" type="video/mp4">Your browser does not support the video tag.</video></div></section><section class="content-section"><div class="text-content"><h2 data-translate-key="about_s3_title">How to Become a Seller</h2><p data-translate-key="about_s3_p">Becoming a seller is simple! Register on our website, upload your store information, and start listing your products. Our verification process ensures secure and trusted transactions for all users.</p><a href="https://t.me/AdamaShoppingfeedback_bot">Adama Shopping</a></div><div class="media-content"><video autoplay muted loop playsinline><source src="video/seller.mp4" type="video/mp4">Your browser does not support the video tag.</video></div></section><section class="content-section"><div class="text-content"><h2 data-translate-key="about_s4_title">How to Order & Pay</h2><p data-translate-key="about_s4_p">Buyers can browse a wide variety of products, place orders with a single click, and pay securely through our supported payment options. Our dedicated delivery team ensures your order reaches your doorstep safely and quickly.</p><a href="https://t.me/AdamaShoppingfeedback_bot">Adama Shopping</a></div><div class="media-content"><video autoplay muted loop playsinline><source src="video/order.mp4" type="video/mp4">Your browser does not support the video tag.</video></div></section><section class="social-section"><h2 data-translate-key="social_title">Connect With Us</h2><p data-translate-key="social_p">Stay connected and get the latest updates through our social media platforms!</p><div class="social-icons-grid"><a href="https://t.me/AdamaShopping" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a> <a href="https://www.youtube.com/@AdamaShopping" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a> <a href="https://www.facebook.com/AdamaShopping" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a> <a href="https://www.instagram.com/AdamaShopping" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a> <a href="https://twitter.com/AdamaShopping" target="_blank" title="X (Twitter)"><i class="fab fa-twitter"></i></a></div></section><footer><div class="footer-content"><div class="footer-section"><h4 data-translate-key="footer1_title">Adama Shopping</h4><p data-translate-key="footer1_p">Find the best products at the best prices. Shop confidently with us.</p></div><div class="footer-section"><h4 data-translate-key="footer2_title">Quick Links</h4><ul><li><a href="index.html" data-translate-key="footer_nav_home">Home</a></li><li><a href="about.html" data-translate-key="footer_nav_about">About</a></li><li><a href="services.html" data-translate-key="footer_nav_services">Services</a></li><li><a href="privacy.html" data-translate-key="footer_nav_privacy">Privacy</a></li></ul></div><div class="footer-section"><h4 data-translate-key="footer3_title">Follow Us</h4><div class="social-icons"><a href="#"><i class="fab fa-telegram">Adama Shopping</i></a> <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-youtube">Adama Shopping</i></a></div></div><div class="footer-section"><h4 data-translate-key="footer4_title">Stay Updated</h4><p data-translate-key="footer4_p">Subscribe to our newsletter for the latest deals and updates.</p><form class="newsletter-form"><input type="email" placeholder="Enter your email" required data-translate-key="footer_placeholder"> <button type="submit"><i class="fas fa-paper-plane"></i></button></form></div></div></footer><a href="#" id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a><script>// Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });</script><script>const translations = {
+      // English Translations
+      en: {
+        nav_home: "Home",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        nav_login: "Login",
+        nav_signup: "Sign Up",
+        about_header_title: "About <span>Adama Shopping</span>",
+        about_header_p: "Your trusted e-commerce and delivery partner, connecting buyers and sellers across Ethiopia with speed, security, and reliability.",
+        about_s1_title: "Welcome to Adama Shopping",
+        about_s1_p: "Adama Shopping is your one-stop online delivery platform. We are dedicated to making online shopping easier than ever by bridging the gap between local sellers and customers with a seamless digital marketplace.",
+        about_s2_title: "Our Core Mission",
+        about_s2_p: "Our platform helps thousands of buyers and sellers every day. Whether you’re shopping for essentials or selling your products, Adama Shopping provides a trusted space to grow your business and shop with complete confidence.",
+        about_s3_title: "How to Become a Seller",
+        about_s3_p: "Becoming a seller is simple! Register on our website, upload your store information, and start listing your products. Our verification process ensures secure and trusted transactions for all users.",
+        about_s4_title: "How to Order & Pay",
+        about_s4_p: "Buyers can browse a wide variety of products, place orders with a single click, and pay securely through our supported payment options. Our dedicated delivery team ensures your order reaches your doorstep safely and quickly.",
+        social_title: "Connect With Us",
+        social_p: "Stay connected and get the latest updates through our social media platforms!",
+        footer1_title: "Adama Shopping",
+        footer1_p: "Find the best products at the best prices. Shop confidently with us.",
+        footer2_title: "Quick Links",
+        footer_nav_home: "Home",
+        footer_nav_about: "About",
+        footer_nav_services: "Services",
+        footer_nav_privacy: "Privacy",
+        footer3_title: "Follow Us",
+        footer4_title: "Stay Updated",
+        footer4_p: "Subscribe to our newsletter for the latest deals and updates.",
+        footer_placeholder: "Enter your email"
+      },
+      // Amharic Translations
+      am: {
+        nav_home: "መነሻ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        nav_login: "ይግቡ",
+        nav_signup: "ይመዝገቡ",
+        about_header_title: "ስለ <span>አዳማ ሾፒንግ</span>",
+        about_header_p: "የእርስዎ ታማኝ የኢ-ኮሜርስ እና የአቅርቦት አጋር፣ ገዢዎችን እና ሻጮችን በመላው ኢትዮጵያ በፍጥነት፣ ደህንነት እና አስተማማኝነት ያገናኛል።",
+        about_s1_title: "ወደ አዳማ ሾፒንግ እንኳን በደህና መጡ",
+        about_s1_p: "አዳማ ሾፒንግ የእርስዎ አንድ ማቆሚያ የመስመር ላይ ማቅረቢያ መድረክ ነው። እንከን የለሽ የዲጂታል የገበያ ቦታ ባላቸው የአገር ውስጥ ሻጮች እና ደንበኞች መካከል ያለውን ልዩነት በማስተካከል የመስመር ላይ ግብይትን ከመቼውም ጊዜ በበለጠ ቀላል ለማድረግ ቆርጠናል.",
+        about_s2_title: "የእኛ ዋና ተልዕኮ",
+        about_s2_p: "የእኛ መድረክ በየቀኑ በሺዎች የሚቆጠሩ ገዢዎችን እና ሻጮችን ይረዳል። ለዕቃዎች እየገዙም ሆኑ ምርቶችዎን እየሸጡ፣ አዳማ ሾፒንግ ንግድዎን የሚያሳድጉበት እና ሙሉ በሙሉ በልበ ሙሉነት የሚገዙበት የታመነ ቦታ ይሰጣል።",
+        about_s3_title: "ሻጭ እንዴት መሆን እንደሚቻል",
+        about_s3_p: "ሻጭ መሆን ቀላል ነው! በድረ-ገጻችን ላይ ይመዝገቡ፣ የመደብር መረጃዎን ይስቀሉ እና ምርቶችዎን መዘርዘር ይጀምሩ። የማረጋገጫ ሂደታችን ለሁሉም ተጠቃሚዎች ደህንነቱ የተጠበቀ እና የታመኑ ግብይቶችን ያረጋግጣል።",
+        about_s4_title: "እንዴት ማዘዝ እና መክፈል እንደሚቻል",
+        about_s4_p: "ገዢዎች የተለያዩ ምርቶችን ማሰስ፣ በአንድ ጠቅታ ትዕዛዝ መስጠት እና በሚደገፉ የክፍያ አማራጮች ደህንነቱ በተጠበቀ ሁኔታ መክፈል ይችላሉ። የእኛ ቁርጠኛ የማድረስ ቡድን ትዕዛዝዎ ደጃፍዎ ላይ በፍጥነት እና በአስተማማኝ ሁኔታ መድረሱን ያረጋግጣል።",
+        social_title: "ከእኛ ጋር ይገናኙ",
+        social_p: "ተገናኝተው ይቆዩ እና የቅርብ ጊዜ ዝመናዎችን በእኛ የማህበራዊ ሚዲያ መድረኮች ያግኙ!",
+        footer1_title: "አዳማ ሾፒንግ",
+        footer1_p: "ምርጥ ምርቶችን በተሻለ ዋጋ ያግኙ። ከእኛ ጋር በልበ ሙሉነት ይግዙ።",
+        footer2_title: "ፈጣን አገናኞች",
+        footer_nav_home: "መነሻ",
+        footer_nav_about: "ስለእኛ",
+        footer_nav_services: "አገልግሎቶች",
+        footer_nav_privacy: "ግላዊነት",
+        footer3_title: "ይከተሉን",
+        footer4_title: "እንደተዘመኑ ይቆዩ",
+        footer4_p: "ለአዳዲስ ቅናሾች እና ዝመናዎች ለጋዜጣችን ይመዝገቡ።",
+        footer_placeholder: "ኢሜልዎን ያስገቡ"
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_home: "Fuula Jalqabaa",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        nav_login: "Seeni",
+        nav_signup: "Galmaa'i",
+        about_header_title: "Waa'ee <span>Adamaa Shooppingii</span>",
+        about_header_p: "Hiriyaa daldalaa elektirooniksii fi geessituu amanamaa keessan, kan bitattootaa fi gurgurtoota guutuu Itoophiyaa keessatti saffisa, nageenyaa fi amanamummaadhaan wal qunnamsiisu.",
+        about_s1_title: "Gara Adamaa Shooppingii Nagaan Dhuftan",
+        about_s1_p: "Adamaa Shooppingiin iddoo geessituu toora interneetii keessanii kan iddoo tokkotti argamudha. Gurgurtoota naannoo fi maamiltoota gidduutti gabaa dijitaalaa cimee argamuun adda addaummaa jiru cufuun bitannaa toora interneetii salphaa taasisuuf kutanno qabna.",
+        about_s2_title: "Ergama Gurguddaa Keenya",
+        about_s2_p: "Marsariitiin keenya guyyaa guyyaan bitattootaa fi gurgurtoota kumaatamaan lakkaa'aman gargaara. Wantoota barbaachisoo yoo bitachaa ykn oomishaalee keessan yoo gurguraa jirtan, Adamaa Shooppingiin iddoo amanamaa daldala keessan itti guddistanii fi ofitti amanamummaa guutuun itti bitattan isiniif kenna.",
+        about_s3_title: "Akkaataa Gurguraa Itti Ta'amu",
+        about_s3_p: "Gurguraa ta'uun salphaadha! Marsariitii keenya irratti galmaa'aa, odeeffannoo suuqii keessanii olkaa'aa, fi oomishaalee keessan tarreessuu jalqabaa. Adeemsi mirkaneessuu keenya fayyadamtoota hundaaf geejjiba nageenya qabuu fi amanamaa ta'e mirkaneessa.",
+        about_s4_title: "Akkaataa Itti Ajajnuu fi Kaffalnu",
+        about_s4_p: "Bitattoonni oomishaalee adda addaa ilaaluu, alt tokko cuqaasuun ajaja kennuu, fi filannoowwan kaffaltii deeggaraman keenyaan nageenyaan kaffaluu danda'u. Gareen geessituu keenya kan kutate ajajni keessan balbala keessanitti nageenyaan akka ga'u mirkaneessa.",
+        social_title: "Nu Qunnamaa",
+        social_p: "Karaa marsariitiiwwan miidiyaa hawaasummaa keenyaa wal qunnamaa fi odeeffannoowwan haaraa argadhaa!",
+        footer1_title: "Adamaa Shooppingii",
+        footer1_p: "Oomishaalee gaggaarii gatii gaariin argadhaa. Ofitti amanamummaan nu biraa bitadhaa.",
+        footer2_title: "Ce'umsa Gaggabaaboo",
+        footer_nav_home: "Fuula Jalqabaa",
+        footer_nav_about: "Waa'ee Keenya",
+        footer_nav_services: "Tajaajila",
+        footer_nav_privacy: "Iccitii",
+        footer3_title: "Nu Hordofaa",
+        footer4_title: "Odeeffannoo argadhaa",
+        footer4_p: "Gatiiwwan fi odeeffannoowwan haaraa argachuuf barruulee keenyaaf galmaa'aa.",
+        footer_placeholder: "Imeelii keessan galchaa"
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+           // Use innerHTML to allow for HTML tags like <span> in translations
+           el.innerHTML = translation;
+        }
+
+        // Special case for placeholders
+        if (el.tagName === 'INPUT' && el.placeholder && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        if (btn.dataset.lang === lang) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Check for a saved language in local storage, or default to English
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    });</script></body></html>

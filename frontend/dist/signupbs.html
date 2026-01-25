@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admama Shopping — Choose Account</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><script src="https://unpkg.com/lottie-web@5.10.2/build/player/lottie.min.js" defer="defer"></script><style>:root{
+      --primary:#5A7BFC; --primary-hover:#4a6eed;
+      --secondary:#4AD991; --secondary-hover:#3fbf80;
+      --accent:#FFD25A;
+      --text:#2D3748; --light-text:#6B7280;
+      --bg:#F8F9FA; --card:#FFF;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow:0 15px 45px rgba(0,0,0,0.12);
+      --transition:0.32s cubic-bezier(.2,.9,.3,1);
+    }
+    /* Dark mode vars */
+    :root[data-theme="dark"]{
+      --bg:#0f1724; --card:#0b1220; --text:#E6EEF8; --light-text:#9FB3D6;
+      --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --hover-shadow:0 15px 45px rgba(2,6,23,0.7);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+    body{
+      min-height:100vh;background:var(--bg);color:var(--text);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;padding-bottom:60px;
+    }
+
+    /* NAVBAR */
+    .navbar{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:20px;padding:14px 20px;border-radius:12px;margin:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.6));
+      box-shadow:var(--shadow);backdrop-filter: blur(8px);
+    }
+    :root[data-theme="dark"] .navbar{
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo a{font-family:'Playfair Display',serif;font-size:22px;text-decoration:none;color:var(--text)}
+    .logo a span{color:var(--primary)}
+    .nav-links{display:flex;gap:14px;align-items:center; flex-wrap: wrap;}
+    .nav-links a{color:var(--light-text);text-decoration:none;padding:8px 12px;border-radius:10px;transition:var(--transition)}
+    .nav-links a:hover{color:var(--primary);transform:translateY(-2px)}
+    .btn-login{background:var(--primary);color:#fff;padding:10px 14px;border-radius:12px;font-weight:600}
+    .theme-toggle{cursor:pointer;padding:8px;border-radius:8px; background: none; border: none; color: var(--text);}
+
+    /* ===== NEW: Language Switcher Styling ===== */
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      background-color: rgba(0,0,0,0.05);
+      border-radius: var(--radius);
+    }
+    :root[data-theme="dark"] .lang-switcher {
+        background-color: rgba(255,255,255,0.05);
+    }
+    .lang-switcher a {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 12px;
+    }
+    .lang-switcher a.active {
+        background-color: var(--primary);
+        color: #fff;
+    }
+
+    /* MAIN CARD */
+    .selection-wrap{max-width:1100px;margin:30px auto;padding:28px;border-radius:20px;background:var(--card);box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .selection-grid{display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center}
+    @media(max-width:960px){.selection-grid{grid-template-columns:1fr; padding-bottom: 20px}}
+    .hero{
+      padding:18px 10%;
+    }
+    .hero h1{font-size:34px;margin-bottom:10px}
+    .hero h1 span{color:var(--primary)}
+    .hero p{color:var(--light-text);margin-bottom:18px;max-width:560px}
+
+    /* Floating shapes (animated background) */
+    .bg-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .shape{
+      position:absolute;border-radius:50%;filter:blur(30px);opacity:0.14;transform:translate3d(0,0,0);
+      animation:float 9s ease-in-out infinite;
+    }
+    .shape.s1{width:380px;height:380px;left:-80px;top:-120px;background:linear-gradient(90deg,var(--primary),#8ea2ff)}
+    .shape.s2{width:260px;height:260px;right:-60px;bottom:-80px;background:linear-gradient(90deg,var(--secondary),#7ce3b4);animation-duration:12s;opacity:0.12}
+    .shape.s3{width:160px;height:160px;left:50%;top:10%;background:var(--accent);opacity:0.08}
+    @keyframes float{0%{transform:translateY(0)translateX(0)}50%{transform:translateY(-18px)translateX(8px)}100%{transform:translateY(0)translateX(0)}}
+
+    /* Buttons panel */
+    .panel{
+      padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2));
+      border-radius:14px;box-shadow:0 8px 24px rgba(10,20,50,0.06);
+      display:flex;flex-direction:column;gap:20px;align-items:center;
+    }
+    :root[data-theme="dark"] .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+
+    .btn-box{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+    .select-btn{
+      display:flex;align-items:center;gap:12px;padding:16px 22px;border-radius:12px;color:#fff;text-decoration:none;font-weight:700;
+      min-width:220px;justify-content:center;box-shadow:0 8px 24px rgba(20,30,80,0.06);transition:transform var(--transition), box-shadow var(--transition);
+    }
+    .select-btn.buy{background:linear-gradient(90deg,var(--primary),#7f9bff)}
+    .select-btn.sell{background:linear-gradient(90deg,var(--secondary),#7ef0b0)}
+    .select-btn:hover{transform:translateY(-6px);box-shadow:var(--hover-shadow)}
+
+    /* Hover info cards */
+    .info-cards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+    .info {
+      min-width:220px;max-width:260px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.85);
+      box-shadow:0 6px 18px rgba(10,20,40,0.06);color:var(--text);transition:transform var(--transition), opacity var(--transition);
+    }
+    :root[data-theme="dark"] .info{background:rgba(255,255,255,0.02);color:var(--light-text)}
+    .info strong{display:block;margin-bottom:6px}
+    /* show/hide by hover (JS also toggles on mobile) */
+    .info.hidden{opacity:0;transform:translateY(8px);pointer-events:none}
+
+    /* Feature highlights */
+    .features{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+    .feature{flex:1 1 200px;min-width:180px;background:transparent;padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center}
+    .feature i{font-size:22px;color:var(--primary);background:rgba(90,123,252,0.12);padding:10px;border-radius:10px}
+
+    /* Testimonials slider (simple) */
+    .testimonials{margin-top:18px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01))}
+    .testimonials .slide{display:none;animation:slidefade 0.8s ease}
+    .testimonials .slide.active{display:block}
+    @keyframes slidefade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    /* Loading overlay */
+    .loading-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,12,20,0.55);z-index:2000;backdrop-filter: blur(6px);opacity:0;visibility:hidden;transition:opacity .2s;flex-direction:column}
+    .loading-overlay.show{opacity:1;visibility:visible}
+    .spinner{width:92px;height:92px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:var(--shadow)}
+    .spinner .logo{height:56px;width:56px;border-radius:10px;display:inline-block;background:linear-gradient(90deg,var(--primary),var(--secondary))}
+
+    /* Terms text */
+    .terms{font-size:13px;color:var(--light-text);margin-top:10px;text-align:center;padding:0 12px}
+
+    /* Back to top btn */
+    #back-to-top{position:fixed;bottom:20px;right:20px;background:var(--primary);color:#fff;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);text-decoration:none;visibility:hidden;opacity:0;transition:all .3s}
+    #back-to-top.show{visibility:visible;opacity:1;transform:translateY(0)}
+    #back-to-top:hover{background:var(--primary-hover)}
+
+    footer{margin-top:40px;padding:24px;border-radius:12px;text-align:center;color:var(--light-text)}
+    /* small screens */
+    @media(max-width:560px){
+      .navbar{padding:12px 14px;margin:12px}
+      .selection-grid{gap:16px}
+      .hero h1{font-size:22px}
+      .select-btn{min-width:160px;font-size:15px;padding:12px}
+      .info{max-width:100%}
+    }</style></head><body><div id="loading" class="loading-overlay" aria-hidden="true"><div class="spinner" role="status" aria-label="Loading"><div class="logo" id="loadingLogo" title="Admama Shopping logo"></div></div><div style="color:#fff;margin-top:12px" data-translate-key="loading_text">Preparing your signup...</div></div><div class="bg-shapes" aria-hidden="true"><div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div></div><header class="navbar" role="banner"><div class="logo"><a href="index.html" data-translate-key="nav_logo_full">Admama<span>Shopping</span></a></div><nav class="nav-links" role="navigation" aria-label="Main navigation"><a href="home.html"><i class="fas fa-home"></i> <span data-translate-key="nav_home">Home</span></a> <a href="about.html"><i class="fas fa-info-circle"></i> <span data-translate-key="nav_about">About</span></a> <a href="services.html"><i class="fas fa-handshake"></i> <span data-translate-key="nav_services">Services</span></a> <a href="privacy.html"><i class="fas fa-shield-alt"></i> <span data-translate-key="nav_privacy">Privacy</span></a> <a class="btn-login" href="login.html"><i class="fas fa-sign-in-alt"></i> <span data-translate-key="nav_login">Login</span></a> <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button><div class="lang-switcher"><a href="#" class="lang-btn" data-lang="en">EN</a> <a href="#" class="lang-btn" data-lang="am">አማ</a> <a href="#" class="lang-btn" data-lang="om">ORO</a></div></nav></header><main class="selection-wrap" id="mainCard"><div class="selection-grid"><div class="hero"><div style="display:flex;gap:12px;align-items:center;margin-bottom:8px"><img src="images/Adama Shopping.png" alt="Admama Shopping icon" style="width:70px;height:70px;border-radius:12px;object-fit:cover;"><div><div style="font-size:14px;color:var(--light-text)" data-translate-key="welcome_to">Welcome to</div><div style="font-weight:700;font-size:18px" data-translate-key="company_name">Admama Shopping</div></div></div><h1 data-translate-key="hero_title">Choose Your <span>Account Type</span></h1><p data-translate-key="hero_p">Join Admama Shopping as a Buyer to shop quickly and securely, or become a Seller to grow your business and reach more customers across Ethiopia.</p><div class="features" aria-hidden="false"><div class="feature"><i class="fas fa-shipping-fast"></i><div><strong data-translate-key="feature1_title">Fast Delivery</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="feature1_p">Reliable local deliveries</div></div></div><div class="feature"><i class="fas fa-lock"></i><div><strong data-translate-key="feature2_title">Secure Payments</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="feature2_p">Trusted payment options</div></div></div><div class="feature"><i class="fas fa-headset"></i><div><strong data-translate-key="feature3_title">24/7 Support</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="feature3_p">Help whenever you need</div></div></div></div><div class="testimonials" aria-live="polite"><div class="slide active"><strong data-translate-key="testimonial1_quote">“Great prices and fast delivery!”</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="testimonial1_author">— Hana, Buyer</div></div><div class="slide"><strong data-translate-key="testimonial2_quote">“My shop grew since joining Admama.”</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="testimonial2_author">— Kassahun, Seller</div></div></div></div><aside class="panel" aria-label="Account selection panel"><div style="display:flex;gap:12px;align-items:center;width:100%;justify-content:center"><div id="lottieBuyer" style="width:86px;height:86px"></div><div id="lottieSeller" style="width:86px;height:86px"></div></div><p style="font-weight:600;font-size:15px;margin-top:6px" data-translate-key="panel_subtitle">Select whether you want to join as a Buyer or Seller.</p><div class="btn-box" role="group" aria-label="Choose account type"><a href="signup.html" class="select-btn buy" data-type="buyer" onclick="choose(event)" aria-label="Sign up as buyer"><i class="fas fa-user-tag"></i> <span data-translate-key="buyer_button">Buyer Sign Up</span> </a><a href="seller-signup.html" class="select-btn sell" data-type="seller" onclick="choose(event)" aria-label="Sign up as seller"><i class="fas fa-store"></i> <span data-translate-key="seller_button">Seller Sign Up</span></a></div><div class="info-cards" aria-hidden="false"><div id="infoBuyer" class="info"><strong data-translate-key="infocard_buyer_title">Buyer Account</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="infocard_buyer_p">Buy products, track orders, save favorites, and chat with sellers.</div></div><div id="infoSeller" class="info hidden"><strong data-translate-key="infocard_seller_title">Seller Account</strong><div style="font-size:13px;color:var(--light-text)" data-translate-key="infocard_seller_p">Upload products, manage orders, get paid, and grow your shop on Admama.</div></div></div><div class="terms" data-translate-key="terms_note">By choosing an account, you agree to Admama Shopping's <a href="privacy.html">Terms & Privacy</a>.</div><div style="width:100%;margin-top:14px"><div style="font-size:13px;color:var(--light-text)" data-translate-key="trusted_by">Trusted by thousands across Ethiopia</div></div></aside></div></main><footer data-translate-key="footer_text">© <span id="yr"></span> Admama Shopping — All rights reserved.</footer><a id="back-to-top" href="#" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a><script>/* --- Utility & state --- */
+    const state = { theme: localStorage.getItem('admamaTheme') || 'light' };
+    document.documentElement.setAttribute('data-theme', state.theme === 'dark' ? 'dark' : 'light');
+
+    // set year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // back to top
+    const backBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 320) backBtn.classList.add('show'); else backBtn.classList.remove('show');
+    });
+
+    backBtn.addEventListener('click', e => { e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+    /* --- Theme toggle --- */
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', state.theme === 'dark' ? 'dark' : 'light');
+      localStorage.setItem('admamaTheme', state.theme);
+      themeToggle.innerHTML = state.theme === 'dark' ? '<i class=\"fas fa-sun\"></i>' : '<i class=\"fas fa-moon\"></i>';
+    });
+    // initialize icon
+    themeToggle.innerHTML = state.theme === 'dark' ? '<i class=\"fas fa-sun\"></i>' : '<i class=\"fas fa-moon\"></i>';
+
+    /* --- Testimonials auto-rotate --- */
+    (function rotateTestimonials(){
+      const slides = document.querySelectorAll('.testimonials .slide');
+      let idx = 0;
+      setInterval(() => {
+        slides[idx].classList.remove('active');
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add('active');
+      }, 4200);
+    })();
+
+    /* --- Lottie placeholders: you can replace the empty objects with remote JSON URLs --- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const lottieBuyerEl = document.getElementById('lottieBuyer');
+      const lottieSellerEl = document.getElementById('lottieSeller');
+      lottieBuyerEl.innerHTML = '<div style=\"display:flex;align-items:center;justify-content:center;height:100%;\"><i class=\"fas fa-cart-plus\" style=\"font-size:28px;color:var(--primary)\"></i></div>';
+      lottieSellerEl.innerHTML = '<div style=\"display:flex;align-items:center;justify-content:center;height:100%;\"><i class=\"fas fa-store\" style=\"font-size:28px;color:var(--secondary)\"></i></div>';
+    });
+
+    /* --- Hover info cards behavior --- */
+    const buyerBtn = document.querySelector('.select-btn.buy');
+    const sellerBtn = document.querySelector('.select-btn.sell');
+    const infoBuyer = document.getElementById('infoBuyer');
+    const infoSeller = document.getElementById('infoSeller');
+
+    function showInfo(type){
+      if(type === 'buyer'){ infoBuyer.classList.remove('hidden'); infoSeller.classList.add('hidden'); }
+      else if(type === 'seller'){ infoSeller.classList.remove('hidden'); infoBuyer.classList.add('hidden'); }
+      else { infoBuyer.classList.remove('hidden'); infoSeller.classList.remove('hidden'); }
+    }
+    buyerBtn.addEventListener('mouseenter', () => showInfo('buyer'));
+    sellerBtn.addEventListener('mouseenter', () => showInfo('seller'));
+    [buyerBtn, sellerBtn].forEach(btn => {
+      btn.addEventListener('focus', e => showInfo(btn.dataset.type));
+      btn.addEventListener('blur', e => showInfo());
+    });
+    buyerBtn.addEventListener('touchstart', () => showInfo('buyer'));
+    sellerBtn.addEventListener('touchstart', () => showInfo('seller'));
+
+    /* --- Click / redirect behavior with animations, sound, loading overlay --- */
+    const loading = document.getElementById('loading');
+
+    function playClickTone(){
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.value = 720; // Hz
+        g.gain.value = 0.02;
+        o.connect(g); g.connect(ctx.destination);
+        o.start();
+        setTimeout(()=>{ o.stop(); ctx.close(); }, 120);
+      } catch(e){ /* ignore */ }
+    }
+
+    function glowButton(btn){
+      btn.animate([{ boxShadow: '0 0 0px rgba(255,255,255,0)' }, { boxShadow: '0 0 28px rgba(255,255,255,0.9)' }], { duration: 520, easing: 'ease-out' });
+    }
+
+    function choose(e){
+      e.preventDefault();
+      const btn = e.currentTarget;
+      const href = btn.getAttribute('href');
+      const type = btn.dataset.type || '';
+      playClickTone();
+      glowButton(btn);
+
+      const ripple = document.createElement('div');
+      ripple.style.position = 'absolute';
+      ripple.style.inset = '0';
+      ripple.style.background = type === 'buyer' ? 'rgba(90,123,252,0.08)' : 'rgba(74,217,145,0.08)';
+      ripple.style.zIndex = '50';
+      ripple.style.borderRadius = '16px';
+      ripple.style.pointerEvents = 'none';
+      document.getElementById('mainCard').appendChild(ripple);
+      ripple.animate([{opacity:1},{opacity:0}],{duration:540}).onfinish = ()=>ripple.remove();
+
+      loading.classList.add('show');
+      setTimeout(()=>{ window.location.href = href; }, 700);
+    }
+
+    window.choose = choose;
+
+    (function spinLoadingLogo(){
+      const logo = document.getElementById('loadingLogo');
+      if(!logo) return;
+      logo.animate([
+        { transform: 'scale(1)', opacity: 1 },
+        { transform: 'scale(1.06)', opacity: 0.9 },
+        { transform: 'scale(1)', opacity: 1 }
+      ], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
+    })();
+    [buyerBtn, sellerBtn].forEach(b => {
+      b.addEventListener('keydown', (ev) => {
+        if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose({ currentTarget: b, preventDefault: () => {} }); }
+      });
+    });</script><script>const translations = {
+      // English Translations
+      en: {
+        nav_logo_full: "Admama<span>Shopping</span>",
+        nav_home: "Home",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        nav_login: "Login",
+        welcome_to: "Welcome to",
+        company_name: "Admama Shopping",
+        hero_title: "Choose Your <span>Account Type</span>",
+        hero_p: "Join Admama Shopping as a Buyer to shop quickly and securely, or become a Seller to grow your business and reach more customers across Ethiopia.",
+        feature1_title: "Fast Delivery",
+        feature1_p: "Reliable local deliveries",
+        feature2_title: "Secure Payments",
+        feature2_p: "Trusted payment options",
+        feature3_title: "24/7 Support",
+        feature3_p: "Help whenever you need",
+        testimonial1_quote: "“Great prices and fast delivery!”",
+        testimonial1_author: "— Hana, Buyer",
+        testimonial2_quote: "“My shop grew since joining Admama.”",
+        testimonial2_author: "— Kassahun, Seller",
+        panel_subtitle: "Select whether you want to join as a Buyer or Seller.",
+        buyer_button: "Buyer Sign Up",
+        seller_button: "Seller Sign Up",
+        infocard_buyer_title: "Buyer Account",
+        infocard_buyer_p: "Buy products, track orders, save favorites, and chat with sellers.",
+        infocard_seller_title: "Seller Account",
+        infocard_seller_p: "Upload products, manage orders, get paid, and grow your shop on Admama.",
+        terms_note: "By choosing an account, you agree to Admama Shopping's <a href=\"privacy.html\">Terms & Privacy</a>.",
+        trusted_by: "Trusted by thousands across Ethiopia",
+        footer_text: `© <span id="yr">${new Date().getFullYear()}</span> Admama Shopping — All rights reserved.`,
+        loading_text: "Preparing your signup..."
+      },
+      // Amharic Translations
+      am: {
+        nav_logo_full: "አዳማ<span>ሾፒንግ</span>",
+        nav_home: "መነሻ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        nav_login: "ይግቡ",
+        welcome_to: "እንኳን ወደ",
+        company_name: "አዳማ ሾፒንግ",
+        hero_title: "የእርስዎን <span>የחשבון አይነት</span> ይምረጡ",
+        hero_p: "በፍጥነት እና ደህንነቱ በተጠበቀ ሁኔታ ለመግዛት እንደ ገዢ አዳማ ሾፒንግን ይቀላቀሉ፣ ወይም ንግድዎን ለማሳደግ እና በመላው ኢትዮጵያ ተጨማሪ ደንበኞችን ለመድረስ ሻጭ ይሁኑ።",
+        feature1_title: "ፈጣን አቅርቦት",
+        feature1_p: "አስተማማኝ የአገር ውስጥ አቅርቦቶች",
+        feature2_title: "ደህንነቱ የተጠበቀ ክፍያዎች",
+        feature2_p: "የታመኑ የክፍያ አማራጮች",
+        feature3_title: "24/7 ድጋፍ",
+        feature3_p: "በፈለጉት ጊዜ እርዳታ",
+        testimonial1_quote: "“ምርጥ ዋጋ እና ፈጣን መላኪያ!”",
+        testimonial1_author: "— ሃና፣ ገዢ",
+        testimonial2_quote: "“አዳማን ከተቀላቀልኩ ጀምሮ ሱቄ አድጓል።”",
+        testimonial2_author: "— ካሳሁን፣ ሻጭ",
+        panel_subtitle: "እንደ ገዢ ወይም ሻጭ መቀላቀል ከፈለጉ ይምረጡ።",
+        buyer_button: "የገዢ ምዝገባ",
+        seller_button: "የሻጭ ምዝገባ",
+        infocard_buyer_title: "የገዢ መለያ",
+        infocard_buyer_p: "ምርቶችን ይግዙ፣ ትዕዛዞችን ይከታተሉ፣ ተወዳጆችን ያስቀምጡ እና ከሻጮች ጋር ይወያዩ።",
+        infocard_seller_title: "የሻጭ መለያ",
+        infocard_seller_p: "ምርቶችን ይስቀሉ፣ ትዕዛዞችን ያስተዳድሩ፣ ክፍያ ያግኙ እና በአዳማ ላይ ሱቅዎን ያሳድጉ።",
+        terms_note: "חשבון በመምረጥ፣ በአዳማ ሾፒንግ <a href=\"privacy.html\">ውሎች እና ግላዊነት</a> ተስማምተሃል።",
+        trusted_by: "በመላው ኢትዮጵያ በሺዎች የሚቆጠሩ የታመነ",
+        footer_text: `© <span id="yr">${new Date().getFullYear()}</span> አዳማ ሾፒንግ — ሁሉም መብቶች የተጠበቁ ናቸው።`,
+        loading_text: "ምዝገባዎን በማዘጋጀት ላይ..."
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_logo_full: "Adamaa<span>Shooppingii</span>",
+        nav_home: "Fuula Jalqabaa",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        nav_login: "Seeni",
+        welcome_to: "Baga Nagaan Dhuftan",
+        company_name: "Adamaa Shooppingii",
+        hero_title: "<span>Gosa Akkaawuntii</span> Keessan Filadhaa",
+        hero_p: "Saffisaan fi amanamummaadhaan bitachuuf akka Bitaatti Adamaa Shooppingiitti makamaa, yookiin immoo daldala keessan guddisuuf fi maamiltoota dabalataa Itiyoophiyaa keessatti argachuuf Gurguraa ta'aa.",
+        feature1_title: "Geessituu Saffisaa",
+        feature1_p: "Geessituu amansiisaa naannoo",
+        feature2_title: "Kaffaltii Amniisaa",
+        feature2_p: "Filannoowwan kaffaltii amansiisoo",
+        feature3_title: "Daggeettii 24/7",
+        feature3_p: "Yeroo barbaaddetti gargaarsa",
+        testimonial1_quote: "“Gatii gaarii fi geessituu saffisaa!”",
+        testimonial1_author: "— Hana, Bitaa",
+        testimonial2_quote: "“Ergan Adamaatti makamee suuqiin koo guddateera.”",
+        testimonial2_author: "— Kassahun, Gurguraa",
+        panel_subtitle: "Akka Bitaa ykn Gurguraatti makamuu akka barbaaddan filadhaa.",
+        buyer_button: "Bitaa Galmaa'i",
+        seller_button: "Gurguraa Galmaa'i",
+        infocard_buyer_title: "Akkaawuntii Bitaa",
+        infocard_buyer_p: "Oomishaalee bitadhaa, ajajoota hordofaa, jaallattan kuufadhaa, fi gurgurtoota waliin haasa'aa.",
+        infocard_seller_title: "Akkaawuntii Gurguraa",
+        infocard_seller_p: "Oomishaalee ol fe'aa, ajajoota bulchaa, kaffaltii argadhaa, fi suuqii keessan Adamaa irratti guddisaa.",
+        terms_note: "Akkaawuntii filachuun, Adamaa Shooppingii <a href=\"privacy.html\">Seerotaa fi Iccitii</a> waliigalteetta.",
+        trusted_by: "Guutuu Itiyoophiyaa keessatti kumaatamaan amanamaa",
+        footer_text: `© <span id="yr">${new Date().getFullYear()}</span> Adamaa Shooppingii — Mirgi hundi seeraan eegamaadha.`,
+        loading_text: "Galmee keessan qopheessaa jira..."
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+           // Use innerHTML to allow for HTML tags like <span>
+           el.innerHTML = translation;
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Check for a saved language in local storage, or default to English
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    });</script></body></html>

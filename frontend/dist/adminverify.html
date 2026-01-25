@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Verification Panel</title><style>body { font-family: Arial, sans-serif; background: #f8f8f8; padding: 20px; }
+    h1 { color: #333; text-align: center; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+    button { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: bold; }
+    .verify-btn { background-color: #28a745; }
+    .unverify-btn { background-color: #dc3545; }
+    .status { font-weight: bold; }
+    .verified { color: #28a745; }
+    .unverified { color: #dc3545; }</style></head><body><h1>Admin Verification Panel</h1><table id="userTable"><thead><tr><th>Username</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead><tbody id="userTableBody"><tr><td colspan="4">Loading...</td></tr></tbody></table><script>const BASE_URL = 'http://localhost:3000/api/admin';
+
+    async function fetchUsers() {
+      try {
+        const res = await fetch(`${BASE_URL}/verify-list`);
+        const data = await res.json();
+        const tableBody = document.getElementById('userTableBody');
+        tableBody.innerHTML = '';
+
+        const allUsers = [
+          ...data.users.map(u => ({ ...u, type: 'User' })),
+          ...data.sellers.map(s => ({ ...s, type: 'Seller' }))
+        ];
+
+        if (allUsers.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="4">0 users</td></tr>';
+          return;
+        }
+
+        allUsers.forEach(u => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${u.username}</td>
+            <td>${u.type}</td>
+            <td class="status ${u.isVerified ? 'verified' : 'unverified'}">${u.isVerified ? 'Verified' : 'Unverified'}</td>
+            <td>
+              <button class="verify-btn" data-username="${u.username}" data-action="verify">Verify</button>
+              <button class="unverify-btn" data-username="${u.username}" data-action="unverify">Unverify</button>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+
+        // Add click listeners to buttons
+        document.querySelectorAll('button[data-username]').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const username = btn.dataset.username;
+            const action = btn.dataset.action;
+            await updateVerification(username, action);
+          });
+        });
+
+      } catch (err) {
+        console.error('Error loading users:', err);
+        document.getElementById('userTableBody').innerHTML = '<tr><td colspan="4">Error loading users</td></tr>';
+      }
+    }
+
+    async function updateVerification(username, action) {
+      try {
+        const endpoint = action === 'verify' ? 'verify' : 'unverify';
+        const res = await fetch(`${BASE_URL}/${endpoint}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username })
+        });
+        const data = await res.json();
+        alert(data.message);
+        fetchUsers();
+      } catch (err) {
+        console.error('Error updating verification:', err);
+        alert('Failed to update verification');
+      }
+    }
+
+    fetchUsers();</script></body></html>

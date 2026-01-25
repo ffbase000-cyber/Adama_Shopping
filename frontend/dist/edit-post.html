@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Edit Post - Adama Shopping</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>/* Root Variables */
+  :root {
+    --primary: #5A7BFC;
+    --secondary: #4AD991;
+    --accent: #FFD25A;
+    --text: #2D3748;
+    --light-text: #6B7280;
+    --bg: #F8F9FA;
+    --card: #FFFFFF;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+    --transition: 0.3s ease;
+    --red-btn: #E74C3C;
+    --red-btn-hover: #C0392B;
+    --navbar-height: 60px;
+  }
+
+  /* Universal Styles */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+  html { height: 100%; }
+  body { 
+    min-height:100vh; 
+    display:flex; 
+    flex-direction:column; 
+    background:var(--bg); 
+    color:var(--text); 
+    overflow-x:hidden; 
+    position:relative; 
+  }
+  h1, h2, h3 { color:var(--text); font-weight:600; }
+  p { color:var(--light-text); line-height:1.6; }
+
+  /* Navbar Styles */
+  .navbar {
+    position: fixed; top: 0; left: 0; width: 100%; height: var(--navbar-height);
+    background-color: var(--card); box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 998;
+    display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+    transition: margin-left var(--transition); flex-wrap: wrap;
+  }
+  .navbar-logo {
+    font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none;
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  }
+  .navbar-logo i { font-size: 28px; color: var(--accent); }
+  .navbar-nav { display: flex; gap: 25px; margin-left: auto; flex-shrink: 0; }
+  .navbar-nav a {
+    color: var(--text); text-decoration: none; font-weight: 500; font-size: 16px;
+    position: relative; transition: color var(--transition);
+  }
+  .navbar-nav a:hover { color: var(--primary); }
+  .navbar-nav a::after {
+    content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px;
+    background-color: var(--primary); transition: width var(--transition);
+  }
+  .navbar-nav a:hover::after, .navbar-nav a.active::after { width: 100%; }
+  .navbar-nav a.active { color: var(--primary); }
+  .navbar-buttons { display: flex; align-items: center; margin-left: 25px; flex-shrink: 0; }
+  .navbar-logout-btn {
+    background-color: var(--red-btn); color: white; padding: 8px 18px; border-radius: var(--radius);
+    border: none; cursor: pointer; font-size: 15px; font-weight: 500; transition: all var(--transition);
+    box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px;
+  }
+  .navbar-logout-btn:hover {
+    background-color: var(--red-btn-hover); transform: translateY(-2px); box-shadow: var(--hover-shadow);
+  }
+
+  /* Sidebar Styles */
+  .sidebar {
+    position: fixed; left: -280px; top: 0; width: 280px; height: 100%;
+    background: linear-gradient(180deg, var(--primary), #4A6EED); color: white;
+    transition: left var(--transition), box-shadow var(--transition); z-index: 999;
+    overflow-y: auto; padding: 30px 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+  }
+  .sidebar.active { left: 0; box-shadow: 5px 0 20px rgba(0,0,0,0.4); }
+  .sidebar h2 {
+    text-align: center; margin-bottom: 30px; color: white; font-size: 26px; font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px;
+  }
+  .sidebar .user-profile-info {
+    margin-bottom: 30px; text-align: center; background: rgba(255,255,255,0.1);
+    padding: 15px; border-radius: var(--radius); box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  .sidebar .user-profile-info img {
+    display: block; margin: 0 auto 15px; border-radius: 50%; width: 130px; height: 130px;
+    object-fit: cover; border: 4px solid var(--accent); box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+  .sidebar .user-profile-info p { margin: 5px 0; font-size: 15px; color: #e0e0e0; font-weight: 300; }
+  .sidebar .user-profile-info p strong { color: white; font-weight: 500; }
+  .sidebar a {
+    display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: white;
+    text-decoration: none; border-radius: var(--radius); background: rgba(255,255,255,0.15);
+    margin: 12px 0; font-size: 16px; transition: all var(--transition); font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .sidebar a:hover { background: rgba(255,255,255,0.3); transform: translateX(8px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .sidebar a i { font-size: 20px; color: var(--accent); }
+
+  /* Toggle Button */
+  .toggle-btn {
+    position: fixed; top: 10px; left: 20px; z-index: 1001; cursor: pointer; padding: 8px;
+    display: flex; flex-direction: column; justify-content: space-around; width: 40px;
+    height: 35px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    transition: all var(--transition);
+  }
+  .toggle-btn:hover { box-shadow: var(--hover-shadow); transform: translateY(-2px); }
+  .bar { width: 100%; height: 4px; background-color: var(--text); margin: 3px 0; transition: all var(--transition); border-radius: 2px; }
+  .toggle-btn.active .bar:nth-child(1) { transform: rotate(-45deg) translate(-7px, 6px); background-color: var(--accent); }
+  .toggle-btn.active .bar:nth-child(2) { opacity: 0; }
+  .toggle-btn.active .bar:nth-child(3) { transform: rotate(45deg) translate(-8px, -8px); background-color: var(--accent); }
+
+  /* Main Layout */
+  .main-layout-container {
+    padding-top: calc(var(--navbar-height) + 40px);
+    flex: 1 0 auto; /* Allows the main content to grow and shrink, but not shrink smaller than its content */
+    padding-left: 30px; padding-right: 30px;
+    max-width: 800px;
+    margin: 0 auto; width: 100%;
+    transition: padding-left var(--transition);
+  }
+  .sidebar.active ~ .main-layout-container { padding-left: 30px; }
+  .sidebar.active ~ .navbar { margin-left: 280px; width: calc(100% - 280px); }
+  
+  /* Page & Form Styles */
+  .page-title { font-size: 32px; color: var(--primary); margin-bottom: 25px; text-align: center; }
+  #editPostForm { background: var(--card); padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 40px; }
+  #editPostForm label { font-weight: 500; color: var(--text); display: block; margin-bottom: 8px; font-size: 16px; }
+  #editPostForm input,
+  #editPostForm textarea {
+    width: 100%; padding: 12px 15px; margin-bottom: 20px; border-radius: var(--radius);
+    border: 1px solid #e2e8f0; font-size: 15px; transition: all var(--transition);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  }
+  #editPostForm input:focus,
+  #editPostForm textarea:focus {
+    border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+  }
+  #editPostForm textarea { min-height: 120px; resize: vertical; }
+  #editPostForm button {
+    display: inline-flex; align-items: center; justify-content: center; width: 100%;
+    padding: 12px 20px; border-radius: var(--radius); text-decoration: none;
+    font-weight: 600; font-size: 16px; transition: all var(--transition);
+    cursor: pointer; border: none; background-color: var(--primary);
+    color: white; box-shadow: var(--shadow);
+  }
+  #editPostForm button:hover { background-color: #4A6EED; transform: translateY(-3px); box-shadow: var(--hover-shadow); }
+  #userInfo { text-align: center; color: var(--light-text); margin-bottom: 20px; }
+  #message { text-align: center; margin-top: 15px; font-weight: 500; }
+
+  /* --- NEW FOOTER STYLES --- */
+  .site-footer {
+    background-color: var(--text);
+    color: #a0aec0;
+    padding: 50px 0 20px 0;
+    margin-top: auto; /* Pushes footer to the bottom */
+    width: 100%;
+    flex-shrink: 0; /* Prevents footer from shrinking */
+  }
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .footer-about, .footer-links, .footer-social {
+    flex: 1;
+    min-width: 250px;
+  }
+  .site-footer h3 {
+    color: var(--card);
+    font-size: 18px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+    font-weight: 600;
+  }
+  .site-footer h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--accent);
+  }
+  .footer-about p { color: #a0aec0; font-size: 14px; }
+  .footer-links ul { list-style: none; }
+  .footer-links ul li a {
+    color: #a0aec0; text-decoration: none; margin-bottom: 10px;
+    display: inline-block; transition: all var(--transition); font-size: 15px;
+  }
+  .footer-links ul li a:hover { color: var(--accent); transform: translateX(5px); }
+  .footer-social a {
+    display: inline-flex; justify-content: center; align-items: center;
+    width: 40px; height: 40px; background-color: rgba(255,255,255,0.1);
+    color: var(--card); border-radius: 50%; text-decoration: none;
+    margin-right: 10px; transition: all var(--transition); font-size: 16px;
+  }
+  .footer-social a:hover { background-color: var(--primary); transform: translateY(-3px); }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    margin-top: 30px;
+    border-top: 1px solid #4a5568;
+    font-size: 14px;
+  }
+  /* --- END FOOTER STYLES --- */
+
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .navbar { height: auto; padding-bottom: 10px; flex-direction: column; align-items: flex-start; }
+    .navbar-logo, .navbar-nav, .navbar-buttons { width: 100%; justify-content: center; margin-left: 0; margin-top: 10px; }
+    .main-layout-container { padding-top: 150px; padding-left: 15px; padding-right: 15px; }
+    .sidebar.active ~ .main-layout-container { padding-left: 15px; }
+    .sidebar.active ~ .navbar { margin-left: 0; width: 100%; }
+    #editPostForm { padding: 20px; }
+  }</style></head><body><nav class="navbar" id="mainNavbar"><a href="home.html" class="navbar-logo"><i class="fas fa-shopping-bag"></i> Adama Shopping</a><div class="navbar-nav"><a href="home.html">Home</a> <a href="posts.html">Posts</a> <a href="my-posts.html" class="active">My Post</a> <a href="order.html">Orders</a></div><div class="navbar-buttons"><button id="navbarLogoutBtn" class="navbar-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></div></nav><div class="toggle-btn" id="toggleBtn"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="sidebar" id="sidebar"><h2>Adama Shopping</h2><div id="sidebarUserInfo" class="user-profile-info"></div><a href="posts.html"><i class="fas fa-box"></i> Posts</a> <a href="my-posts.html" class="active"><i class="fas fa-store"></i> My Post</a> <a href="order.html"><i class="fas fa-shopping-cart"></i> Orders</a> <a href="sellerOrders.html"><i class="fas fa-clipboard-list"></i> My Seller Orders</a> <button id="logoutBtnSidebar" class="red-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></div><div class="main-layout-container"><h1 class="page-title">Edit Post</h1><div id="userInfo"></div><form id="editPostForm"><label for="title">Title:</label> <input type="text" id="title" required> <label for="description">Description:</label> <textarea id="description" required></textarea> <label for="importantInfo">Important Info:</label> <textarea id="importantInfo"></textarea> <label for="location">Location:</label> <input type="text" id="location" required> <label for="price">Price (Birr):</label> <input type="number" id="price" required> <button type="submit"><i class="fas fa-save" style="margin-right: 8px;"></i> Save Changes</button></form><div id="message"></div></div><footer class="site-footer"><div class="footer-container"><div class="footer-about"><h3><i class="fas fa-shopping-bag" style="color: var(--accent); margin-right: 8px;"></i>Adama Shopping</h3><p>Your one-stop destination for the best products. We are dedicated to connecting buyers and sellers with ease, security, and trust.</p></div><div class="footer-links"><h3>Quick Links</h3><ul><li><a href="home.html">Home</a></li><li><a href="posts.html">All Posts</a></li><li><a href="order.html">My Orders</a></li><li><a href="aboutt.html">About Us</a></li><li><a href="servicess.html">service</a></li><li><a href="privacyy.html">Privacy Policy</a></li></ul></div><div class="footer-social"><h3>Follow Us</h3><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a> <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a> <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></div></div><div class="footer-bottom"><p>&copy; 2025 Adama Shopping. All Rights Reserved.</p></div></footer><script>// --- START OF ORIGINAL SCRIPT (with added UI logic) ---
+    const userInfoDiv = document.getElementById('userInfo');
+    const form = document.getElementById('editPostForm');
+    const messageDiv = document.getElementById('message');
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebarUserInfo = document.getElementById('sidebarUserInfo');
+    const navbarLogoutBtn = document.getElementById('navbarLogoutBtn');
+    const logoutBtnSidebar = document.getElementById('logoutBtnSidebar');
+
+    // Sidebar Toggle Logic
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      toggleBtn.classList.toggle('active');
+    });
+
+    const storedUser = localStorage.getItem('currentUser');
+    if (!storedUser) {
+      alert('Please log in first.');
+      window.location.href = 'login.html';
+    } else {
+      const currentUser = JSON.parse(storedUser);
+      const username = currentUser.info.username;
+      userInfoDiv.innerHTML = `<p>Editing post as: <strong>${username}</strong></p>`;
+      const { accountType, info } = currentUser;
+      let sidebarUserHtml = `
+        <img src="${info.profilePic || 'https://via.placeholder.com/130/5A7BFC/FFFFFF?text=PROFILE'}" alt="Profile Picture">
+        <p>Hello, <strong>${info.fullName}!</strong></p>
+        <p>Username: ${info.username}</p>`;
+      sidebarUserInfo.innerHTML = sidebarUserHtml;
+
+      navbarLogoutBtn.addEventListener('click', logout);
+      logoutBtnSidebar.addEventListener('click', logout);
+      function logout() {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get('id');
+      if (!postId) {
+        alert('No post ID provided');
+        window.location.href = 'my-posts.html';
+      }
+
+      fetch(`http://localhost:3000/api/posts?username=${username}`)
+        .then(res => res.json())
+        .then(data => {
+          const post = data.posts.find(p => p._id === postId);
+          if (!post) {
+            alert('Post not found or you are not authorized');
+            window.location.href = 'my-posts.html';
+            return;
+          }
+          document.getElementById('title').value = post.title;
+          document.getElementById('description').value = post.description;
+          document.getElementById('importantInfo').value = post.importantInfo || '';
+          document.getElementById('location').value = post.location;
+          document.getElementById('price').value = post.price;
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Error loading post');
+        });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        messageDiv.textContent = '';
+        const updatedData = {
+          username,
+          title: document.getElementById('title').value,
+          description: document.getElementById('description').value,
+          importantInfo: document.getElementById('importantInfo').value,
+          location: document.getElementById('location').value,
+          price: document.getElementById('price').value
+        };
+        try {
+          const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData)
+          });
+          const result = await res.json();
+          if (!res.ok) {
+            messageDiv.style.color = 'red';
+            messageDiv.textContent = result.error || 'Error updating post';
+            return;
+          }
+          alert('Post updated successfully');
+          window.location.href = 'my-posts.html';
+        } catch (err) {
+          console.error(err);
+          messageDiv.style.color = 'red';
+          messageDiv.textContent = 'Network error';
+        }
+      });
+    }</script></body></html>

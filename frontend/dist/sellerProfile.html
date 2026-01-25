@@ -1,0 +1,863 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Seller Profile</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>/* Root Variables (from home.html) */
+    :root {
+      --primary: #5A7BFC;
+      --secondary: #4AD991;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+      --red-btn: #E74C3C;
+      --red-btn-hover: #C0392B;
+      --green-btn: #28a745;
+      --green-btn-hover: #218838;
+      --navbar-height: 60px;
+    }
+
+    /* Universal Styles (from home.html) */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--text); overflow-x:hidden; position:relative; }
+
+    h1, h2, h3 { color:var(--text); font-weight:600; }
+    p { color:var(--light-text); line-height:1.6; }
+
+    /* Navbar (identical to home.html) */
+    .navbar {
+      position: sticky; /* Sticky here for simpler integration in this page */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--navbar-height);
+      background-color: var(--card);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 998;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      flex-wrap: wrap;
+    }
+    .navbar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .navbar-logo i {
+      font-size: 28px;
+      color: var(--accent);
+    }
+    .navbar .search-container {
+        margin: 0 20px;
+        flex-grow: 1;
+        max-width: 400px;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .navbar .search-input {
+        width: 100%;
+        padding: 8px 15px;
+        font-size: 14px;
+        border-radius: var(--radius);
+        border: 1px solid #e2e8f0;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        transition: all var(--transition);
+        padding-right: 40px;
+    }
+    .navbar .search-input:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+    }
+    .navbar .search-icon {
+        position: absolute;
+        right: 15px;
+        color: var(--light-text);
+        font-size: 16px;
+        pointer-events: none;
+    }
+    .navbar-nav {
+      display: flex;
+      gap: 25px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .navbar-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      transition: color var(--transition);
+    }
+    .navbar-nav a:hover {
+      color: var(--primary);
+    }
+    .navbar-nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width var(--transition);
+    }
+    .navbar-nav a:hover::after,
+    .navbar-nav a.active::after {
+      width: 100%;
+    }
+    .navbar-nav a.active {
+      color: var(--primary);
+    }
+    .navbar-buttons {
+      display: flex;
+      align-items: center;
+      margin-left: 25px;
+      flex-shrink: 0;
+    }
+    .navbar-logout-btn {
+      background-color: var(--red-btn);
+      color: white;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all var(--transition);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .navbar-logout-btn:hover {
+      background-color: var(--red-btn-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Main Content Layout */
+    .main-content {
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-grow: 1;
+    }
+
+    /* Profile Header */
+    .profile-header {
+      display: flex;
+      flex-direction: column; /* Stack vertically by default */
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      background-color: var(--card);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .profile-header img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .profile-info {
+      flex-grow: 1;
+    }
+    .profile-info h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      color: var(--primary);
+    }
+    .profile-info p {
+      margin-bottom: 15px;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .profile-info .description-input {
+      width: 100%;
+      max-width: 500px;
+      min-height: 80px;
+      padding: 10px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      font-size: 15px;
+      margin-top: 10px;
+      resize: vertical;
+      transition: all var(--transition);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .profile-info .description-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+    }
+
+    /* Buttons */
+    .edit-btn, .order-btn, .category-btn, .price-range button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+      font-size: 15px;
+      box-shadow: var(--shadow);
+      gap: 8px;
+    }
+    .edit-btn {
+      background-color: var(--primary);
+      color: white;
+    }
+    .edit-btn:hover {
+      background-color: #4A6EED;
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+    }
+    .order-btn {
+      background-color: var(--green-btn);
+      color: white;
+      width: 100%; /* Make order button full width in post card */
+      margin-top: 10px;
+    }
+    .order-btn:hover {
+      background-color: var(--green-btn-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Business Documents */
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: var(--text);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: inline-block; /* To make border-bottom fit content */
+    }
+    .business-docs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+      justify-content: center; /* Center items */
+    }
+    .business-docs img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 2px solid var(--light-text);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition);
+      cursor: zoom-in;
+    }
+    .business-docs img:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* Seller Posts Grid */
+    #sellerPosts {
+      display: grid;
+      /* Adjusted for 3 columns with gaps */
+      grid-template-columns: repeat(auto-fit, minmax(calc(33.333% - 17px), 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    /* Post Card Styling (from home.html) */
+    .post-card {
+      background: var(--card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      height: 100%;
+    }
+    .post-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+    .post-card img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-top: 5px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    .post-card h3 {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+    .post-card p {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    /* Quantity controls (from home.html) */
+    .quantity-container {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      gap: 10px;
+      width: 100%;
+    }
+    .quantity-input {
+      flex-grow: 1;
+      max-width: 80px;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      font-size: 15px;
+      -moz-appearance: textfield;
+    }
+    .quantity-input::-webkit-outer-spin-button,
+    .quantity-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .quantity-btn {
+        background-color: var(--primary);
+        color: white;
+        padding: 8px 15px;
+        box-shadow: none;
+        border-radius: var(--radius); /* Ensure consistent radius */
+    }
+    .quantity-btn:hover {
+        background-color: #4A6EED;
+        transform: translateY(-1px);
+    }
+
+    /* Filter Bar (copied from home.html) */
+    .filter-bar {
+      position: sticky; /* ADDED: Make filter bar sticky */
+      top: var(--navbar-height); /* ADDED: Sticks right below the navbar */
+      z-index: 997; /* ADDED: Lower than navbar (998) but higher than content */
+      display: flex; /* Make it horizontal */
+      flex-wrap: wrap; /* Allow items to wrap */
+      justify-content: flex-end; /* Align to the right */
+      align-items: center; /* Vertically align items */
+      background: var(--card);
+      padding: 10px 20px; /* Reduced padding */
+      margin-bottom: 20px; /* Space below the filter bar */
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      gap: 15px; /* Space between filter elements */
+      width: 100%; /* Take full width of main-content */
+    }
+
+    .filter-bar h2 {
+      font-size: 18px; /* Smaller font size for filter title */
+      color: var(--primary);
+      margin: 0; /* Remove default margin */
+      flex-shrink: 0; /* Prevent from shrinking */
+    }
+
+    .filter-bar .price-range {
+      flex-direction: row; /* Make price inputs horizontal */
+      align-items: center;
+      gap: 8px;
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+      background: none; /* No background */
+      box-shadow: none; /* No shadow */
+      display: flex; /* Ensure flex for internal layout */
+    }
+    .filter-bar .price-range label {
+      font-size: 14px;
+      margin-bottom: 0;
+      white-space: nowrap; /* Keep label on one line */
+    }
+    .filter-bar .price-range-inputs {
+      display: flex;
+      gap: 8px;
+    }
+    .filter-bar .price-range input {
+      width: 80px; /* Smaller width for price inputs */
+      padding: 6px 10px;
+      font-size: 13px;
+      border-radius: 8px; /* Slightly smaller radius */
+      border: 1px solid #e2e8f0; /* Added missing border */
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Added missing shadow */
+      transition: all var(--transition); /* Added transition */
+    }
+    .filter-bar .price-range input:focus { /* Added focus state */
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(90,123,252,0.25);
+    }
+    .filter-bar .price-range button {
+      width: auto; /* Auto width */
+      padding: 6px 15px;
+      font-size: 13px;
+      margin-top: 0; /* Remove default margin */
+      border-radius: 8px;
+    }
+
+    .filter-bar .category-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px; /* Smaller gap for category buttons */
+      margin: 0; /* Remove default margin */
+    }
+    .filter-bar .category-btn {
+      background-color: var(--light-text);
+      color: white;
+      padding: 6px 15px;
+      font-size: 13px;
+      border-radius: 8px;
+      margin: 0; /* Remove default margin */
+    }
+    .filter-bar .category-btn.active {
+      background-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
+    .filter-bar .category-btn:hover:not(.active) {
+      background-color: #5a6268;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Responsive Adjustments */
+    @media (min-width: 768px) {
+      .profile-header {
+        flex-direction: row; /* Horizontal layout for larger screens */
+        text-align: left;
+      }
+      .profile-info {
+        text-align: left;
+      }
+      .profile-info h2 {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .navbar {
+          height: auto;
+          padding-bottom: 10px;
+          flex-direction: column;
+          align-items: flex-start;
+      }
+      .navbar-logo, .navbar .search-container, .navbar-nav, .navbar-buttons {
+          width: 100%;
+          justify-content: center;
+          margin-left: 0;
+          margin-right: 0;
+          margin-top: 10px;
+          padding: 0 20px; /* Add padding back for alignment */
+          max-width: none;
+      }
+      .navbar-nav {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .filter-bar {
+        flex-direction: column; /* Stack filters vertically on smaller screens */
+        align-items: flex-start; /* Align left */
+        padding: 15px;
+        gap: 10px;
+      }
+      .filter-bar h2 {
+        width: 100%; /* Full width for title */
+        margin-bottom: 10px;
+      }
+      .filter-bar .price-range {
+        flex-direction: column; /* Stack price inputs */
+        width: 100%;
+        gap: 5px;
+      }
+      .filter-bar .price-range-inputs {
+        width: 100%;
+      }
+      .filter-bar .price-range input,
+      .filter-bar .price-range button {
+        width: 100%; /* Full width for inputs and button */
+        margin: 0;
+      }
+      .filter-bar .category-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+      #sellerPosts {
+        /* Adjusted for 2 columns on tablets */
+        grid-template-columns: repeat(auto-fit, minmax(calc(50% - 18px), 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 20px;
+      }
+      .navbar {
+        padding: 0 10px 10px 10px;
+      }
+      .navbar-logo {
+        font-size: 20px;
+      }
+      .navbar-logo i {
+        font-size: 24px;
+      }
+      .navbar .search-input {
+        font-size: 13px;
+        padding: 6px 12px;
+        padding-right: 35px;
+      }
+      .navbar .search-icon {
+          right: 12px;
+          font-size: 14px;
+      }
+      .navbar-nav a {
+        font-size: 14px;
+      }
+      .navbar-logout-btn {
+        font-size: 13px;
+        padding: 6px 15px;
+      }
+      .profile-header {
+        padding: 20px;
+        gap: 15px;
+      }
+      .profile-header img {
+        width: 100px;
+        height: 100px;
+      }
+      .profile-info h2 {
+        font-size: 24px;
+      }
+      .profile-info p {
+        font-size: 14px;
+      }
+      .section-title {
+        font-size: 20px;
+      }
+      .business-docs img {
+        width: 120px;
+        height: 120px;
+      }
+      #sellerPosts {
+        /* Adjusted for 2 columns on smaller tablets */
+        grid-template-columns: repeat(auto-fit, minmax(calc(50% - 18px), 1fr));
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main-content {
+        padding: 15px;
+      }
+      .navbar-logo {
+        font-size: 18px;
+      }
+      .navbar-logo i {
+        font-size: 22px;
+      }
+      .navbar .search-input {
+        font-size: 13px;
+        padding: 6px 12px;
+        padding-right: 35px;
+      }
+      .navbar .search-icon {
+          right: 12px;
+          font-size: 14px;
+      }
+      .navbar-nav a {
+        font-size: 12px;
+      }
+      .navbar-logout-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+      }
+      .profile-header img {
+        width: 120px;
+        height: 120px;
+      }
+      .profile-info h2 {
+        font-size: 22px;
+      }
+      .profile-info p {
+        font-size: 13px;
+      }
+      .section-title {
+        font-size: 18px;
+      }
+      .business-docs img {
+        width: 100px;
+        height: 100px;
+      }
+      #sellerPosts {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 15px;
+      }
+      .post-card img {
+        max-height: 180px;
+      }
+    }</style></head><body><nav class="navbar"><a href="home.html" class="navbar-logo"><i class="fas fa-shopping-bag"></i> Adama Shopping</a><div class="search-container"><input type="text" id="searchBar" class="search-input" placeholder="Search posts..."> <i class="fas fa-search search-icon"></i></div><div class="navbar-nav"><a href="home.html">Home</a> <a href="aboutt.html">About</a> <a href="servicess.html">Services</a> <a href="privacyy.html">Privacy</a></div><div class="navbar-buttons"><button id="navbarLogoutBtn" class="navbar-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></div></nav><div class="main-content"><div class="profile-header" id="sellerProfile"></div><h2 class="section-title">Business Documents</h2><div class="business-docs" id="businessDocs"></div><div class="filter-bar"><h2>Filters</h2><div class="price-range"><label><i class="fas fa-dollar-sign"></i> Price Range:</label><div class="price-range-inputs"><input type="number" id="minPrice" placeholder="Min $" min="0"> <input type="number" id="maxPrice" placeholder="Max $" min="0"></div><button id="filterBtn"><i class="fas fa-filter"></i> Filter</button></div><h3>Categories</h3><div class="category-buttons"><button class="category-btn active" data-category="All">All</button> <button class="category-btn" data-category="Addi Sabab">Addi Sabab</button> <button class="category-btn" data-category="Mebrat">Mebrat</button> <button class="category-btn" data-category="Adama">Adama</button></div></div><h2 class="section-title">Posts by this Seller</h2><div id="sellerPosts"></div><div id="popupMessage" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card); color: var(--green-btn); padding: 30px 50px; border: 2px solid var(--green-btn); border-radius: var(--radius); box-shadow: var(--hover-shadow); font-size: 22px; font-weight: bold; z-index: 10000; text-align: center; animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;">✅ Order successfully added!</div><style>@keyframes popIn {
+        from { transform: translate(-50%, -60%) scale(0.7); opacity: 0; }
+        to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      }</style></div><script>const params = new URLSearchParams(window.location.search);
+    const sellerUsername = params.get('username');
+
+    const sellerProfileDiv = document.getElementById('sellerProfile');
+    const sellerPostsDiv = document.getElementById('sellerPosts');
+    const businessDocsDiv = document.getElementById('businessDocs');
+    const searchBar = document.getElementById('searchBar');
+    const popupMessage = document.getElementById('popupMessage');
+    const navbarLogoutBtn = document.getElementById('navbarLogoutBtn'); // Added logout button
+
+    const categoryButtons = document.querySelectorAll('.category-btn'); // Added filter elements
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+    const filterBtn = document.getElementById('filterBtn');
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    let allSellerPosts = []; // Store all posts by this seller, before filtering
+
+    // Logout functionality (copied from home.html)
+    navbarLogoutBtn.addEventListener('click', logout);
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    }
+
+    async function loadSellerProfile() {
+      try {
+        const res = await fetch(`http://localhost:3000/api/sellers/${sellerUsername}`);
+        if (!res.ok) throw new Error('Failed to load seller profile.');
+        const sellerInfo = await res.json();
+
+        // Populate seller profile
+        sellerProfileDiv.innerHTML = `
+          <img src="${sellerInfo.profilePic || 'https://via.placeholder.com/150/5A7BFC/FFFFFF?text=PROFILE'}" alt="${sellerUsername}">
+          <div class="profile-info">
+            <h2>${sellerInfo.username}</h2>
+            <p id="sellerDescription">${sellerInfo.description || 'No description yet.'}</p>
+            ${currentUser.info && currentUser.info.username === sellerUsername
+              ? `<textarea id="descriptionInput" class="description-input" placeholder="Add your description...">${sellerInfo.description || ''}</textarea>
+                 <button id="saveDescriptionBtn" class="edit-btn"><i class="fas fa-save"></i> Save Description</button>`
+              : ''}
+          </div>
+        `;
+
+        // Populate business documents
+        let docsHtml = '';
+        if (sellerInfo.businessLicensePic) {
+            docsHtml += `<img src="${sellerInfo.businessLicensePic}" alt="Business License">`;
+        }
+        if (sellerInfo.otherDocPic) {
+            docsHtml += `<img src="${sellerInfo.otherDocPic}" alt="Other Document">`;
+        }
+        businessDocsDiv.innerHTML = docsHtml || '<p style="color:var(--light-text); text-align:center; width:100%;">No business documents provided.</p>';
+
+
+        const saveBtn = document.getElementById('saveDescriptionBtn');
+        if (saveBtn) {
+          saveBtn.addEventListener('click', async () => {
+            const newDesc = document.getElementById('descriptionInput').value.trim();
+            const response = await fetch(`http://localhost:3000/api/sellers/${sellerUsername}/description`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ description: newDesc })
+            });
+            const data = await response.json();
+            if (response.ok) {
+              document.getElementById('sellerDescription').innerText = data.description || 'No description yet.';
+              alert('✅ Description updated!');
+            } else {
+              alert('❌ Failed to update description');
+            }
+          });
+        }
+
+      } catch (err) {
+        sellerProfileDiv.innerHTML = `<p style="color:var(--red-btn); text-align: center;">${err.message}. Please ensure the server is running.</p>`;
+      }
+    }
+
+    // Function to display posts based on filters
+    function displayPosts(posts) {
+      if (posts.length === 0) {
+        sellerPostsDiv.innerHTML = '<p style="margin:20px; color:var(--light-text); text-align:center; width:100%;">This seller has no posts yet matching your criteria.</p>';
+        return;
+      }
+
+      sellerPostsDiv.innerHTML = posts.map(post => `
+        <div class="post-card">
+          <img src="${post.image || 'https://via.placeholder.com/200/6B7280/FFFFFF?text=NO+IMAGE'}" class="view-img" data-post='${encodeURIComponent(JSON.stringify(post))}'>
+          <h3>${post.title}</h3>
+          <p><strong>Description:</strong> ${post.description}</p>
+          <p><strong>Location:</strong> ${post.location}</p>
+          <p><strong>Price:</strong> $${parseFloat(post.price).toFixed(2)}</p>
+
+          <div class="quantity-container">
+            <button class="quantity-btn minus-btn">-</button>
+            <input type="number" min="1" value="1" class="quantity-input">
+            <button class="quantity-btn plus-btn">+</button>
+          </div>
+
+          <button class="order-btn" data-post='${encodeURIComponent(JSON.stringify(post))}'><i class="fas fa-cart-plus"></i> Order</button>
+        </div>
+      `).join('');
+
+      // Add event listeners for quantity buttons
+      document.querySelectorAll('.quantity-container').forEach(container => {
+        const input = container.querySelector('.quantity-input');
+        const plus = container.querySelector('.plus-btn');
+        const minus = container.querySelector('.minus-btn');
+
+        plus.addEventListener('click', () => {
+          input.value = parseInt(input.value) + 1;
+        });
+
+        minus.addEventListener('click', () => {
+          if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+          }
+        });
+      });
+
+      document.querySelectorAll('.view-img').forEach(img => {
+        img.addEventListener('click', () => {
+          const postData = JSON.parse(decodeURIComponent(img.dataset.post));
+          localStorage.setItem('selectedPost', JSON.stringify(postData));
+          window.location.href = 'post-details.html';
+        });
+      });
+
+      document.querySelectorAll('.order-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const postData = JSON.parse(decodeURIComponent(btn.dataset.post));
+          const quantityInput = btn.closest('.post-card').querySelector('.quantity-input');
+          const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+
+          if (!currentUser || !currentUser.info || !currentUser.info.username) {
+            alert('Please log in to place an order.');
+            window.location.href = 'login.html'; // Redirect to login if user not logged in
+            return;
+          }
+
+          try {
+            const res = await fetch('http://localhost:3000/api/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                userId: currentUser.info.username,
+                postId: postData._id,
+                title: postData.title,
+                description: postData.description,
+                price: postData.price,
+                quantity,
+                image: postData.image || '',
+                sellerUsername: postData.posterUsername,
+                sellerFullName: postData.posterFullName || postData.posterUsername,
+                sellerProfilePic: postData.posterProfilePic || 'https://via.placeholder.com/60/6B7280/FFFFFF?text=PP'
+              })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Failed to add order');
+            popupMessage.style.display = 'block';
+            setTimeout(() => {
+              popupMessage.style.display = 'none';
+              // Optionally redirect or update a badge here, similar to home.html
+              // window.location.href = 'order.html';
+            }, 1200);
+          } catch (err) {
+            alert('❌ Error adding order: ' + err.message);
+          }
+        });
+      });
+    }
+
+    // This is the core filtering logic, similar to home.html
+    function applyFilters() {
+        let filteredPosts = [...allSellerPosts]; // Start with all posts by this seller
+
+        // Apply search filter
+        const query = searchBar.value.toLowerCase();
+        if (query) {
+            filteredPosts = filteredPosts.filter(post =>
+                post.title.toLowerCase().includes(query) || (post.description || '').toLowerCase().includes(query)
+            );
+        }
+
+        // Apply category filter
+        const activeCategoryBtn = document.querySelector('.category-btn.active');
+        const category = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'All';
+        if (category !== 'All') {
+            filteredPosts = filteredPosts.filter(p => (p.location || '').toLowerCase() === category.toLowerCase());
+        }
+
+        // Apply price range filter
+        const min = parseFloat(minPriceInput.value) || 0;
+        const max = parseFloat(maxPriceInput.value) || Infinity;
+        filteredPosts = filteredPosts.filter(p => parseFloat(p.price) >= min && parseFloat(p.price) <= max);
+
+        displayPosts(filteredPosts);
+    }
+
+
+    // Load all posts for this seller initially
+    function loadSellerPosts() {
+      fetch('http://localhost:3000/api/posts')
+        .then(res => res.json())
+        .then(data => {
+          const allLoadedPosts = data.posts || [];
+          allSellerPosts = allLoadedPosts.filter(p => p.posterUsername === sellerUsername);
+          applyFilters(); // Apply initial filters
+        })
+        .catch(err => {
+          console.error('Error fetching all posts:', err);
+          sellerPostsDiv.innerHTML = `<p style="color:var(--red-btn); text-align: center;">Error loading seller's posts: ${err.message}.</p>`;
+        });
+    }
+
+    // Event listeners for filters
+    searchBar.addEventListener('input', applyFilters);
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    filterBtn.addEventListener('click', applyFilters); // Price range filter button
+
+    // Initial load
+    loadSellerProfile();
+    loadSellerPosts();</script></body></html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Privacy Policy - Adama Shopping</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>/* --- Root Variables from in.html --- */
+    :root {
+      --primary: #5A7BFC;
+      --primary-hover: #4a6eed;
+      --secondary: #4AD991;
+      --secondary-hover: #3fbf80;
+      --accent: #FFD25A;
+      --text: #2D3748;
+      --light-text: #6B7280;
+      --bg: #F8F9FA;
+      --card: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hover-shadow: 0 15px 45px rgba(0,0,0,0.12);
+      --transition: 0.3s ease;
+    }
+
+    /* --- Global Styles from in.html --- */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; scroll-behavior: smooth; }
+    body {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      position:relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    p {
+      line-height: 1.7;
+      font-weight: 400;
+      color: var(--light-text);
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    /* --- Navbar (Copied from in.html for consistency) --- */
+    .navbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(12px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:15px;
+      z-index:1000;
+      margin:15px 20px;
+      transition: all 0.3s ease;
+    }
+    .navbar:hover { box-shadow:var(--hover-shadow); }
+    
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .navbar .logo img {
+        height: 40px;
+    }
+
+    .navbar .logo a {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text);
+        transition: color var(--transition);
+    }
+    .navbar .logo a span {
+        color: var(--primary);
+    }
+
+    .navbar ul { display:flex; list-style:none; gap:20px; align-items:center; flex-wrap:wrap; }
+    .navbar ul li a { text-decoration:none; color:var(--light-text); font-weight:500; display:flex; align-items:center; gap:8px; transition: all var(--transition); }
+    .navbar ul li a:hover, .navbar ul li a.active { color:var(--primary); }
+    .navbar ul li a.btn-login { background:var(--primary); color:#fff; padding:10px 20px; border-radius:var(--radius); font-weight:600; }
+    .navbar ul li a.btn-login:hover { background:var(--primary-hover); transform: translateY(-3px); box-shadow:var(--hover-shadow); }
+    
+    /* ===== NEW: Language Switcher Styling ===== */
+    .lang-switcher {
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      border-radius: var(--radius);
+    }
+    .lang-switcher a {
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 12px;
+    }
+    .lang-switcher a.active {
+        background-color: var(--primary);
+        color: #fff !important;
+    }
+
+
+    /* --- Main Content Styling for Privacy Page --- */
+    .page-header {
+      padding: 80px 10%;
+      text-align: center;
+      background:linear-gradient(135deg, #E0E7FF 0%, #F0F2F5 100%);
+      margin: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .page-header h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .page-header h1 span {
+      color: var(--primary);
+    }
+    .page-header p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .privacy-container {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 50px;
+      transition: all var(--transition);
+    }
+    .privacy-container:hover {
+        box-shadow: var(--hover-shadow);
+    }
+
+    .privacy-container h2 {
+      font-size: 28px;
+      color: var(--primary);
+      margin-top: 40px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0f4ff;
+    }
+    .privacy-container h2:first-of-type {
+        margin-top: 0;
+    }
+    .privacy-container p {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    .privacy-container ul {
+      margin-left: 25px;
+      padding-left: 0;
+    }
+    .privacy-container ul li {
+      color: var(--light-text);
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    .contact-box {
+      background-color: #f0f4ff;
+      border-radius: var(--radius);
+      padding: 25px;
+      margin-top: 30px;
+      border: 1px solid #e0e7ff;
+    }
+    .contact-box p {
+      margin-bottom: 10px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-box i {
+      color: var(--primary);
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+    .contact-box a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition);
+    }
+    .contact-box a:hover {
+      color: var(--primary-hover);
+    }
+
+    .back-home-btn {
+      display: inline-block;
+      margin-top: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #fff;
+      padding: 14px 30px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    .back-home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* --- Footer (Copied from in.html) --- */
+    footer { background:var(--card); padding:40px 10%; margin-top:40px; border-radius:var(--radius); box-shadow:var(--shadow); }
+    /* ... (rest of the footer styles are identical) ... */
+    footer .footer-content { display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px; }
+    footer .footer-section { flex:1; min-width:220px; }
+    footer h4 { margin-bottom:20px; font-size:20px; font-weight: 600; }
+    footer ul { list-style:none; }
+    footer ul li { margin-bottom:10px; }
+    footer ul li a { text-decoration:none; color:var(--light-text); transition: color var(--transition); }
+    footer ul li a:hover { color:var(--primary); }
+    footer .social-icons { display:flex; gap:15px; margin-top:15px; }
+    footer .social-icons a { color:var(--light-text); font-size:20px; transition:color var(--transition), transform var(--transition); }
+    footer .social-icons a:hover { color:var(--primary); transform: scale(1.2); }
+    .newsletter-form { display: flex; gap: 10px; margin-top: 15px; }
+    .newsletter-form input { flex-grow: 1; padding: 10px; border: 1px solid #ddd; border-radius: var(--radius); }
+    .newsletter-form button { background: var(--primary); color: #fff; border: none; padding: 10px 15px; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); }
+    .newsletter-form button:hover { background: var(--primary-hover); }
+
+    /* --- Back to Top Button (Copied from in.html) --- */
+    #back-to-top {
+        position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    }
+    #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #back-to-top:hover { background: var(--primary-hover); transform: scale(1.1); }
+
+    @media (max-width: 768px) {
+        .privacy-container { margin: 20px; padding: 30px; }
+        .page-header h1 { font-size: 36px; }
+    }</style></head><body><nav class="navbar"><div class="logo"><img src="images/Adama Shopping.png" alt="Adama Shopping Logo"> <a href="index.html">Adama<span>Shopping</span></a></div><ul><li><a href="home.html"><i class="fas fa-home"></i> <span data-translate-key="nav_home">Home</span></a></li><li><a href="aboutt.html"><i class="fas fa-info-circle"></i> <span data-translate-key="nav_about">About</span></a></li><li><a href="servicess.html"><i class="fas fa-handshake"></i> <span data-translate-key="nav_services">Services</span></a></li><li><a href="privacyy.html" class="active"><i class="fas fa-shield-alt"></i> <span data-translate-key="nav_privacy">Privacy</span></a></li><li><div class="lang-switcher"><a href="#" class="lang-btn" data-lang="en">EN</a> <a href="#" class="lang-btn" data-lang="am">አማ</a> <a href="#" class="lang-btn" data-lang="om">ORO</a></div></li></ul></nav><header class="page-header"><h1 data-translate-key="header_title">Privacy <span>Policy</span></h1><p data-translate-key="header_subtitle">Your privacy and the security of your data are our top priorities.</p></header><main class="privacy-container"><p data-translate-key="intro_p">At <strong>Adama Shopping</strong>, we respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our platform.</p><h2 data-translate-key="section1_title">1. Information We Collect</h2><p data-translate-key="section1_p">We may collect the following types of information to provide and improve our services:</p><ul><li data-translate-key="section1_li1"><strong>Personal Information:</strong> Name, email, phone number, and delivery address.</li><li data-translate-key="section1_li2"><strong>Account Details:</strong> Your login credentials and user preferences.</li><li data-translate-key="section1_li3"><strong>Transaction Data:</strong> Details about payments, orders, and products you buy or sell.</li><li data-translate-key="section1_li4"><strong>Technical Data:</strong> Information about your device, browser, and IP address.</li></ul><h2 data-translate-key="section2_title">2. How We Use Your Information</h2><p data-translate-key="section2_p">Your data allows us to enhance our service and provide a better, more personalized experience. We use your information to:</p><ul><li data-translate-key="section2_li1">Process, confirm, and deliver your orders efficiently.</li><li data-translate-key="section2_li2">Verify user and seller accounts to maintain a trusted marketplace.</li><li data-translate-key="section2_li3">Communicate important updates, promotional offers, and customer support.</li><li data-translate-key="section2_li4">Ensure secure transactions and prevent fraudulent activity.</li></ul><h2 data-translate-key="section3_title">3. Data Protection & Security</h2><p data-translate-key="section3_p">We implement robust security measures, including encryption and secure storage systems, to protect your personal data from unauthorized access or misuse. However, please be aware that no online transmission is 100% secure.</p><h2 data-translate-key="section4_title">4. Cookies Policy</h2><p data-translate-key="section4_p">Our website uses cookies to enhance user experience, remember your preferences, and collect analytics data to help us improve our platform. You can manage or disable cookies through your browser settings at any time.</p><h2 data-translate-key="section5_title">5. Your Rights</h2><p data-translate-key="section5_p">As a user, you have the right to:</p><ul><li data-translate-key="section5_li1">Access or request a copy of the personal data we hold about you.</li><li data-translate-key="section5_li2">Update or correct your account information at any time.</li><li data-translate-key="section5_li3">Request the deletion of your data where it is no longer necessary for us to retain it.</li><li data-translate-key="section5_li4">Withdraw consent for receiving marketing and promotional messages.</li></ul><h2 data-translate-key="section6_title">6. Contact Us</h2><div class="contact-box"><p data-translate-key="contact_intro">If you have any questions or concerns about this policy or your data, please don't hesitate to reach out:</p><p><i class="fab fa-telegram"></i> <strong data-translate-key="contact_telegram">Telegram:</strong> <a href="https://t.me/AdamaShopping" target="_blank">@AdamaShoppingfeedback_bot</a></p></div><a href="index.html" class="back-home-btn"><i class="fas fa-arrow-left"></i> <span data-translate-key="back_button">Back to Home</span></a></main><footer><div class="footer-content"><div class="footer-section"><h4 data-translate-key="footer_logo">Adama Shopping</h4><p data-translate-key="footer_p">Find the best products at the best prices. Shop confidently with us.</p></div><div class="footer-section"><h4 data-translate-key="footer_links_title">Quick Links</h4><ul><li><a href="home.html" data-translate-key="footer_home">Home</a></li><li><a href="aboutt.html" data-translate-key="footer_about">About</a></li><li><a href="servicess.html" data-translate-key="footer_services">Services</a></li><li><a href="privacyy.html" data-translate-key="footer_privacy">Privacy</a></li></ul></div><div class="footer-section"><h4 data-translate-key="footer_social_title">Follow Us</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a> <a href="#"><i class="fab fa-twitter"></i></a> <a href="#"><i class="fab fa-instagram"></i></a> <a href="#"><i class="fab fa-linkedin-in"></i></a> <a href="#"><i class="fab fa-telegram"></i></a> <a href="#"><i class="fab fa-youtube"></i></a> <a href="#"><i class="fab fa-whatsapp"></i></a></div></div><div class="footer-section"><h4 data-translate-key="footer_newsletter_title">Stay Updated</h4><p data-translate-key="footer_newsletter_p">Subscribe to our newsletter for the latest deals and updates.</p><form class="newsletter-form"><input type="email" placeholder="Enter your email" required data-translate-key="footer_placeholder"> <button type="submit"><i class="fas fa-paper-plane"></i></button></form></div></div></footer><a href="#" id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a><script>// Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });</script><script>const translations = {
+      // English Translations
+      en: {
+        nav_home: "Home",
+        nav_about: "About",
+        nav_services: "Services",
+        nav_privacy: "Privacy",
+        nav_login: "Login",
+        header_title: "Privacy <span>Policy</span>",
+        header_subtitle: "Your privacy and the security of your data are our top priorities.",
+        intro_p: "At <strong>Adama Shopping</strong>, we respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our platform.",
+        section1_title: "1. Information We Collect",
+        section1_p: "We may collect the following types of information to provide and improve our services:",
+        section1_li1: "<strong>Personal Information:</strong> Name, email, phone number, and delivery address.",
+        section1_li2: "<strong>Account Details:</strong> Your login credentials and user preferences.",
+        section1_li3: "<strong>Transaction Data:</strong> Details about payments, orders, and products you buy or sell.",
+        section1_li4: "<strong>Technical Data:</strong> Information about your device, browser, and IP address.",
+        section2_title: "2. How We Use Your Information",
+        section2_p: "Your data allows us to enhance our service and provide a better, more personalized experience. We use your information to:",
+        section2_li1: "Process, confirm, and deliver your orders efficiently.",
+        section2_li2: "Verify user and seller accounts to maintain a trusted marketplace.",
+        section2_li3: "Communicate important updates, promotional offers, and customer support.",
+        section2_li4: "Ensure secure transactions and prevent fraudulent activity.",
+        section3_title: "3. Data Protection & Security",
+        section3_p: "We implement robust security measures, including encryption and secure storage systems, to protect your personal data from unauthorized access or misuse. However, please be aware that no online transmission is 100% secure.",
+        section4_title: "4. Cookies Policy",
+        section4_p: "Our website uses cookies to enhance user experience, remember your preferences, and collect analytics data to help us improve our platform. You can manage or disable cookies through your browser settings at any time.",
+        section5_title: "5. Your Rights",
+        section5_p: "As a user, you have the right to:",
+        section5_li1: "Access or request a copy of the personal data we hold about you.",
+        section5_li2: "Update or correct your account information at any time.",
+        section5_li3: "Request the deletion of your data where it is no longer necessary for us to retain it.",
+        section5_li4: "Withdraw consent for receiving marketing and promotional messages.",
+        section6_title: "6. Contact Us",
+        contact_intro: "If you have any questions or concerns about this policy or your data, please don't hesitate to reach out:",
+        contact_email: "Email:",
+        contact_phone: "Phone:",
+        contact_telegram: "Telegram:",
+        back_button: "Back to Home",
+        footer_logo: "Adama Shopping",
+        footer_p: "Find the best products at the best prices. Shop confidently with us.",
+        footer_links_title: "Quick Links",
+        footer_home: "Home",
+        footer_about: "About",
+        footer_services: "Services",
+        footer_privacy: "Privacy",
+        footer_social_title: "Follow Us",
+        footer_newsletter_title: "Stay Updated",
+        footer_newsletter_p: "Subscribe to our newsletter for the latest deals and updates.",
+        footer_placeholder: "Enter your email"
+      },
+      // Amharic Translations
+      am: {
+        nav_home: "መነሻ",
+        nav_about: "ስለእኛ",
+        nav_services: "አገልግሎቶች",
+        nav_privacy: "ግላዊነት",
+        nav_login: "ይግቡ",
+        header_title: "የግላዊነት <span>ፖሊሲ</span>",
+        header_subtitle: "የእርስዎ ግላዊነት እና የውሂብዎ ደህንነት የእኛ ዋና ቅድሚያዎች ናቸው።",
+        intro_p: "በ<strong>አዳማ ሾፒንግ</strong>፣ ግላዊነትዎን እናከብራለን እና የግል መረጃዎን ለመጠበቅ ቆርጠናል። ይህ የግላዊነት ፖሊሲ የእኛን መድረክ ሲጠቀሙ የእርስዎን ውሂብ እንዴት እንደምንሰበስብ፣ እንደምንጠቀም እና እንደምንጠብቅ ያብራራል።",
+        section1_title: "1. የምንሰበስበው መረጃ",
+        section1_p: "አገልግሎቶቻችንን ለማቅረብ እና ለማሻሻል የሚከተሉትን የመረጃ አይነቶች ልንሰበስብ እንችላለን፡",
+        section1_li1: "<strong>የግል መረጃ:</strong> ስም፣ ኢሜይል፣ ስልክ ቁጥር እና የመላኪያ አድራሻ።",
+        section1_li2: "<strong>የחשבון ዝርዝሮች:</strong> የመግቢያ ምስክርነቶችዎ እና የተጠቃሚ ምርጫዎችዎ።",
+        section1_li3: "<strong>የግብይት ውሂብ:</strong> ስለ ክፍያዎች፣ ትዕዛዞች እና ስለሚገዙዋቸው ወይም ስለሚሸጧቸው ምርቶች ዝርዝሮች።",
+        section1_li4: "<strong>ቴክኒካዊ ውሂብ:</strong> ስለ መሳሪያዎ፣ አሳሽዎ እና የአይፒ አድራሻዎ መረጃ።",
+        section2_title: "2. መረጃዎን እንዴት እንደምንጠቀም",
+        section2_p: "የእርስዎ ውሂብ አገልግሎታችንን እንድናሻሽል እና የተሻለ፣ የበለጠ ግላዊ ተሞክሮ እንድናቀርብ ያስችለናል። መረጃዎን ለሚከተሉት እንጠቀማለን፡",
+        section2_li1: "ትዕዛዞችዎን በብቃት ለማስኬድ፣ ለማረጋገጥ እና ለማድረስ።",
+        section2_li2: "የታመነ የገበያ ቦታን ለመጠበቅ የተጠቃሚ እና የሻጭ መለያዎችን ለማረጋገጥ።",
+        section2_li3: "ጠቃሚ ዝመናዎችን፣ የማስተዋወቂያ ቅናሾችን እና የደንበኛ ድጋፍን ለመግባባት።",
+        section2_li4: "ደህንነታቸው የተጠበቀ ግብይቶችን ለማረጋገጥ እና የማጭበርበር እንቅስቃሴን ለመከላከል።",
+        section3_title: "3. የውሂብ ጥበቃ እና ደህንነት",
+        section3_p: "የእርስዎን የግል ውሂብ ካልተፈቀደለት መዳረሻ ወይም አላግባብ መጠቀም ለመጠበቅ ምስጠራን እና ደህንነታቸው የተጠበቀ የማከማቻ ስርዓቶችን ጨምሮ ጠንካራ የደህንነት እርምጃዎችን እንተገብራለን። ሆኖም፣ ምንም የመስመር ላይ ስርጭት 100% ደህንነቱ የተጠበቀ እንዳልሆነ እባክዎ ልብ ይበሉ።",
+        section4_title: "4. የኩኪዎች ፖሊሲ",
+        section4_p: "የእኛ ድረ-ገጽ የተጠቃሚን ተሞክሮ ለማሳደግ፣ ምርጫዎችዎን ለማስታወስ እና መድረክችንን እንድናሻሽል የሚረዱንን የትንታኔ መረጃዎችን ለመሰብሰብ ኩኪዎችን ይጠቀማል። በማንኛውም ጊዜ በአሳሽዎ ቅንብሮች በኩል ኩኪዎችን ማስተዳደር ወይም ማሰናከል ይችላሉ።",
+        section5_title: "5. የእርስዎ መብቶች",
+        section5_p: "እንደ ተጠቃሚ፣ የሚከተሉትን የማድረግ መብት አለዎት፡",
+        section5_li1: "ስለእርስዎ የያዝናቸውን የግል ውሂብ ቅጂ ለመድረስ ወይም ለመጠየቅ።",
+        section5_li2: "የחשבון መረጃዎን በማንኛውም ጊዜ ለማዘመን ወይም ለማረም።",
+        section5_li3: "ከእንግዲህ ለማቆየት አስፈላጊ በማይሆንበት ጊዜ የእርስዎን ውሂብ እንዲሰረዝ ለመጠየቅ።",
+        section5_li4: "የግብይት እና የማስተዋወቂያ መልዕክቶችን ለመቀበል ፈቃድን ለመሰረዝ።",
+        section6_title: "6. ያግኙን",
+        contact_intro: "ስለዚህ ፖሊሲ ወይም ስለእርስዎ ውሂብ ማንኛውም ጥያቄ ወይም ስጋት ካለዎት፣ እባክዎ ለማነጋገር አያመንቱ፡",
+        contact_email: "ኢሜይል:",
+        contact_phone: "ስልክ:",
+        contact_telegram: "ቴሌግራም:",
+        back_button: "ወደ መነሻ ተመለስ",
+        footer_logo: "አዳማ ሾፒንግ",
+        footer_p: "ምርጥ ምርቶችን በተሻለ ዋጋ ያግኙ። ከእኛ ጋር በልበ ሙሉነት ይግዙ።",
+        footer_links_title: "ፈጣን አገናኞች",
+        footer_home: "መነሻ",
+        footer_about: "ስለእኛ",
+        footer_services: "አገልግሎቶች",
+        footer_privacy: "ግላዊነት",
+        footer_social_title: "ይከተሉን",
+        footer_newsletter_title: "እንደተዘመኑ ይቆዩ",
+        footer_newsletter_p: "ለአዳዲስ ቅናሾች እና ዝመናዎች ለጋዜጣችን ይመዝገቡ።",
+        footer_placeholder: "ኢሜልዎን ያስገቡ"
+      },
+      // Oromia (Afaan Oromoo) Translations
+      om: {
+        nav_home: "Fuula Jalqabaa",
+        nav_about: "Waa'ee Keenya",
+        nav_services: "Tajaajila",
+        nav_privacy: "Iccitii",
+        nav_login: "Seeni",
+        header_title: "Imaammata <span>Iccitii</span>",
+        header_subtitle: "Iccitiin keessanii fi nageenyi daataa keessanii dursa keenya isa guddaadha.",
+        intro_p: "<strong>Adamaa Shooppingii</strong> irratti, iccitii keessan kabajna, odeeffannoo dhuunfaa keessan eeguufis kutannaadha. Imaammatni Iccitii kun yeroo madaraka keenya fayyadamtan akkaataa itti daataa keessan walitti qabnu, fayyadamnuu fi eegnu ibsa.",
+        section1_title: "1. Odeeffannoo Nutti Walitti Qabnu",
+        section1_p: "Tajaajila keenya kennuu fi fooyyessuuf gosa odeeffannoo armaan gadii walitti qabuu dandeenya:",
+        section1_li1: "<strong>Odeeffannoo Dhuunfaa:</strong> Maqaa, imeelii, lakkoofsa bilbilaa, fi teessoo geessituu.",
+        section1_li2: "<strong>Ibsa Akkaawuntii:</strong> Ragaalee seensaa keessanii fi filannoowwan fayyadamaa.",
+        section1_li3: "<strong>Daataa Jijjiirraa:</strong> Ibsa waa'ee kaffaltii, ajajootaa, fi oomishaalee bitattan ykn gurgurtan.",
+        section1_li4: "<strong>Daataa Teeknikaa:</strong> Odeeffannoo waa'ee meeshaa, biraawzarii, fi teessoo IP keessanii.",
+        section2_title: "2. Akkaataa Itti Odeeffannoo Keessan Fayyadamnu",
+        section2_p: "Daataan keessan tajaajila keenya akka fooyyessinuu fi muuxannoo gaarii, kan dhuunfaatti mijaa'e akka kenninu nu gargaara. Odeeffannoo keessan kanaaf fayyadamna:",
+        section2_li1: "Ajajoota keessan sirnaan hojjechuu, mirkaneessuu, fi geessuuf.",
+        section2_li2: "Gabaa amansiisaa uumuuf akkaawuntii fayyadamaa fi gurguraa mirkaneessuuf.",
+        section2_li3: "Odeeffannoowwan haarawaa barbaachisoo, dorgommiiwwan, fi deeggarsa maamilaa beeksisuuf.",
+        section2_li4: "Jijjiirraawwan amansiisoo ta'uu isaanii mirkaneessuu fi gocha gowwomsaa ittisuuf.",
+        section3_title: "3. Eegumsa Daataa & Nageenya",
+        section3_p: "Daataa dhuunfaa keessan seeraan ala argachuu ykn badii irraa eeguuf mala nageenyaa cimaa, kan akka icciteessuu fi sirna kuusaa amansiisaa, fayyadamna. Haa ta'u malee, tamsa'insi interneetii kamiyyuu 100% amansiisaa akka hin taane hubadhaa.",
+        section4_title: "4. Imaammata Kuukiiwwanii",
+        section4_p: "Websaayitiin keenya muuxannoo fayyadamaa fooyyessuuf, filannoowwan keessan yaadachuuf, fi daataa xiinxalaa walitti qabuuf kuukiiwwan fayyadama. Yeroo barbaaddetti seetingii biraawzarii keessanii irraa kuukiiwwan bulchuu ykn cufuu dandeessu.",
+        section5_title: "5. Mirgoota Keessan",
+        section5_p: "Akka fayyadamaatti, mirga kana qabdu:",
+        section5_li1: "Daataa dhuunfaa waa'ee keessanii qabnu argachuu ykn gaafachuu.",
+        section5_li2: "Odeeffannoo akkaawuntii keessanii yeroo barbaaddetti haaromsuu ykn sirreessuu.",
+        section5_li3: "Yeroo itti fufnee qabachuun nuuf hin barbaachifne daataan keessan akka haqamu gaafachuu.",
+        section5_li4: "Ergaawwan gurgurtaa fi beeksisaa argachuuf hayyama kennitan irraa deebi'uu.",
+        section6_title: "6. Nu Qunnamaa",
+        contact_intro: "Waa'ee imaammata kanaa ykn daataa keessanii gaaffii ykn yaaddoo yoo qabaattan, maaloo nu qunnamaa:",
+        contact_email: "Imeelii:",
+        contact_phone: "Bilbila:",
+        contact_telegram: "Telegram:",
+        back_button: "Gara Fuula Jalqabaatti Deebi'i",
+        footer_logo: "Adamaa Shooppingii",
+        footer_p: "Oomishaalee gaggaarii gatii gaariin argadhaa. Ofitti amanamummaan nu biraa bitadhaa.",
+        footer_links_title: "Ce'umsa Gaggabaaboo",
+        footer_home: "Fuula Jalqabaa",
+        footer_about: "Waa'ee Keenya",
+        footer_services: "Tajaajila",
+        footer_privacy: "Iccitii",
+        footer_social_title: "Nu Hordofaa",
+        footer_newsletter_title: "Odeeffannoo argadhaa",
+        footer_newsletter_p: "Gatiiwwan fi odeeffannoowwan haaraa argachuuf barruulee keenyaaf galmaa'aa.",
+        footer_placeholder: "Imeelii keessan galchaa"
+      }
+    };
+
+    const languageButtons = document.querySelectorAll('.lang-btn');
+    const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+    const setLanguage = (lang) => {
+      translatableElements.forEach(el => {
+        const key = el.dataset.translateKey;
+        const translation = translations[lang][key];
+        
+        if (translation !== undefined) {
+          if (el.placeholder !== undefined) {
+              el.placeholder = translation;
+          } else {
+              // Use innerHTML to allow for tags like <strong> or <span>
+              el.innerHTML = translation;
+          }
+        }
+      });
+
+      // Update active button style
+      languageButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      // Save the selected language to local storage
+      localStorage.setItem('language', lang);
+    };
+
+    languageButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const selectedLang = button.dataset.lang;
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Check for a saved language in local storage, or default to English
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    });</script></body></html>
