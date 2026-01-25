@@ -64,6 +64,7 @@ async function loadDashboard() {
     if (!res.ok) throw new Error(data.error || 'Failed to load data');
 
     // Buyers
+    
     buyersTbody.innerHTML = '';
     if (!data.buyers || data.buyers.length === 0) {
       buyersTbody.innerHTML = '<tr><td colspan="8">No buyers found.</td></tr>';
