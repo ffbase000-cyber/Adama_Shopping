@@ -146,7 +146,7 @@ const currentUser = JSON.parse(storedUser);
 async function loadOrders() {
   ordersContainer.innerHTML = '<p>Loading your orders...</p>';
   try {
-    const res = await fetch(`http://localhost:3000/api/orders/buyer/${currentUser.info.username}`);
+    const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/orders/buyer/${currentUser.info.username}`);
     const data = await res.json();
     if (!res.ok && data.error) throw new Error(data.error);
 
