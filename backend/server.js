@@ -33,7 +33,7 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'", "https://adama-shopping-20ij.onrender.com"],
+      connectSrc: ["'self'", "https://adama-shopping-19bf.onrender.com"],
       fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com", "data:"],
       objectSrc: ["'none'"],
       frameSrc: ["'none'"],
