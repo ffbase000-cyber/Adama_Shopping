@@ -244,7 +244,7 @@ submitPaymentBtn.addEventListener('click', async () => {
   };
 
   try {
-    const res = await fetch('http://localhost:3000/api/payments', {
+    const res = await fetch('https://adama-shopping-20ij.onrender.com/api/payments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentData)
