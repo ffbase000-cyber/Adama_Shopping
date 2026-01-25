@@ -83,7 +83,7 @@ router.post('/pay', async (req, res) => {
         tx_ref,
         email: buyerEmail,
         first_name: buyerFullName,
-        callback_url: `https://adama-shopping-20ij.onrender.com/payment-success.html?orderId=${orderId}&tx_ref=${tx_ref}`
+        callback_url: `https://adama-shopping-19bf.onrender.com/payment-success.html?orderId=${orderId}&tx_ref=${tx_ref}`
       })
     });
 
