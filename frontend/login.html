@@ -523,8 +523,8 @@
 
       const accountType = formData.get('accountType');
       const apiUrl = accountType === 'user'
-        ? 'http://localhost:3000/api/users/login'
-        : 'http://localhost:3000/api/sellers/login';
+        ? 'https://adama-shopping-20ij.onrender.com/api/users/login'
+        : 'https://adama-shopping-20ij.onrender.com/api/sellers/login';
 
       try {
         const res = await fetch(apiUrl, {
