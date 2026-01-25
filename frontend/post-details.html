@@ -1205,7 +1205,7 @@
       const quantity = parseInt(quantityInput.value) || 1;
 
       try {
-        const res = await fetch('http://localhost:3000/api/orders', {
+        const res = await fetch('https://adama-shopping-20ij.onrender.com/api/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1239,7 +1239,7 @@
     async function loadAllPosts() {
       allPostsContainer.innerHTML = '<p style="text-align: center; color: var(--light-text);">Loading more posts...</p>';
       try {
-        const res = await fetch('http://localhost:3000/api/posts');
+        const res = await fetch('https://adama-shopping-20ij.onrender.com/api/posts');
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         allAvailablePosts = data.posts || [];
@@ -1320,7 +1320,7 @@
           const quantity = parseInt(quantityInput.value) || 1;
 
           try {
-            const res = await fetch('http://localhost:3000/api/orders', {
+            const res = await fetch('https://adama-shopping-20ij.onrender.com/api/orders', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -1428,7 +1428,7 @@
     // Update orders count
     async function updateOrdersCount() {
       try {
-        const res = await fetch(`http://localhost:3000/api/orders/count/${currentUser.info.username}`);
+        const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/orders/count/${currentUser.info.username}`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         ordersCountSpan.textContent = data.count > 0 ? data.count : '0';
