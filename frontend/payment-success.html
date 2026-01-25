@@ -29,7 +29,7 @@ if (!tx_ref) {
 
   async function verifyPayment() {
     try {
-      const res = await fetch(`http://localhost:3000/api/payments/verify/${tx_ref}`);
+      const res = await fetch(`https://adama-shopping-20ij.onrender.com/api/payments/verify/${tx_ref}`);
       const data = await res.json();
 
       if (res.ok && data.order && data.order.status === 'paid') {
