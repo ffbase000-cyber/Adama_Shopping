@@ -30,13 +30,13 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'","https://adama-shopping-19bf.onrender.com"],
+      styleSrc: ["'self'", "'unsafe-inline'","https://adama-shopping-19bf.onrender.com"],
       imgSrc: ["'self'", "data:", "blob:"],
       connectSrc: ["'self'", "https://adama-shopping-19bf.onrender.com"],
       fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com", "data:"],
       objectSrc: ["'none'"],
-      frameSrc: ["'none'"],
+      frameSrc: ["'none'","https://adama-shopping-19bf.onrender.com"],
       baseUri: ["'self'"],
       formAction: ["'self'"],
       frameAncestors: ["'self'"],
