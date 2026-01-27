@@ -32,7 +32,7 @@ app.use(
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'","https://adama-shopping-19bf.onrender.com"],
       styleSrc: ["'self'", "'unsafe-inline'","https://adama-shopping-19bf.onrender.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
+      imgSrc: ["'self'", "data:", "blob:","https://adama-shopping-19bf.onrender.com"],
       connectSrc: ["'self'", "https://adama-shopping-19bf.onrender.com"],
       fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com", "data:"],
       objectSrc: ["'none'"],
