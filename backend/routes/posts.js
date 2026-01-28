@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load .env
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
@@ -6,6 +7,8 @@ const Seller = require('../models/Seller');
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
 const path = require('path');
+
+const BASE_URL = process.env.BASE_URL || ''; // Added BASE_URL
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'public/uploads'),
@@ -32,8 +35,8 @@ router.post('/create', upload.single('image'), [
 
     const newPost = new Post({
       title, description, importantInfo, location, price, userId: username,
-      posterProfilePic: user.profilePic || '/uploads/default-profile.png',
-      image: req.file ? '/uploads/' + req.file.filename : null
+      posterProfilePic: user.profilePic ? `${BASE_URL}${user.profilePic}` : `${BASE_URL}/uploads/default-profile.png`,
+      image: req.file ? `${BASE_URL}/uploads/${req.file.filename}` : null
     });
 
     await newPost.save();
@@ -50,7 +53,12 @@ router.get('/', async (req, res) => {
     const posts = await Post.find().sort({ createdAt: -1 });
     const populatedPosts = await Promise.all(posts.map(async post => {
       let user = await User.findOne({ username: post.userId }) || await Seller.findOne({ username: post.userId });
-      return { ...post._doc, posterUsername: user?.username || post.userId, posterProfilePic: user?.profilePic || '/uploads/default-profile.png' };
+      return {
+        ...post._doc,
+        posterUsername: user?.username || post.userId,
+        posterProfilePic: user?.profilePic ? `${BASE_URL}${user.profilePic}` : `${BASE_URL}/uploads/default-profile.png`,
+        image: post.image ? `${BASE_URL}${post.image}` : null
+      };
     }));
     res.json({ posts: populatedPosts });
   } catch (err) {
