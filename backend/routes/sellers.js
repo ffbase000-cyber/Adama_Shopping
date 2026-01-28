@@ -6,6 +6,8 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+
 // Multer setup for multiple file uploads
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -56,9 +58,9 @@ router.post(
         username: req.body.username,
         phone: req.body.phone,
         password: hashedPassword,
-        profilePic: req.files.profilePic ? '/uploads/' + req.files.profilePic[0].filename : null,
-        businessLicensePic: req.files.businessLicensePic ? '/uploads/' + req.files.businessLicensePic[0].filename : null,
-        otherDocPic: req.files.otherDocPic ? '/uploads/' + req.files.otherDocPic[0].filename : null,
+        profilePic: req.files.profilePic ? `${BASE_URL}/uploads/${req.files.profilePic[0].filename}` : null,
+        businessLicensePic: req.files.businessLicensePic ? `${BASE_URL}/uploads/${req.files.businessLicensePic[0].filename}` : null,
+        otherDocPic: req.files.otherDocPic ? `${BASE_URL}/uploads/${req.files.otherDocPic[0].filename}` : null,
         bankAccountNumber: req.body.bankAccountNumber,
         bankAccountName: req.body.bankAccountName,
         description: '' // initialize empty description
@@ -105,9 +107,9 @@ router.post('/login', async (req, res) => {
         fullName: seller.fullName,
         username: seller.username,
         phone: seller.phone,
-        profilePic: seller.profilePic,
-        businessLicensePic: seller.businessLicensePic,
-        otherDocPic: seller.otherDocPic,
+        profilePic: seller.profilePic ? `${BASE_URL}${seller.profilePic.replace(BASE_URL,'')}` : null,
+        businessLicensePic: seller.businessLicensePic ? `${BASE_URL}${seller.businessLicensePic.replace(BASE_URL,'')}` : null,
+        otherDocPic: seller.otherDocPic ? `${BASE_URL}${seller.otherDocPic.replace(BASE_URL,'')}` : null,
         description: seller.description,
         bankAccountNumber: seller.bankAccountNumber,
         bankAccountName: seller.bankAccountName
@@ -128,9 +130,9 @@ router.get('/:username', async (req, res) => {
     res.json({
       fullName: seller.fullName,
       username: seller.username,
-      profilePic: seller.profilePic,
-      businessLicensePic: seller.businessLicensePic,
-      otherDocPic: seller.otherDocPic,
+      profilePic: seller.profilePic ? `${BASE_URL}${seller.profilePic.replace(BASE_URL,'')}` : null,
+      businessLicensePic: seller.businessLicensePic ? `${BASE_URL}${seller.businessLicensePic.replace(BASE_URL,'')}` : null,
+      otherDocPic: seller.otherDocPic ? `${BASE_URL}${seller.otherDocPic.replace(BASE_URL,'')}` : null,
       description: seller.description || '',
       bankAccountName: seller.bankAccountName,
       bankAccountNumber: seller.bankAccountNumber
