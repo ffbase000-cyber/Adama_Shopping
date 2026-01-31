@@ -30,13 +30,13 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'","https://adama-shopping-19bf.onrender.com"],
-      styleSrc: ["'self'", "'unsafe-inline'","https://adama-shopping-19bf.onrender.com"],
-      imgSrc: ["'self'", "data:", "blob:","https://adama-shopping-19bf.onrender.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://adama-shopping-19bf.onrender.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://adama-shopping-19bf.onrender.com"],
+      imgSrc: ["'self'", "data:", "blob:", "https://adama-shopping-19bf.onrender.com"],
       connectSrc: ["'self'", "https://adama-shopping-19bf.onrender.com"],
       fontSrc: ["'self'", "https://fonts.googleapis.com", "https://fonts.gstatic.com", "data:"],
       objectSrc: ["'none'"],
-      frameSrc: ["'none'","https://adama-shopping-19bf.onrender.com"],
+      frameSrc: ["'none'", "https://adama-shopping-19bf.onrender.com"],
       baseUri: ["'self'"],
       formAction: ["'self'"],
       frameAncestors: ["'self'"],
@@ -67,13 +67,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
+// ---------------------
 // Ensure uploads directory exists
+// ---------------------
 const uploadsDir = path.join(__dirname, 'public/uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+// ---------------------
 // Create default profile image if it doesn't exist
+// ---------------------
 const defaultProfilePath = path.join(uploadsDir, 'default-profile.png');
 if (!fs.existsSync(defaultProfilePath)) {
   sharp({
@@ -90,8 +94,10 @@ if (!fs.existsSync(defaultProfilePath)) {
     .catch(err => console.error('❌ Error creating default profile picture', err));
 }
 
-// Serve uploaded files
-app.use('/uploads', express.static(uploadsDir));
+// ---------------------
+// Serve uploaded files (fix for deployment)
+// ---------------------
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // ---------------------
 // API Routes
