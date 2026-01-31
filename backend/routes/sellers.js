@@ -6,6 +6,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 
+// Use this for deployed backend URL
 const BASE_URL = process.env.BASE_URL || 'https://adama-shopping-19bf.onrender.com';
 
 // Multer setup for multiple file uploads
